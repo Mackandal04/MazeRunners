@@ -1,0 +1,16 @@
+    Generar maze de cells✅
+
+    Generar maze de obstacles, traps✅
+
+    Hacer que el mazeWithTraps sea valido 
+
+    Crear el layout✅
+
+    Modificar el layout para mostrar una matriz de string
+    
+    Recordar implementar el metodo play de los jugadores
+
+    Revisar los enlaces en el grupo
+
+    Hacer los tokens : BloquerToken, TrapToken, TeleToken, SpeedToken, TrapIgnorer
+

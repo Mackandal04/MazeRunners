@@ -2,37 +2,8 @@ using System;
 
 using Spectre.Console;
 
-namespace NewProjectMazeRunners
+namespace MazeRunners
 {
-    public abstract class Cell//Tipo de la matriz q reoresenta el tablero
-    {
-        public abstract void Show();
-    }
-
-    public class FreeCell: Cell
-    {
-        public override void Show()
-        {
-            AnsiConsole.Markup("[cyan]░░[/]");
-        }
-    }
-
-    public class Wall : Cell
-    {
-        public override void Show()
-        {
-            AnsiConsole.Markup("[blue]██[/]");
-        }
-    }
-
-    public class TrapCell : Cell
-    {
-        public override void Show()
-        {
-            AnsiConsole.Markup("🪤");
-        }
-    } 
-
     public class Maze
     {
         Cell[,] maze;
@@ -81,6 +52,10 @@ namespace NewProjectMazeRunners
                     MazeGenerator(newX,newY);
                 }
             }
+
+            maze[1,0] = new FreeCell();
+
+            maze[high-2,width-1] = new FreeCell();
         }
 
         void FisherYates((int,int)[]array, Random random)
@@ -99,6 +74,44 @@ namespace NewProjectMazeRunners
                 array[i] = array[j];
 
                 array[j] = temp;
+            }
+        }
+
+        public void AddTrapsAndObstacles(int traps, int obstacles)
+        {
+            Random random = new Random();
+
+            for (int i = 0; i < traps; i++)
+            {
+                while (true)//Mientras la casilla no sea valida
+                {
+                    int CordX = random.Next(0,high-1); // [) Evitar los bordes
+                    
+                    int CordY = random.Next(0,width-1);
+
+                    if(maze[CordX,CordY] is FreeCell && !(CordX==1 && CordY==1) && !(CordX==high-2 && CordY==width-2 ))
+                    {
+                        maze[CordX,CordY] = new TrapCell();
+                        break;
+                    }
+                }
+                
+            }
+
+            for (int j = 0; j < obstacles; j++)
+            {
+                while(true)
+                {
+                    int CordX = random.Next(1,high-1);
+
+                    int CordY = random.Next(1,width-1);
+
+                    if(maze[CordX,CordY] is FreeCell && !(CordX==1 && CordY==1) && !(CordX==high-2 && CordY==width-2 ))
+                    {
+                        maze[CordX,CordY] = new Obstacles(); //Obstaculo no era un bool ?
+                        break;
+                    }
+                }
             }
         }
 

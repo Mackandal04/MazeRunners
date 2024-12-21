@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "ooC21vYtjwU=",
+  "success": true,
+  "projectFilePath": "D:\\1. Primer Año\\Programación\\Proyectos\\1er anno\\MazeRunners\\MazeRunners.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\MAURICIO\\.nuget\\packages\\spectre.console\\0.49.1\\spectre.console.0.49.1.nupkg.sha512"
+  ],
+  "logs": []
+}

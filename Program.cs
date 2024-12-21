@@ -1,9 +1,8 @@
-﻿    using System;
+    using System;
     using System.Collections.Generic;
-using NewProjectMazeRunners;
-using Spectre.Console;
+    using Spectre.Console;
 
-    namespace NewProjectMazeRunners
+    namespace MazeRunners
     {
         class Program
         {
@@ -16,6 +15,8 @@ using Spectre.Console;
 
                 maze.MazeGenerator(1,1);//Siempre empezar en el 1-1
 
+                maze.AddTrapsAndObstacles(3,3);
+                
                 maze.PrintMaze();
             }
         }

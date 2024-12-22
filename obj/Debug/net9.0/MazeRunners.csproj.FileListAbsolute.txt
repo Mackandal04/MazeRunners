@@ -15,3 +15,4 @@ D:\1. Primer Año\Programación\Proyectos\1er anno\MazeRunners\obj\Debug\net9.0\
 D:\1. Primer Año\Programación\Proyectos\1er anno\MazeRunners\bin\Debug\net9.0\Spectre.Console.dll
 D:\1. Primer Año\Programación\Proyectos\1er anno\MazeRunners\obj\Debug\net9.0\MazeRunners.csproj.AssemblyReference.cache
 D:\1. Primer Año\Programación\Proyectos\1er anno\MazeRunners\obj\Debug\net9.0\MazeRunn.7AB42528.Up2Date
+D:\1. Primer Año\Programación\Proyectos\1er anno\MazeRunners\obj\Debug\net9.0\MazeRunners.sourcelink.json

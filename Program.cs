@@ -18,6 +18,7 @@
                 maze.AddTrapsAndObstacles(3,3);
                 
                 maze.PrintMaze();
+
             }
         }
     }

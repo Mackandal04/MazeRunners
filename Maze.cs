@@ -108,24 +108,48 @@ namespace MazeRunners
 
                     if(maze[CordX,CordY] is FreeCell && !(CordX==1 && CordY==1) && !(CordX==high-2 && CordY==width-2 ))
                     {
-                        maze[CordX,CordY] = new Obstacles(); //Obstaculo no era un bool ?
+                        maze[CordX,CordY] = new ObstaclesCell(); //Obstaculo no era un bool ?
                         break;
                     }
                 }
             }
         }
 
-        public void PrintMaze()
+        public string[,] ConcatMaze()
         {
-            System.Console.WriteLine("printing maze....");
+            string[,] stringMaze = new string[high,width];
+
             for (int i = 0; i < high; i++)
             {
                 for (int j = 0; j < width; j++)
                 {
-                    maze[i,j].Show();
+                    Write(stringMaze,i,j);
                 }
+            }
 
-                Console.WriteLine();
+            return stringMaze;
+        }
+
+        void Write(string[,] stringMaze,int x, int y)
+        {
+            if(maze[x,y] is FreeCell)
+            {
+                stringMaze[x,y] = "[cyan]░░[/]";
+            }
+
+            else if(maze[x,y] is Wall)
+            {
+                stringMaze[x,y] = "[blue]██[/]";
+            }
+
+            else if(maze[x,y] is TrapCell)
+            {
+                stringMaze[x,y] = "TT"; //🪤 || ##
+            }
+
+            else if(maze[x,y] is ObstaclesCell)
+            {
+                stringMaze[x,y] = "OO"; //🪨 || XX
             }
         }
     }

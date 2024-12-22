@@ -1,15 +1,15 @@
-    using System;
-    using System.Collections.Generic;
-    using Spectre.Console;
+using System.Text;
+using Spectre.Console;
 
-    namespace MazeRunners
+namespace MazeRunners
+{
+    class Program
     {
-        class Program
+        static void Main(string[]args)
         {
-            static void Main(string[] args)
-            {
-                int high = 37;
-                int width = 37;
+                int high = 7;//Tope 35
+                
+                int width = 7; //Tope31
 
                 Maze maze = new Maze(high, width);
 
@@ -17,8 +17,51 @@
 
                 maze.AddTrapsAndObstacles(3,3);
                 
-                maze.PrintMaze();
+                UsefulMethods useful = new UsefulMethods();
 
-            }
+            var layout = new Layout("Root").SplitColumns
+            (
+                new Layout("Left"),
+                new Layout("Right").SplitRows(new Layout("Top"), new Layout("Bottom"))
+            );
+
+            layout["Left"].Update
+            (
+                new Panel
+                (
+                    Align.Center
+                    (
+                        new Markup(useful.FormatMatrix(maze.ConcatMaze())),
+                        VerticalAlignment.Middle
+                    )
+                ).Expand()
+            );
+
+            layout["Top"].Update
+            (
+                new Panel
+                (
+                    Align.Center
+                    (
+                        new Markup("[blue]Menu[/]"),
+                        VerticalAlignment.Middle
+                    )
+                ).Expand()
+            );
+
+            layout["Bottom"].Update
+            (
+                new Panel
+                (
+                    Align.Center
+                    (
+                        new Markup("[blue]PiecesStade[/]"),
+                        VerticalAlignment.Middle
+                    )
+                ).Expand()
+            );
+
+            AnsiConsole.Write(layout);
         }
     }
+}

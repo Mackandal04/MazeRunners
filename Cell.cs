@@ -36,7 +36,7 @@ namespace MazeRunners
         }
     }
 
-    public class Obstacles : Cell
+    public class ObstaclesCell : Cell
     {
         public override void Show()
         {

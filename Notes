@@ -1,8 +1,8 @@
     Generar maze de cells✅
 
-    Generar maze de obstacles, traps✅
+    Hacer que el mazeWithTraps sea valido✅ 
 
-    Hacer que el mazeWithTraps sea valido 
+    Generar maze de obstacles, traps valido ✅
 
     Crear el layout✅
 
@@ -16,3 +16,5 @@
 
     Hacer los tokens : BloquerToken, TrapToken, TeleToken, SpeedToken, TrapIgnorer
 
+    (opcional) Implementar para que no haya una trampa u obstaculo si en esa fila/columna
+    tambien hay otro tableObject del mismo tipo

@@ -7,15 +7,20 @@ namespace MazeRunners
     {
         static void Main(string[]args)
         {
-                int high = 7;//Tope 35
+                int high = 35;//Tope 35
                 
-                int width = 7; //Tope31
+                int width = 31; //Tope31
 
                 Maze maze = new Maze(high, width);
 
                 maze.MazeGenerator(1,1);//Siempre empezar en el 1-1
 
-                maze.AddTrapsAndObstacles(3,3);
+                while(!maze.IsAValidMaze())
+                {
+                    maze.MazeGenerator(1,1);
+                }
+                
+                maze.AddTrapsAndObstacles(4);
                 
                 UsefulMethods useful = new UsefulMethods();
 
@@ -31,7 +36,7 @@ namespace MazeRunners
                 (
                     Align.Center
                     (
-                        new Markup(useful.FormatMatrix(maze.ConcatMaze())),
+                        new Markup(useful.FormatMatrix(maze.ConcatMazeWithStringMaze())),
                         VerticalAlignment.Middle
                     )
                 ).Expand()

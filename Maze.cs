@@ -6,7 +6,7 @@ namespace MazeRunners
 {
     public class Maze
     {
-        Cell[,] maze;
+        public Cell[,] maze {get;}
 
         int high;
         int width;
@@ -34,7 +34,7 @@ namespace MazeRunners
         public void MazeGenerator(int CordX, int CordY)//Metodo que genera un tablero valido
         {
             //Annadir verificacion, debe empezar en 1,1
-            System.Console.WriteLine("Entro al mazeGenerator");
+            //System.Console.WriteLine("Entro al mazeGenerator");
 
             maze[CordX,CordY] = new FreeCell();
 
@@ -65,7 +65,7 @@ namespace MazeRunners
 
         void FisherYates((int,int)[]array, Random random)
         {
-            System.Console.WriteLine("Organizo el array de direcciones");
+            //System.Console.WriteLine("Organizo el array de direcciones");
 
             //Metodo de Fisher Yates para organizar un array de forma random
             int n = array.Length;
@@ -87,7 +87,8 @@ namespace MazeRunners
         public void AddTrapsAndObstacles(int tableObject)
         {
             //Annadir verificacion, debe ser una entrada par
-            System.Console.WriteLine("Entro al AddTrapsAndObstacles");
+            
+            //System.Console.WriteLine("Entro al AddTrapsAndObstacles");
 
             int traps = tableObject/2;
 
@@ -177,25 +178,24 @@ namespace MazeRunners
             
 
             else if(maze[x,y] is TrapCell)
-                stringMaze[x,y] = "TT"; //🪤 || ##
+                stringMaze[x,y] = "[yellow]TT[/]"; //🪤 || ##
             
 
             else if(maze[x,y] is ObstaclesCell)
-                stringMaze[x,y] = "OO"; //🪨 || XX
+                stringMaze[x,y] = "[black]OO[/]"; //🪨 || XX
+
+            else if(maze[x,y] is NormalToken)
+                stringMaze[x,y] = "[red]⇯⇯[/]";
             
         }
 
         public bool IsAValidMaze()
         {
-            System.Console.WriteLine("Entro al IsAValidObstacleTrap");
+            //System.Console.WriteLine("Entro al IsAValidObstacleTrap");
             
             bool[,]arrive = new bool[high,width]; //Mascara para saber si ya visite una casilla
 
             arrive[1,1] = true; 
-
-            int[]df = {-1,1,0,0};
-
-            int[]dc = {0,0,-1,1};
 
             (int, int)[] direc = {(0,1), (0,-1), (1,0), (-1,0)};
 
@@ -230,5 +230,11 @@ namespace MazeRunners
                 
                 return false;
             }
+
+
+        public void AddTokens(NormalToken normalToken)
+        {
+            maze[1,1] = normalToken;
+        }
     }
 }

@@ -9,7 +9,10 @@
     Modificar el layout para mostrar una matriz de string✅
 
     Concatenar las matrices ✅
-    
+
+    Hacer un basicToken✅
+
+    Colocar el token en el maze, mover y actualizar correctamente el token en el maze✅
     Recordar implementar el metodo play de los jugadores
 
     Revisar los enlaces en el grupo

@@ -30,5 +30,15 @@ namespace MazeRunners
 
             return formatedString.ToString();//Convierte el StringBuilder a string y lo devuelve
         }
+
+        public bool isAValidMove(int newCordX, int newCordY, Cell[,] maze)//Valisa una operacion de movimiento en el maze
+        {
+
+            if(newCordX >= 0 && newCordY >= 0 && newCordX < maze.GetLength(0) && newCordY<maze.GetLongLength(1) && maze[newCordX,newCordY] is FreeCell)
+                return true;
+
+            else
+                return false;
+        }
     }
 }

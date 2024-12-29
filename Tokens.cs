@@ -9,15 +9,12 @@ namespace MazeRunners
     public abstract class Tokens:Cell
     {
         Player player;
-
-        Cell cell;
         string name;
         public int myX{get;set;}
         public int myY{get;set;}
-
+        public int cooldowmSkill = 6;
         public abstract void TokenMove(int CordX, int CordY, Cell[,] maze);
-
-        public abstract void TokenSkill();
+        public abstract void TokenSkill(Maze maze);
 
         public Tokens(string name,int myX, int myY)
         {
@@ -37,9 +34,7 @@ namespace MazeRunners
         }
 
         public override void Show()
-        {
-            AnsiConsole.Markup("[red]⇯⇯[/]");
-        }
+        {}
 
         public override void TokenMove(int CordX, int CordY, Cell[,] maze)
         {
@@ -57,25 +52,27 @@ namespace MazeRunners
             }
         }
 
-        public override void TokenSkill()
-        {}//No tiene skill 
+        public override void TokenSkill(Maze maze)
+        {
+            System.Console.WriteLine("This token has no skill");
+        } 
     }
 
 
-    public class TrapIgnore : Tokens
+    public class TrapDeleteToken : Tokens
     {
-        public TrapIgnore(string name, int myX, int myY) : base(name, myX, myY)
+        public TrapDeleteToken(string name, int myX, int myY) : base(name, myX, myY)
         {
         }
-        public override void TokenSkill()
+        public override void TokenSkill(Maze maze)
         {
-            throw new NotImplementedException();
+            DeleteTrapToken deleteTrapToken = new DeleteTrapToken();
+
+            deleteTrapToken.ActivateSkill(this,maze);
         }
 
         public override void Show()
-        {
-            throw new NotImplementedException();
-        }
+        {}
 
         public override void TokenMove(int CordX, int CordY, Cell[,] maze)
         {
@@ -83,20 +80,20 @@ namespace MazeRunners
         }
     }
 
-    public class ObstacleDestroyerToken : Tokens
+    public class ObstacleToken : Tokens
     {
-        public ObstacleDestroyerToken(string name, int myX, int myY) : base(name, myX, myY)
+        public ObstacleToken(string name, int myX, int myY) : base(name, myX, myY)
         {
         }
-        public override void TokenSkill()
+        public override void TokenSkill(Maze maze)
         {
-            throw new NotImplementedException();
+            BlockerToken blockerToken = new BlockerToken();
+
+            blockerToken.ActivateSkill(this,maze);
         }
 
         public override void Show()
-        {
-            throw new NotImplementedException();
-        }
+        {}
 
         public override void TokenMove(int CordX, int CordY, Cell[,] maze)
         {
@@ -109,15 +106,13 @@ namespace MazeRunners
         public FlashToken(string name, int myX, int myY) : base(name, myX, myY)
         {
         }
-        public override void TokenSkill()
+        public override void TokenSkill(Maze maze)
         {
             throw new NotImplementedException();
         }
 
         public override void Show()
-        {
-            throw new NotImplementedException();
-        }
+        {}
 
         public override void TokenMove(int CordX, int CordY, Cell[,] maze)
         {
@@ -130,15 +125,21 @@ namespace MazeRunners
         public TeleportToken(string name, int myX, int myY) : base(name, myX, myY)
         {
         }
-        public override void TokenSkill()
+        public override void TokenSkill(Maze maze)
         {
-            throw new NotImplementedException();
+            if(cooldowmSkill>=6)
+            {
+                Teleport teleport = new Teleport();
+
+                teleport.ActivateSkill(this,maze);//Le pasamos el token actual junto con el maze
+            }
+
+            else
+                System.Console.WriteLine("Skill is not charge yet");
         }
 
         public override void Show()
-        {
-            throw new NotImplementedException();
-        }
+        {}
 
         public override void TokenMove(int CordX, int CordY, Cell[,] maze)
         {
@@ -152,15 +153,15 @@ namespace MazeRunners
         {
         }
 
-        public override void TokenSkill()
+        public override void TokenSkill(Maze maze)
         {
-            throw new NotImplementedException();
+            BlockerToken blockerToken = new BlockerToken();
+
+            blockerToken.ActivateSkill(this,maze);
         }
 
         public override void Show()
-        {
-            throw new NotImplementedException();
-        }
+        {}
 
         public override void TokenMove(int CordX, int CordY, Cell[,] maze)
         {

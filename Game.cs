@@ -6,19 +6,19 @@
     {
         class Game
         {
-            public void StartGame(NormalToken normalToken)//Debe recibir un array de token q representa los tokens de cada jugador
+            public void StartGame(Tokens token)//Debe recibir un array de token q representa los tokens de cada jugador
             {
-                Maze maze = new Maze(7, 7); //Tope35X31
+                Maze maze = new Maze(31,33); //Tope39X45
 
-                CreateGame(maze,normalToken);//Crea el juego por detras
+                CreateGame(maze,token);//Crea el juego por detras
 
                 ShowGame(maze); //Muestra el tablero y el estado del juego
 
-                LetsPlay(normalToken,maze); //Permite jugar
+                LetsPlay(token,maze); //Permite jugar
             }
 
 
-            void CreateGame(Maze maze, NormalToken normalToken)
+            void CreateGame(Maze maze, Tokens token)
             {
                 maze.MazeGenerator(1,1);//Siempre empezar en el 1-1
 
@@ -27,9 +27,9 @@
                     maze.MazeGenerator(1,1);
                 }
                 
-                maze.AddTrapsAndObstacles(10);
+                maze.AddTrapsAndObstacles(30);
 
-                maze.AddTokens(normalToken);
+                maze.AddTokens(token);
             }
 
             void ShowGame(Maze maze)
@@ -38,8 +38,8 @@
 
                 var layout = new Layout("Root").SplitColumns
                 (
-                    new Layout("Left"),
-                    new Layout("Right").SplitRows(new Layout("Top"), new Layout("Bottom"))
+                    new Layout("Left").Ratio(3),
+                    new Layout("Right").SplitRows(new Layout("Top"), new Layout("Bottom")).Ratio(1)
                 );
 
                 layout["Left"].Update
@@ -51,7 +51,11 @@
                             new Markup(useful.FormatMatrix(maze.ConcatMazeWithStringMaze())),
                             VerticalAlignment.Middle
                         )
-                    ).Expand()
+                    )
+                    .Header("[green bold]Board[/]")
+                    .Expand()
+                    .RoundedBorder()
+                    .BorderColor(Color.Blue)
                 );
 
                 layout["Top"].Update
@@ -60,28 +64,36 @@
                     (
                         Align.Center
                         (
-                            new Markup("[blue]Menu[/]"),
+                            new Markup("[blue bold]Menu[/]"),
                             VerticalAlignment.Middle
                         )
-                    ).Expand()
+                    )
+                    .Header("[bold yellow]Options[/]")
+                    .RoundedBorder()
+                    .BorderColor(Color.Yellow)
+                    .Expand()
                 );
 
                 layout["Bottom"].Update
                 (
                     new Panel
                     (
-                        Align.Center
+                        Align.Left
                         (
-                            new Markup("[blue]PiecesStade[/]"),
-                            VerticalAlignment.Middle
+                            new Markup("[green]Points:[/]0\n[red]Health:[/]7\n[cyan]Skill:[/] NormalToken"),
+                            VerticalAlignment.Top
                         )
-                    ).Expand()
+                    )
+                    .Header("[bold cyan]Player's Stade[/]")
+                    .RoundedBorder()
+                    .BorderColor(Color.Cyan1)
+                    .Expand()
                 );
 
                 AnsiConsole.Write(layout);
             }
 
-            void LetsPlay(NormalToken normalToken, Maze maze)
+            void LetsPlay(Tokens token, Maze maze)
             {  
                 UsefulMethods usefulMethods = new UsefulMethods();
 
@@ -100,43 +112,58 @@
 
                 while(true)
                 {    
+                    Console.Clear();//Refrescar la pantalla
+
+                    ShowGame(maze);
+
                     System.Console.WriteLine("Muevete por el maze con las letras w,s,a,d ");
+                    System.Console.WriteLine("Para salir del juego presiona e ");
+                    System.Console.WriteLine("Para utilizar tu habilidad presiona k");
 
                     char letter = Console.ReadKey().KeyChar;
 
                     if(letter == 'e')
                         break;
+
+                    if(letter=='k')
+                    {
+                        token.TokenSkill(maze);
+                    }
                         
                     else if(mazeDirec.ContainsKey(letter))
                     {
                         (int CordX,int CordY) = mazeDirec[letter];
                         
-                        int newCordX = normalToken.myX + CordX;
+                        int newCordX = token.myX + CordX;
 
-                        int newCordY = normalToken.myY + CordY;
+                        int newCordY = token.myY + CordY;
 
-    //                        normalToken.TokenMove(newCordX,newCordY, maze.maze);
                         if(usefulMethods.isAValidMove(newCordX,newCordY,maze.maze))
                         {
-                            maze.maze[normalToken.myX,normalToken.myY] = new FreeCell();//Haz libre la celda en que estba el token
+                            maze.maze[token.myX,token.myY] = new FreeCell();//Haz libre la celda en que estba el token
 
-                            normalToken.myX = newCordX;
+                            token.myX = newCordX;
 
-                            normalToken.myY = newCordY;
+                            token.myY = newCordY;
 
-                            maze.maze[newCordX,newCordY] = normalToken;//Poner al token en su nueva posicion
+                            maze.maze[newCordX,newCordY] = token;//Poner al token en su nueva posicion
 
-                            ShowGame(maze);
+                            token.cooldowmSkill++;
 
-                            if(normalToken.myX==n-2 && normalToken.myY == m-1)
+                            if(token.myX==n-2 && token.myY == m-1)
                             {
+                                Console.Clear();
+                                ShowGame(maze);
                                 System.Console.WriteLine("You have completed the maze");
                                 break;
                             }
                         }
 
                         else
-                            System.Console.WriteLine("No valid move");
+                        {
+                            System.Console.WriteLine(" it is not a valid move");
+                            Thread.Sleep(1500);//Esto hace una pausa momentanea para q se lea el mensaje
+                        }
                     }
                 }
             }

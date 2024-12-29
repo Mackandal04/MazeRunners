@@ -174,19 +174,31 @@ namespace MazeRunners
             
 
             else if(maze[x,y] is Wall)
-                stringMaze[x,y] = "[blue]██[/]";
+                stringMaze[x,y] = "[Silver]██[/]";
             
 
             else if(maze[x,y] is TrapCell)
-                stringMaze[x,y] = "[yellow]TT[/]"; //🪤 || ##
+                stringMaze[x,y] = "[Gold1]██[/]"; //🪤 || TT || color-██
             
 
             else if(maze[x,y] is ObstaclesCell)
-                stringMaze[x,y] = "[black]OO[/]"; //🪨 || XX
+                stringMaze[x,y] = "[black]██[/]"; // OO || color-██
 
             else if(maze[x,y] is NormalToken)
-                stringMaze[x,y] = "[red]⇯⇯[/]";
+                stringMaze[x,y] = "[cyan]⚡[/]"; //⇯░||☬░||⚡||⧖░||⚜️ ||⇶░
             
+            else if(maze[x,y] is TeleportToken)
+                stringMaze[x,y] = "[cyan]⚡[/]";
+
+            else if(maze[x,y] is TrapDeleteToken)
+            {
+                stringMaze[x,y] = "[cyan]⚡[/]";
+            }
+
+            else if (maze[x,y] is ObstacleToken)
+            {
+                stringMaze[x,y] = "[cyan]⚡[/]";
+            }
         }
 
         public bool IsAValidMaze()
@@ -232,9 +244,9 @@ namespace MazeRunners
             }
 
 
-        public void AddTokens(NormalToken normalToken)
+        public void AddTokens(Tokens token)
         {
-            maze[1,1] = normalToken;
+            maze[1,1] = token;
         }
     }
 }

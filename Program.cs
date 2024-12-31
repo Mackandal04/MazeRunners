@@ -17,7 +17,7 @@ namespace MazeRunners
                 
                 ObstacleToken obstacleToken = new ObstacleToken("Hulk",1,1);
 
-                game.StartGame(obstacleToken);
+                game.StartGame(teleportToken);
         }
     }
 }

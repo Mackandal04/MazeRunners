@@ -34,7 +34,7 @@ namespace MazeRunners
         public bool isAValidMove(int newCordX, int newCordY, Cell[,] maze)//Valida una operacion de movimiento en el maze
         {
 
-            if(newCordX >= 0 && newCordY >= 0 && newCordX < maze.GetLength(0) && newCordY<maze.GetLongLength(1) && maze[newCordX,newCordY] is FreeCell)
+            if(newCordX >= 0 && newCordY >= 0 && newCordX < maze.GetLength(0) && newCordY<maze.GetLongLength(1) && maze[newCordX,newCordY] is not Wall && maze[newCordX,newCordY] is not ObstaclesCell )
                 return true;
 
             else

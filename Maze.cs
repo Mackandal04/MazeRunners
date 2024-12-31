@@ -100,13 +100,21 @@ namespace MazeRunners
 
             int counter = 0;
 
-            ObstaclesOrtraps(counter,traps,isTrap,random);
+            TrapCell[]trapArray = new TrapCell[]
+            {
+                new TeleportTrap(),
+                new DamageTrap(),
+                new InvalidateTokenSkillTrap(),
+                new StuckTrap()
+            };
+
+            ObstaclesOrtraps(counter,traps,isTrap,random,trapArray);
 
             isTrap = false;
 
-            ObstaclesOrtraps(counter,obstacles,isTrap,random);
+            ObstaclesOrtraps(counter,obstacles,isTrap,random,trapArray);
         }
-            void ObstaclesOrtraps(int counter,int tableObject,bool IsTrap, Random random)
+            void ObstaclesOrtraps(int counter,int tableObject,bool IsTrap, Random random, TrapCell[]trapArray)
             {
                 int maxCount = high*width;
 
@@ -122,9 +130,11 @@ namespace MazeRunners
                         {
                             if(IsTrap)
                             {
-                                maze[CordX,CordY] = new TrapCell();
+                                TrapCell randomTrap = trapArray[random.Next(trapArray.Length)];
 
-                                if(IsAValidMaze())
+                                maze[CordX,CordY] = randomTrap;
+
+                                if(IsAValidMaze(1,1))
                                     break;
                                 else
                                     maze[CordX,CordY] = new FreeCell();
@@ -134,7 +144,7 @@ namespace MazeRunners
                             {
                                 maze[CordX,CordY] = new ObstaclesCell();
 
-                                if(IsAValidMaze())
+                                if(IsAValidMaze(1,1))
                                     break;
                                 else
                                     maze[CordX,CordY] = new FreeCell();
@@ -174,15 +184,26 @@ namespace MazeRunners
             
 
             else if(maze[x,y] is Wall)
-                stringMaze[x,y] = "[Silver]██[/]";
+                stringMaze[x,y] = "[Silver]██[/]"; //Silver
             
 
-            else if(maze[x,y] is TrapCell)
-                stringMaze[x,y] = "[Gold1]██[/]"; //🪤 || TT || color-██
+            // else if(maze[x,y] is TrapCell)
+            //     stringMaze[x,y] = "[cyan]░░[/]"; //[cyan]░░//[Gold1]██//🪤 || TT || color-██ //Recordar ponerle el mismo color que el pasillo
+            //                                                             //para que el plaer se coma las traps
+            
+
+            else if(maze[x,y] is TeleportTrap)
+                stringMaze[x,y] = "[Green]██[/]";//[cyan]░░ //[Green]██//🪤 || TT || color-██ //Recordar ponerle el mismo color que el pasillo a las trampas
+            else if(maze[x,y] is DamageTrap)                                                  //Al final borrar esto y quedarme con TrapCell
+                stringMaze[x,y] = "[Red]██[/]"; //[cyan]░░//[Red]██//🪤 || TT || color-██
+            else if(maze[x,y] is InvalidateTokenSkillTrap)
+                stringMaze[x,y] = "[Yellow]██[/]"; //[cyan]░░//[Yellow]██//🪤 || TT || color-██
+            else if(maze[x,y] is StuckTrap)
+                stringMaze[x,y] = "[Purple]██[/]";//[cyan]░░ //[Purple]██//🪤 || TT || color-██
             
 
             else if(maze[x,y] is ObstaclesCell)
-                stringMaze[x,y] = "[black]██[/]"; // OO || color-██
+                stringMaze[x,y] = "[CadetBlue_1]██[/]"; // OO || color-██ //CadetBlue_1
 
             else if(maze[x,y] is NormalToken)
                 stringMaze[x,y] = "[cyan]⚡[/]"; //⇯░||☬░||⚡||⧖░||⚜️ ||⇶░
@@ -201,13 +222,13 @@ namespace MazeRunners
             }
         }
 
-        public bool IsAValidMaze()
+        public bool IsAValidMaze(int beginningX, int beginningY)
         {
             //System.Console.WriteLine("Entro al IsAValidObstacleTrap");
             
             bool[,]arrive = new bool[high,width]; //Mascara para saber si ya visite una casilla
 
-            arrive[1,1] = true; 
+            arrive[beginningX,beginningY] = true; 
 
             (int, int)[] direc = {(0,1), (0,-1), (1,0), (-1,0)};
 
@@ -233,11 +254,11 @@ namespace MazeRunners
 
                 return false;
             }
-            return DFS(1,1);
+            return DFS(beginningX,beginningY);
         }
         bool ValidCheck(bool[,] arrive,int newDirecX, int newDirecY)
             {
-                if(newDirecX>0 && newDirecY>0 && newDirecX<high && newDirecY<width && !arrive[newDirecX,newDirecY] && !(maze[newDirecX,newDirecY] is Wall) && !(maze[newDirecX,newDirecY] is TrapCell) && !(maze[newDirecX,newDirecY] is ObstaclesCell))
+                if(newDirecX>0 && newDirecY>0 && newDirecX<high && newDirecY<width && !arrive[newDirecX,newDirecY] && !(maze[newDirecX,newDirecY] is Wall)&& !(maze[newDirecX,newDirecY] is ObstaclesCell))// && !(maze[newDirecX,newDirecY] is TrapCell) 
                     return true;
                 
                 return false;

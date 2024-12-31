@@ -18,9 +18,11 @@
 
     Revisar los enlaces en el grupo
 
-    Hacer los tokens : BloquerToken✅, TrapDeleteToken✅, TeleToken✅, SpeedToken, TrapIgnorer
+    Hacer los tokens : BloquerToken✅, TrapDeleteToken✅, TeleToken✅, 3 token mas 
 
     Concatenar las habilidades con el juego✅
+
+    Tampas listas✅
     
     (opcional) Implementar para que no haya una trampa u obstaculo si en esa fila/columna
     tambien hay otro tableObject del mismo tipo

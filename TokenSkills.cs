@@ -69,11 +69,11 @@ namespace MazeRunners
 
                     int teleportToY = token.myY + j;
 
-                    if(usefulMethods.isAValidFreeCell(teleportToX,teleportToY,maze.maze))
+                    if(usefulMethods.isAValidFreeCell(teleportToX,teleportToY,maze.maze) && maze.IsAValidMaze(teleportToX,teleportToY))
                     {
-                        maze.maze[teleportToX,teleportToY] = token;
-
                         maze.maze[token.myX,token.myY] = new FreeCell();
+
+                        maze.maze[teleportToX,teleportToY] = token;
 
                         token.myX = teleportToX;
 

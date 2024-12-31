@@ -26,16 +26,6 @@ namespace MazeRunners
             AnsiConsole.Markup("[blue]██[/]");
         }
     }
-
-    public class TrapCell : Cell
-    {
-        public override void Show()
-        {
-            AnsiConsole.Markup("##");
-            //AnsiConsole.Markup("🪤");
-        }
-    }
-
     public class ObstaclesCell : Cell
     {
         public override void Show()

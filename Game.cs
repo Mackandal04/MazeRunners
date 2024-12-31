@@ -8,7 +8,7 @@
         {
             public void StartGame(Tokens token)//Debe recibir un array de token q representa los tokens de cada jugador
             {
-                Maze maze = new Maze(31,33); //Tope39X45
+                Maze maze = new Maze(7,7); //Tope39X45
 
                 CreateGame(maze,token);//Crea el juego por detras
 
@@ -22,7 +22,7 @@
             {
                 maze.MazeGenerator(1,1);//Siempre empezar en el 1-1
 
-                while(!maze.IsAValidMaze())
+                while(!maze.IsAValidMaze(1,1))
                 {
                     maze.MazeGenerator(1,1);
                 }
@@ -55,7 +55,7 @@
                     .Header("[green bold]Board[/]")
                     .Expand()
                     .RoundedBorder()
-                    .BorderColor(Color.Blue)
+                    .BorderColor(Color.Blue)//BlueViolet //CadetBlue y _1 //Chartreuse1
                 );
 
                 layout["Top"].Update
@@ -119,6 +119,8 @@
                     System.Console.WriteLine("Muevete por el maze con las letras w,s,a,d ");
                     System.Console.WriteLine("Para salir del juego presiona e ");
                     System.Console.WriteLine("Para utilizar tu habilidad presiona k");
+                    // string a = token.Health.ToString();
+                    // System.Console.WriteLine(a);
 
                     char letter = Console.ReadKey().KeyChar;
 
@@ -128,15 +130,25 @@
                     if(letter=='k')
                     {
                         token.TokenSkill(maze);
+                        continue;
                     }
                         
-                    else if(mazeDirec.ContainsKey(letter))
+                    if(mazeDirec.ContainsKey(letter))
                     {
                         (int CordX,int CordY) = mazeDirec[letter];
                         
                         int newCordX = token.myX + CordX;
 
                         int newCordY = token.myY + CordY;
+
+                        if(token.StuckTurns>0)
+                        {
+                            System.Console.WriteLine("You are stuck");
+
+                            token.StuckTurns--;
+                            Thread.Sleep(1300);
+                            continue;
+                        }
 
                         if(usefulMethods.isAValidMove(newCordX,newCordY,maze.maze))
                         {
@@ -146,10 +158,33 @@
 
                             token.myY = newCordY;
 
-                            maze.maze[newCordX,newCordY] = token;//Poner al token en su nueva posicion
+                            
+                            if(maze.maze[newCordX,newCordY] is TrapCell trap)
+                            {
+                                System.Console.WriteLine("Trap Activated");
+
+                                trap.ActivateTrapSkill(token,maze);
+                                
+                            }
+                            
+                            if(maze.maze[newCordX,newCordY] is not TeleportTrap)
+                            {
+                                maze.maze[newCordX,newCordY] = token;//Poner al token en su nueva posicion
+                            }
+
+                            if(maze.maze[newCordX,newCordY] is TeleportTrap)
+                            {
+                                maze.maze[newCordX,newCordY] = new FreeCell();
+                            }
 
                             token.cooldowmSkill++;
 
+                            if(token.Health<=0)
+                            {    
+                                System.Console.WriteLine("Your token is dead, you lose :( ");
+                                break;
+                            }    
+                                
                             if(token.myX==n-2 && token.myY == m-1)
                             {
                                 Console.Clear();
@@ -162,7 +197,7 @@
                         else
                         {
                             System.Console.WriteLine(" it is not a valid move");
-                            Thread.Sleep(1500);//Esto hace una pausa momentanea para q se lea el mensaje
+                            Thread.Sleep(1300);//Esto hace una pausa momentanea para q se lea el mensaje
                         }
                     }
                 }

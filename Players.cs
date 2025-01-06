@@ -5,28 +5,28 @@ using System.Threading.Tasks;
 
 namespace MazeRunners
 {
-    public abstract class Player
+    public class Player
     {
-        public abstract void Play(); 
-    }
-
-    public class PlayerOne: Player
-    {
-        Tokens[] playerOneTokens;
-
-        public override void Play()
+        public bool isYourTurn ; //para saber si es o no el turno de player actual
+        public List<Tokens> playerTokens = new List<Tokens>(); //lista con los tokens de cada player
+        public void AddToken(Tokens token)
         {
-            throw new NotImplementedException();
+            System.Console.WriteLine("Se annadio el token");
+            playerTokens.Add(token);
         }
-    }
 
-    public class PlayerTwo: Player
-    {
-        Tokens[] playerTwoTokens;
-
-        public override void Play()
+        public void RemoveToken(Tokens token)
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < playerTokens.Count; i++)
+            {
+                if(playerTokens[i] == token)
+                {
+                    playerTokens.RemoveAt(i);
+                    return;
+                }
+            }
+
+            System.Console.WriteLine("the token wasn't found it");
         }
     }
 }

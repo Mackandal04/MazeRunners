@@ -34,4 +34,12 @@ namespace MazeRunners
             //AnsiConsole.Markup("🪨");
         }
     }
+
+    public class ExitCell : Cell
+    {
+        public override void Show()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

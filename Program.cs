@@ -9,15 +9,13 @@ namespace MazeRunners
         {
                 Game game = new Game();
 
-                NormalToken normalToken = new NormalToken("Jarvis",1,1);
+                //Creando los players
+                Player playerOne = new Player();
 
-                TeleportToken teleportToken = new TeleportToken("Ultron",1,1);
+                Player playerTwo = new Player();
 
-                TrapDeleteToken trapDeleteToken = new TrapDeleteToken("Batman",1,1);
-                
-                ObstacleToken obstacleToken = new ObstacleToken("Hulk",1,1);
-
-                game.StartGame(teleportToken);
+                //iniciando el juego
+                game.StartGame(playerOne,playerTwo);
         }
     }
 }

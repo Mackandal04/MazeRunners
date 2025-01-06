@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MazeRunners
 {
-    public class UsefulMethods
+    public class UsefulMethods //Aqui van los metodos q no tuve claro donde poner pero q me hacian falta
     {
         public string FormatMatrix( string[,]maze)
         {

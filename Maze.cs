@@ -59,8 +59,6 @@ namespace MazeRunners
             }
 
             maze[1,0] = new FreeCell();
-
-            maze[high-2,width-1] = new FreeCell();
         }
 
         void FisherYates((int,int)[]array, Random random)
@@ -122,11 +120,11 @@ namespace MazeRunners
                 {
                     while(counter<maxCount)
                     {
-                        int CordX = random.Next(1,high-1);
+                        int CordX = random.Next(2,high-1);
 
-                        int CordY = random.Next(1,width-1);
+                        int CordY = random.Next(2,width-1);
     
-                        if(maze[CordX,CordY] is FreeCell && !(CordX==1 && CordY==1) && !(CordX==high-2 && CordY==width-1 ) )
+                        if(maze[CordX,CordY] is FreeCell && maze[CordX,CordY] is not Tokens ) // && !(CordX==1 && CordY==1) !(CordX==high-2 && CordY==width-1 )
                         {
                             if(IsTrap)
                             {
@@ -134,7 +132,7 @@ namespace MazeRunners
 
                                 maze[CordX,CordY] = randomTrap;
 
-                                if(IsAValidMaze(1,1))
+                                if(IsAValidCell(high/2,width/2)) //le paso las coordenadas del centro del maze
                                     break;
                                 else
                                     maze[CordX,CordY] = new FreeCell();
@@ -144,7 +142,7 @@ namespace MazeRunners
                             {
                                 maze[CordX,CordY] = new ObstaclesCell();
 
-                                if(IsAValidMaze(1,1))
+                                if(IsAValidCell(high/2,width/2))
                                     break;
                                 else
                                     maze[CordX,CordY] = new FreeCell();
@@ -158,7 +156,57 @@ namespace MazeRunners
             }
 
 
+        public bool IsAValidCell(int centerX, int centerY)
+        {
+            (int,int)[] tokensPositions = new (int, int)[]{(1,1), (high-2,width-2), (1,width-2), (high-2,1)};
 
+            foreach (var item in tokensPositions)
+            {
+                bool[,]arrive = new bool[high,width]; //Mascara para saber si ya visite una casilla
+
+                if(!DFS(item.Item1,item.Item2,centerX,centerY,arrive))
+                {
+                    return false;
+                }                
+            }
+
+            return true;
+        }
+            bool DFS(int CordX, int CordY, int centerX, int centerY, bool[,]arrive )//Devuelve true si en su actual estado el laberinto es valido
+            {
+                if(CordX == centerX && CordY == centerY)
+                {
+                    return true;
+                }
+
+                arrive[CordX,CordY] = true; 
+                
+                (int, int)[] direc = {(0,1), (0,-1), (1,0), (-1,0)};
+
+                foreach(var item in direc)
+                {
+                    int newDirecX = CordX+ item.Item1;
+
+                    int newDirecY = CordY+item.Item2;
+
+                    if(ValidCheck(arrive,newDirecX,newDirecY))//Si la nueva casilla es valida, no es muro trampa u obstaculo y no ha sido visitada antes 
+                    {
+                        if(DFS(newDirecX,newDirecY,centerX,centerY,arrive))
+                            return true;
+                    }
+                }
+                return false;
+            }
+        
+        bool ValidCheck(bool[,] arrive,int newDirecX, int newDirecY)
+        {
+            if(newDirecX>0 && newDirecY>0 && newDirecX<high && newDirecY<width && !arrive[newDirecX,newDirecY] && !(maze[newDirecX,newDirecY] is Wall)&& !(maze[newDirecX,newDirecY] is ObstaclesCell))// && !(maze[newDirecX,newDirecY] is TrapCell) 
+                return true;
+                
+            return false;
+        }
+
+        
         public string[,] ConcatMazeWithStringMaze()//Devuelve la matriz de string enlazada al maze
         {
             //System.Console.WriteLine("Entro al concatMaze");
@@ -193,81 +241,50 @@ namespace MazeRunners
             
 
             else if(maze[x,y] is TeleportTrap)
-                stringMaze[x,y] = "[Green]██[/]";//[cyan]░░ //[Green]██//🪤 || TT || color-██ //Recordar ponerle el mismo color que el pasillo a las trampas
+                stringMaze[x,y] = "[blue]██[/]";//[cyan]░░ //[Green]██//🪤 || TT || color-██ //Recordar ponerle el mismo color que el pasillo a las trampas
             else if(maze[x,y] is DamageTrap)                                                  //Al final borrar esto y quedarme con TrapCell
                 stringMaze[x,y] = "[Red]██[/]"; //[cyan]░░//[Red]██//🪤 || TT || color-██
             else if(maze[x,y] is InvalidateTokenSkillTrap)
                 stringMaze[x,y] = "[Yellow]██[/]"; //[cyan]░░//[Yellow]██//🪤 || TT || color-██
             else if(maze[x,y] is StuckTrap)
                 stringMaze[x,y] = "[Purple]██[/]";//[cyan]░░ //[Purple]██//🪤 || TT || color-██
-            
-
+            else if(maze[x,y] is ExitCell)
+                stringMaze[x,y] = "[white]██[/]";
             else if(maze[x,y] is ObstaclesCell)
-                stringMaze[x,y] = "[CadetBlue_1]██[/]"; // OO || color-██ //CadetBlue_1
+                stringMaze[x,y] = "[black]██[/]"; // OO || color-██ //CadetBlue_1
 
             else if(maze[x,y] is NormalToken)
                 stringMaze[x,y] = "[cyan]⚡[/]"; //⇯░||☬░||⚡||⧖░||⚜️ ||⇶░
             
             else if(maze[x,y] is TeleportToken)
-                stringMaze[x,y] = "[cyan]⚡[/]";
+                stringMaze[x,y] = "[cyan]☬░[/]";
 
             else if(maze[x,y] is TrapDeleteToken)
             {
-                stringMaze[x,y] = "[cyan]⚡[/]";
+                stringMaze[x,y] = "[cyan]⇶░[/]";
             }
 
             else if (maze[x,y] is ObstacleToken)
             {
-                stringMaze[x,y] = "[cyan]⚡[/]";
+                stringMaze[x,y] = "[cyan]⇯░[/]";
             }
         }
 
-        public bool IsAValidMaze(int beginningX, int beginningY)
+        public void AddTokens(List<Tokens> playerOneTokens,List<Tokens> playerTwoTokens, int high, int width)
         {
-            //System.Console.WriteLine("Entro al IsAValidObstacleTrap");
+            int centerX = high/2;
+
+            int centerY = width/2;
             
-            bool[,]arrive = new bool[high,width]; //Mascara para saber si ya visite una casilla
+            maze[centerX,centerY] = new ExitCell();
 
-            arrive[beginningX,beginningY] = true; 
+            maze[1,1] = playerOneTokens[0];
 
-            (int, int)[] direc = {(0,1), (0,-1), (1,0), (-1,0)};
+            maze[high-2,width-2] = playerOneTokens[1];
 
-            bool DFS(int CordX, int CordY)//Devuelve true si en su actual estado el laberinto es valido
-            {
-                if(CordX==high-2 && CordY == width-1) //Caso base la salida es true
-                    return true;
+            maze[1,width-2] = playerTwoTokens[1];
 
-                foreach(var item in direc)
-                {
-                    int newDirecX = CordX+ item.Item1;
-
-                    int newDirecY = CordY+item.Item2;
-
-                    if(ValidCheck(arrive,newDirecX,newDirecY))//Si la nueva casilla es valida, no es muro trampa u obstaculo y no ha sido visitada antes 
-                    {                                           //devuelve true
-                        arrive[newDirecX,newDirecY] = true;
-
-                        if(DFS(newDirecX,newDirecY))
-                            return true;
-                    }
-                }
-
-                return false;
-            }
-            return DFS(beginningX,beginningY);
-        }
-        bool ValidCheck(bool[,] arrive,int newDirecX, int newDirecY)
-            {
-                if(newDirecX>0 && newDirecY>0 && newDirecX<high && newDirecY<width && !arrive[newDirecX,newDirecY] && !(maze[newDirecX,newDirecY] is Wall)&& !(maze[newDirecX,newDirecY] is ObstaclesCell))// && !(maze[newDirecX,newDirecY] is TrapCell) 
-                    return true;
-                
-                return false;
-            }
-
-
-        public void AddTokens(Tokens token)
-        {
-            maze[1,1] = token;
+            maze[high-2,1] = playerTwoTokens[0];
         }
     }
 }

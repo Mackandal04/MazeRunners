@@ -8,16 +8,13 @@ namespace MazeRunners
 {
     public abstract class Tokens:Cell
     {
-        Player player;
-        string name;
-
+        //Player player;
+        public string name;
         public int Health{get;set;} = 7;
-
         public int StuckTurns{get;set;} = 0;
         public int myX{get;set;}
         public int myY{get;set;}
         public int cooldowmSkill = 6;
-        public abstract void TokenMove(int CordX, int CordY, Cell[,] maze);
         public abstract void TokenSkill(Maze maze);
 
         public Tokens(string name,int myX, int myY)
@@ -40,22 +37,6 @@ namespace MazeRunners
         public override void Show()
         {}
 
-        public override void TokenMove(int CordX, int CordY, Cell[,] maze)
-        {
-            UsefulMethods usefulMethods = new UsefulMethods();
-
-            int newCordX = myX + CordX;
-
-            int newCordY = myY + CordY;
-
-            if(usefulMethods.isAValidMove(newCordX,newCordY,maze))
-            {
-                System.Console.WriteLine("Se actualizo el estado del token");
-                myX = newCordX;
-                myY = newCordY;
-            }
-        }
-
         public override void TokenSkill(Maze maze)
         {
             System.Console.WriteLine("This token has no skill");
@@ -77,11 +58,6 @@ namespace MazeRunners
 
         public override void Show()
         {}
-
-        public override void TokenMove(int CordX, int CordY, Cell[,] maze)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public class ObstacleToken : Tokens
@@ -98,11 +74,6 @@ namespace MazeRunners
 
         public override void Show()
         {}
-
-        public override void TokenMove(int CordX, int CordY, Cell[,] maze)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public class FlashToken : Tokens
@@ -117,11 +88,6 @@ namespace MazeRunners
 
         public override void Show()
         {}
-
-        public override void TokenMove(int CordX, int CordY, Cell[,] maze)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public class TeleportToken : Tokens
@@ -144,11 +110,6 @@ namespace MazeRunners
 
         public override void Show()
         {}
-
-        public override void TokenMove(int CordX, int CordY, Cell[,] maze)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public class BloquerToken : Tokens
@@ -166,10 +127,5 @@ namespace MazeRunners
 
         public override void Show()
         {}
-
-        public override void TokenMove(int CordX, int CordY, Cell[,] maze)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

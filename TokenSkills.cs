@@ -9,7 +9,7 @@ namespace MazeRunners
     {
         public abstract void ActivateSkill(Tokens token, Maze maze);
 
-        public bool CoolDownEnd(int cooldownSkill)
+        public bool CoolDownEnd(int cooldownSkill) //Tiempo de enfriamiento de cada skill
         {
             if(cooldownSkill>=6)
                 return true;
@@ -18,8 +18,10 @@ namespace MazeRunners
                 return false;
         }
 
+        //Verifica si es posible utilizar la skill en un rango determinado
         public bool isInAValidRange(int maxRange,int cordX,int cordY, int newCordX, int newCordY)
         {
+            //formula de distancia distancia entre dos puntos adaptada a dos casillas 
             int range = (int)Math.Sqrt(Math.Pow(newCordX-cordX,2)+Math.Pow(newCordY-cordY,2));
 
             if(range<= maxRange)
@@ -34,28 +36,44 @@ namespace MazeRunners
     {
         public override void ActivateSkill(Tokens token, Maze maze)
         {
+            Game game = new Game();
+            
             UsefulMethods usefulMethods = new UsefulMethods();
 
             int maxRange = 4;
 
             if(CoolDownEnd(token.cooldowmSkill))
             {
-                System.Console.WriteLine("Teleporting the token");
+                game.ShowGame(maze,"Teleporting the token");
+                
+                Thread.Sleep(1000);
 
                 if(TeleportSuccessfully(maxRange,token,maze))
                 {
                     token.cooldowmSkill = 0;
-
-                    System.Console.WriteLine("Token teleport's skill was successfully realized");
+                    
+                    game.ShowGame(maze,"Token teleport's skill was successfully realized");
+                    
+                    Thread.Sleep(1800);
                 }
 
                 else
-                    System.Console.WriteLine("Something was wrong");
+                {
+                    game.ShowGame(maze,"Something was wrong");
+                    
+                    Thread.Sleep(1000);
+                }
             }
 
             else
-                System.Console.WriteLine("you can't do this, not yet");
+            {
+                game.ShowGame(maze,"you can't do this, not yet");
+                
+                Thread.Sleep(1000);
+            }
         }
+
+
 
         bool TeleportSuccessfully(int maxRange, Tokens token, Maze maze)
         {
@@ -69,7 +87,7 @@ namespace MazeRunners
 
                     int teleportToY = token.myY + j;
 
-                    if(usefulMethods.isAValidFreeCell(teleportToX,teleportToY,maze.maze) && maze.IsAValidMaze(teleportToX,teleportToY))
+                    if(usefulMethods.isAValidFreeCell(teleportToX,teleportToY,maze.maze) && maze.IsAValidCell(maze.maze.GetLength(0)/2, maze.maze.GetLength(1)/2 ))
                     {
                         maze.maze[token.myX,token.myY] = new FreeCell();
 
@@ -88,31 +106,47 @@ namespace MazeRunners
         }
     }
 
+
+    //Bloquea una casilla del maze
     public class BlockerToken : TokenSkills
     {
         public override void ActivateSkill(Tokens token, Maze maze)
         {
             int maxRange = 2;
 
+            Game game = new Game();
+
             UsefulMethods usefulMethods = new UsefulMethods();
 
             if(CoolDownEnd(token.cooldowmSkill))
             {
-                System.Console.WriteLine("Bloqueando celda");
+                game.ShowGame(maze,"Bloqueando celda");
+                
+                Thread.Sleep(1000);
 
                 if(BlockerSuccessfully(maxRange,token,maze))
                 {
                     token.cooldowmSkill = 0;
 
-                    System.Console.WriteLine("BlockerTokenSkill was succesfully activated");
+                    game.ShowGame(maze,"BlockerTokenSkill was succesfully activated");
+                    
+                    Thread.Sleep(1600);
                 }
 
                 else
-                    System.Console.WriteLine("Something was wrong");
+                {
+                    game.ShowGame(maze,"Something was wrong");
+                
+                    Thread.Sleep(1000);
+                }
             }
 
             else
-                System.Console.WriteLine("you can't do this, not yet");
+            {
+                game.ShowGame(maze,"you can't do this, not yet");
+                
+                Thread.Sleep(1000);
+            }
         }
 
         bool BlockerSuccessfully(int maxRange, Tokens token, Maze maze)
@@ -144,26 +178,39 @@ namespace MazeRunners
     {
         public override void ActivateSkill(Tokens token, Maze maze)
         {
+            Game game = new Game();
+
             int maxRange = 2;
 
             if(CoolDownEnd(token.cooldowmSkill))
             {
-                System.Console.WriteLine("Looking for traps");
-
+                game.ShowGame(maze,"Looking for traps");
+                
+                Thread.Sleep(1000);
                 //So hay una trampa cerca y se pudo eliminar
                 if(TrapsFoundSuccessfully(maxRange,token,maze))
                 {
                     token.cooldowmSkill = 0;
 
-                    System.Console.WriteLine("the Trap was successfully deleted");
+                    game.ShowGame(maze,"the Trap was successfully deleted");
+                    
+                    Thread.Sleep(1500);
                 }
 
                 else
-                    System.Console.WriteLine("This is not a valid operation");
+                {
+                    game.ShowGame(maze,"This is not a valid operation");
+                    
+                    Thread.Sleep(1000);
+                }
             }
 
             else
-                System.Console.WriteLine("You can't do this...yet");
+            {
+                game.ShowGame(maze,"You can't do this...yet");
+                
+                Thread.Sleep(1000);
+            }
         }
 
         bool TrapsFoundSuccessfully(int maxRange, Tokens token, Maze maze)
@@ -188,6 +235,12 @@ namespace MazeRunners
             }
 
             return false;
+        }
+
+                bool TryingTrapsFoundSuccessfully(int maxRange, Tokens token, Maze maze)
+        {
+            //Nueva busqueda en espiral de trampas
+            throw new NotImplementedException();
         }
     }
 }

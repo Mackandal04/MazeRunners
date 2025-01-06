@@ -22,7 +22,19 @@
 
     Concatenar las habilidades con el juego✅
 
-    Tampas listas✅
+    Trampas listas✅
+
+    Revisar xq el teleport token nos manda para un lugar donde no se puede llegar al final
+
+    OJO:el problema del maze esta en la instancia de las fichas. estoy diciendo q la ficha esta en -2-2
+    o q esta en 1,-2 cuando en realidad es n-2,n-2 o 1,n-2(fixed✅)
+
+    Revisar los skills de los tokens, no estan funcionando del todo bien.
+
+    en los turnos, cuando al jugador le quede un solo token revisar, que flag debe dar error
+
+    Recordar implementar un ChooseToken(donde de un array de token el player escoge con cuales quiere jugar
+    y esos se meten en su lista de tokens)
     
     (opcional) Implementar para que no haya una trampa u obstaculo si en esa fila/columna
     tambien hay otro tableObject del mismo tipo

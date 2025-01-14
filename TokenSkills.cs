@@ -36,7 +36,7 @@ namespace MazeRunners
     {
         public override void ActivateSkill(Tokens token, Maze maze)
         {
-            Game game = new Game();
+            GameDisplay gameDisplay=new GameDisplay();
             
             UsefulMethods usefulMethods = new UsefulMethods();
 
@@ -44,7 +44,7 @@ namespace MazeRunners
 
             if(CoolDownEnd(token.cooldowmSkill))
             {
-                game.ShowGame(maze,"Teleporting the token");
+                gameDisplay.ShowGame(maze,"Teleporting the token");
                 
                 Thread.Sleep(1000);
 
@@ -52,14 +52,14 @@ namespace MazeRunners
                 {
                     token.cooldowmSkill = 0;
                     
-                    game.ShowGame(maze,"Token teleport's skill was successfully realized");
+                    gameDisplay.ShowGame(maze,"Token teleport's skill was successfully realized");
                     
                     Thread.Sleep(1800);
                 }
 
                 else
                 {
-                    game.ShowGame(maze,"Something was wrong");
+                    gameDisplay.ShowGame(maze,"Something was wrong");
                     
                     Thread.Sleep(1000);
                 }
@@ -67,12 +67,11 @@ namespace MazeRunners
 
             else
             {
-                game.ShowGame(maze,"you can't do this, not yet");
+                gameDisplay.ShowGame(maze,"you can't do this, not yet");
                 
                 Thread.Sleep(1000);
             }
         }
-
 
 
         bool TeleportSuccessfully(int maxRange, Tokens token, Maze maze)
@@ -108,19 +107,19 @@ namespace MazeRunners
 
 
     //Bloquea una casilla del maze
-    public class BlockerToken : TokenSkills
+    public class Blocker : TokenSkills
     {
         public override void ActivateSkill(Tokens token, Maze maze)
         {
-            int maxRange = 2;
+            GameDisplay gameDisplay=new GameDisplay();
 
-            Game game = new Game();
+            int maxRange = 2;
 
             UsefulMethods usefulMethods = new UsefulMethods();
 
             if(CoolDownEnd(token.cooldowmSkill))
             {
-                game.ShowGame(maze,"Bloqueando celda");
+                gameDisplay.ShowGame(maze,"Bloqueando celda");
                 
                 Thread.Sleep(1000);
 
@@ -128,14 +127,14 @@ namespace MazeRunners
                 {
                     token.cooldowmSkill = 0;
 
-                    game.ShowGame(maze,"BlockerTokenSkill was succesfully activated");
+                    gameDisplay.ShowGame(maze,"BlockerTokenSkill was succesfully activated");
                     
                     Thread.Sleep(1600);
                 }
 
                 else
                 {
-                    game.ShowGame(maze,"Something was wrong");
+                    gameDisplay.ShowGame(maze,"Something was wrong");
                 
                     Thread.Sleep(1000);
                 }
@@ -143,7 +142,7 @@ namespace MazeRunners
 
             else
             {
-                game.ShowGame(maze,"you can't do this, not yet");
+                gameDisplay.ShowGame(maze,"you can't do this, not yet");
                 
                 Thread.Sleep(1000);
             }
@@ -169,22 +168,21 @@ namespace MazeRunners
                     }
                 }
             }
-
             return false;
         }
     }
 
-    public class DeleteTrapToken : TokenSkills
+    public class DeleteTrap : TokenSkills
     {
         public override void ActivateSkill(Tokens token, Maze maze)
         {
-            Game game = new Game();
+            GameDisplay gameDisplay=new GameDisplay();
 
             int maxRange = 2;
 
             if(CoolDownEnd(token.cooldowmSkill))
             {
-                game.ShowGame(maze,"Looking for traps");
+                gameDisplay.ShowGame(maze,"Looking for traps");
                 
                 Thread.Sleep(1000);
                 //So hay una trampa cerca y se pudo eliminar
@@ -192,14 +190,14 @@ namespace MazeRunners
                 {
                     token.cooldowmSkill = 0;
 
-                    game.ShowGame(maze,"the Trap was successfully deleted");
+                    gameDisplay.ShowGame(maze,"the Trap was successfully deleted");
                     
                     Thread.Sleep(1500);
                 }
 
                 else
                 {
-                    game.ShowGame(maze,"This is not a valid operation");
+                    gameDisplay.ShowGame(maze,"This is not a valid operation");
                     
                     Thread.Sleep(1000);
                 }
@@ -207,7 +205,7 @@ namespace MazeRunners
 
             else
             {
-                game.ShowGame(maze,"You can't do this...yet");
+                gameDisplay.ShowGame(maze,"You can't do this...yet");
                 
                 Thread.Sleep(1000);
             }
@@ -241,6 +239,57 @@ namespace MazeRunners
         {
             //Nueva busqueda en espiral de trampas
             throw new NotImplementedException();
+        }
+    }
+
+    public class SpeedUp : TokenSkills
+    {
+        //Aumento de la cantiad de veces que se puede mover esta en MoveToken
+        //Habilidad pasiva
+        public override void ActivateSkill(Tokens token, Maze maze)
+        {}
+    }
+
+    public class DestroyWall : TokenSkills
+    {
+        public override void ActivateSkill(Tokens token, Maze maze)
+        {
+            GameDisplay gameDisplay = new GameDisplay();
+
+            gameDisplay.ShowGame(maze,"Seleccione una direccion para destruir una pared");
+
+            char goTo = Console.ReadKey().KeyChar;
+
+            Dictionary<char,(int CordX,int CordY)> direccions = new Dictionary<char, (int CordX, int CordY)>
+            {
+                {'w',(-1,0)},
+                {'s',(1,0)},
+                {'a',(0,-1)},
+                {'d',(0,1)}
+            };
+
+            if(direccions.ContainsKey(goTo))
+            {
+                (int CordX,int CordY) = direccions[goTo];
+
+                int newCordX = token.myX + CordX;
+
+                int newCordY = token.myY + CordY;
+
+                if(maze.maze[newCordX,newCordY] is Wall && newCordX>0 && newCordY >0 && newCordX<maze.maze.GetLength(0)-1 && newCordY<maze.maze.GetLength(1)-1)
+                {
+                    maze.maze[newCordX,newCordY] = new FreeCell();
+
+                    token.cooldowmSkill = 0;
+
+                    gameDisplay.ShowGame(maze,"Wall was destroyed");
+                    
+                    Thread.Sleep(1300);
+                }
+            }
+
+            else
+                gameDisplay.ShowGame(maze,"you can't destroy there");
         }
     }
 }

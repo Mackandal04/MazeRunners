@@ -14,16 +14,20 @@ namespace MazeRunners
     {
         public override void ActivateSkill(Tokens token, Maze maze)
         {
-            Game game = new Game();
-            game.ShowGame(maze,"Teleporting the token");
+            GameDisplay gameDisplay=new GameDisplay();
+
+            gameDisplay.ShowGame(maze,"Teleporting the token");
+            
             Thread.Sleep(1000);
+            
             token.myX = 1;
 
             token.myY = 1;
 
             maze.maze[token.myX,token.myY] = token;
 
-            game.ShowGame(maze,"TokenTeleportedSkill successfully activated");
+            gameDisplay.ShowGame(maze,"TokenTeleportedSkill successfully activated");
+            
             Thread.Sleep(1800);
         }
     }
@@ -32,6 +36,7 @@ namespace MazeRunners
     {
         public override void ActivateSkill(Tokens token, Maze maze)
         {
+            GameDisplay gameDisplay=new GameDisplay();
 
             int life = token.Health;
 
@@ -39,8 +44,8 @@ namespace MazeRunners
 
             token.Health = life;
 
-            Game game = new Game();
-            game.ShowGame(maze,token.name +" takes 3 of damage");
+            gameDisplay.ShowGame(maze,token.name +" takes 3 of damage");
+            
             Thread.Sleep(1000);
         }
     }
@@ -50,8 +55,11 @@ namespace MazeRunners
         public override void ActivateSkill(Tokens token, Maze maze)
         {
             token.cooldowmSkill = int.MinValue;
-            Game game = new Game();
-            game.ShowGame(maze,"This token won't be able to use his skill no more");
+            
+            GameDisplay gameDisplay=new GameDisplay();
+
+            gameDisplay.ShowGame(maze,"This token won't be able to use his skill no more");
+            
             Thread.Sleep(1800);
         }
     }
@@ -61,9 +69,31 @@ namespace MazeRunners
         public override void ActivateSkill(Tokens token, Maze maze)
         {
             token.StuckTurns = 3;
-                        Game game = new Game();
-            game.ShowGame(maze,"This token is stuck for three turns");
+
+            GameDisplay gameDisplay=new GameDisplay();
+            
+            gameDisplay.ShowGame(maze,"This token is stuck for three turns");
+            
             Thread.Sleep(1000);
+        }
+    }
+
+    public class HealingToken : TrapsSkills
+    {
+        public override void ActivateSkill(Tokens token, Maze maze)
+        {
+            GameDisplay gameDisplay=new GameDisplay();
+
+            int life = token.Health;
+
+            life += 3;
+
+            token.Health = life;
+
+            gameDisplay.ShowGame(maze,token.name +" receives 3 life points");
+            
+            Thread.Sleep(1000);
+
         }
     }
 }

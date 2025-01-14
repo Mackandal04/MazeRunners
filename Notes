@@ -14,15 +14,15 @@
 
     Colocar el token en el maze, mover y actualizar correctamente el token en el maze✅
 
-    Recordar implementar el metodo play de los jugadores
-
-    Revisar los enlaces en el grupo
+    Revisar los enlaces en el grupo✅
 
     Hacer los tokens : BloquerToken✅, TrapDeleteToken✅, TeleToken✅, 3 token mas 
 
     Concatenar las habilidades con el juego✅
 
     Trampas listas✅
+
+    Separar ShowGame y MoveToken del Game✅
 
     Revisar xq el teleport token nos manda para un lugar donde no se puede llegar al final
 
@@ -32,6 +32,8 @@
     Revisar los skills de los tokens, no estan funcionando del todo bien.
 
     en los turnos, cuando al jugador le quede un solo token revisar, que flag debe dar error
+
+    Arreglar el problema de distista visualizacion en consolas diferentes(idk)
 
     Recordar implementar un ChooseToken(donde de un array de token el player escoge con cuales quiere jugar
     y esos se meten en su lista de tokens)

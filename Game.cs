@@ -6,53 +6,44 @@
     {
         class Game
         {
-            public bool keepGoing;
             public void StartGame(Player playerOne, Player playerTwo)//Debe recibir un array de token q representa los tokens de cada jugador
             {
-                
                 int high = 31;
 
                 int width = 31;
                 
                 bool isPlayerOneturn = true;
 
-                
-                NormalToken normalToken = new NormalToken("Jarvis",1,1); //1 1
+                GameDisplay gameDisplay=new GameDisplay();
 
-                TeleportToken teleportToken = new TeleportToken("Ultron",high-2,width-2);//-2-2
+                List<Tokens> tokens = new List<Tokens> //Lista con todos los tokens del juego, para seleccionar
+                {
+                    new NormalToken("Jarvis",1,1),
+                    new TeleportToken("Ultron",high-2,width-2),
+                    new TrapDeleteToken("Batman",1,width-2),
+                    new ObstacleToken("Hulk",high-2,1),
+                    new FlashToken("Flash",1,1),
+                    new WallDestroyerToken("Truck",high-2,width-2)
+                };
 
-                TrapDeleteToken trapDeleteToken = new TrapDeleteToken("Batman",1,width-2);
-                
-                ObstacleToken obstacleToken = new ObstacleToken("Hulk",high-2,1);
-                
-                playerOne.AddToken(normalToken);
+                Maze maze = new Maze(high,high);
 
-                playerOne.AddToken(teleportToken);
+                CreateGame(maze,playerOne.playerTokens,playerTwo.playerTokens,high,width,tokens,playerOne,playerTwo);//Crea el juego por detras
 
-                playerTwo.AddToken(obstacleToken);
+                //ShowGame(maze,"Welcome to the game !"); //Muestra el tablero y el estado del juego
+                //Thread.Sleep(2100);
 
-                playerTwo.AddToken(trapDeleteToken);
+                //ShowGame(maze,"The first player to take all his tokens to exits will be the winner");
+                //Thread.Sleep(3500);
 
-                Maze maze = new Maze(high,high); //Tope39X45
-
-                CreateGame(maze,playerOne.playerTokens,playerTwo.playerTokens,high,width);//Crea el juego por detras
-
-                ShowGame(maze,"Welcome to the game !"); //Muestra el tablero y el estado del juego
-                Thread.Sleep(2100);
-
-                ShowGame(maze,"The first player to take all his tokens to exits will be the winner");
-                Thread.Sleep(3500);
-
-                ShowGame(maze,"Good luck :) ");
-                Thread.Sleep(2300);
+                //ShowGame(maze,"Good luck :) ");
+                //Thread.Sleep(2300);
 
                 int flag = 0;
 
                 TurnsSystem turnsSystem = new TurnsSystem();
 
-                bool keepGoing = true;
-
-                while(keepGoing)
+                while(true)
                 {
                     if(isPlayerOneturn)
                     {
@@ -73,10 +64,13 @@
                     if(flag>1)
                         flag=0;
                 }
+
+                // gameDisplay.ShowGame(maze,"Exit game...");
+                // Thread.Sleep(1300);
             }
 
 
-            void CreateGame(Maze maze,List<Tokens> playerOneTokens,List<Tokens> playerTwoTokens, int high, int width)
+            void CreateGame(Maze maze,List<Tokens> playerOneTokens,List<Tokens> playerTwoTokens, int high, int width, List<Tokens>tokens,Player playerOne, Player playerTwo)
             {
                 maze.MazeGenerator(1,1);//Siempre empezar en el 1-1
 
@@ -84,206 +78,99 @@
                 {
                     maze.MazeGenerator(1,1);
                 }
+
+                ChooseToken(maze,tokens,playerOne,playerTwo);
                 
                 maze.AddTrapsAndObstacles(30);
 
                 maze.AddTokens(playerOneTokens,playerTwoTokens,high,width);
             }
-
-            public void ShowGame(Maze maze, string message)
+            
+            //Metedo para q cada player seleccione sus tokens
+            public void ChooseToken(Maze maze, List<Tokens>tokens, Player playerOne, Player playerTwo)
             {
-                UsefulMethods useful = new UsefulMethods();
+                GameDisplay gameDisplay = new GameDisplay();
 
-                var layout = new Layout("Root").SplitColumns
-                (
-                    new Layout("Left").Ratio(3),
-                    new Layout("Right").SplitRows(new Layout("Top"),new Layout("Middle"), new Layout("Bottom")).Ratio(1)
-                );
-
-                layout["Left"].Update
-                (
-                    new Panel
-                    (
-                        Align.Center
-                        (
-                            new Markup(useful.FormatMatrix(maze.ConcatMazeWithStringMaze())),
-                            VerticalAlignment.Middle
-                        )
-                    )
-                    .Header("[green bold]Board[/]")
-                    .Expand()
-                    .RoundedBorder()
-                    .BorderColor(Color.Blue)//BlueViolet //CadetBlue y _1 //Chartreuse1
-                );
-
-                layout["Top"].Update
-                (
-                    new Panel
-                    (
-                        Align.Center
-                        (
-                            new Markup("[blue bold]Menu[/]"),
-                            VerticalAlignment.Middle
-                        )
-                    )
-                    .Header("[bold yellow]Options[/]")
-                    .RoundedBorder()
-                    .BorderColor(Color.Yellow)
-                    .Expand()
-                );
-
-                layout["Bottom"].Update
-                (
-                    new Panel
-                    (
-                        Align.Left
-                        (
-                            new Markup("[green]Points:[/]0\n[red]Health:[/]7\n[cyan]Skill:[/] NormalToken"),
-                            VerticalAlignment.Top
-                        )
-                    )
-                    .Header("[bold cyan]Player's Stade[/]")
-                    .RoundedBorder()
-                    .BorderColor(Color.Cyan1)
-                    .Expand()
-                );
-
-                layout["Middle"].Update
-                (
-                    new Panel
-                    (
-                        Align.Left
-                        (
-                            new Markup("[white bold]" + message + "[/]"),
-                            VerticalAlignment.Top
-                        )
-                    )
-                    .Header("[bold magenta]Message[/]")
-                    .RoundedBorder()
-                    .BorderColor(Color.Magenta1)
-                    .Expand()
-                );
-
-                AnsiConsole.Write(layout);
-            }
-
-            public void MoveToken(Tokens token, Maze maze, string message)
-            {  
-                int count = 3;
-
-                UsefulMethods usefulMethods = new UsefulMethods();
-
-                int n = maze.maze.GetLength(0);
-
-                int m = maze.maze.GetLength(1);
-
-                //Diccionario que asocia la letra con su direccion correspondiente
-                Dictionary<char,(int CordX, int CordY)> mazeDirec = new Dictionary<char, (int CordX, int CordY)>
+                while(tokens.Count>0)//mientras hayan tokens para seleccionar
                 {
-                    {'w',(-1,0)},
-                    {'s',(1,0)},
-                    {'a',(0,-1)},
-                    {'d',(0,1)},
-                };
+                    //"Es turno de " + playerOne.playerTokens.Count + ". " + playerOne.playerTokens[playerOne.playerTokens.Count-1].name
+                    gameDisplay.ShowGame(maze,"Es el turno del PlayerOne");//"Es el turno de " + player.playerTokens[flag].name
+                    
+                    Thread.Sleep(1300);
 
-                while(count>0)
-                {    
-                    Console.Clear();//Refrescar la pantalla
+                    gameDisplay.ShowGame(maze,"Escoge un token");
+                    
+                    Thread.Sleep(1300);
 
-                    ShowGame(maze,message);
-
-                    System.Console.WriteLine("Muevete por el maze con las letras w,s,a,d ");
-                    System.Console.WriteLine("Para salir del juego presiona e ");
-                    System.Console.WriteLine("Para utilizar tu habilidad presiona k");
-                    // string a = token.Health.ToString();
-                    // System.Console.WriteLine(a);
-
-                    char letter = Console.ReadKey().KeyChar;
-
-                    if(letter == 'e')
+                    for (int i = 0; i < tokens.Count; i++)
                     {
-                        break;
+                        gameDisplay.ShowGame(maze,"-" + (i+1)+ ". " + tokens[i].name );
+
+                        Thread.Sleep(1300);
                     }
-                        
 
-                    if(letter=='k')
+                    int index;
+
+                    while(true)
                     {
-                        token.TokenSkill(maze);
-                        continue;
-                    }
+                        Console.Clear();
                         
-                    if(mazeDirec.ContainsKey(letter))
-                    {
-                        (int CordX,int CordY) = mazeDirec[letter];
-                        
-                        int newCordX = token.myX + CordX;
+                        gameDisplay.ShowGame(maze,"Introduce el numero del token que deseas");
 
-                        int newCordY = token.myY + CordY;
-
-                        if(token.StuckTurns>0)
+                        if(int.TryParse(Console.ReadLine(),out index) && index>0 && index<= tokens.Count)
                         {
-                            ShowGame(maze,"You are stuck");
-                            
-                            token.StuckTurns--;
-                            
-                            Thread.Sleep(1000);
-                            
-                            continue;
-                        }
-
-                        if(usefulMethods.isAValidMove(newCordX,newCordY,maze.maze))
-                        {
-                            maze.maze[token.myX,token.myY] = new FreeCell();//Haz libre la celda en que estba el token
-
-                            token.myX = newCordX;
-
-                            token.myY = newCordY;
-
-                            
-                            if(maze.maze[newCordX,newCordY] is TrapCell trap)
-                            {
-                                ShowGame(maze,"Trap Activated");
-
-                                Thread.Sleep(1500);
-
-                                trap.ActivateTrapSkill(token,maze);
-                            }
-                            
-                            if(maze.maze[newCordX,newCordY] is not TeleportTrap)
-                            {
-                                maze.maze[newCordX,newCordY] = token;//Poner al token en su nueva posicion
-                            }
-
-                            if(maze.maze[newCordX,newCordY] is TeleportTrap)
-                            {
-                                maze.maze[newCordX,newCordY] = new FreeCell();
-                            }
-
-                            token.cooldowmSkill++;
-
-                            if(token.Health<=0)
-                            {
-                                ShowGame(maze,"Your token is dead, you lose :( ");
-                                
-                                break;
-                            }
-
-                            count--;
-                        }
+                            playerOne.AddToken(tokens[index-1] );
+                            tokens.RemoveAt(index-1);
+                            break;
+                        } 
 
                         else
                         {
-                            ShowGame(maze," it is not a valid move");
+                            gameDisplay.ShowGame(maze,"Entrada no valida, intenta otra vez");
+
+                            Thread.Sleep(1300);
+                        }
+                    }
+
+                    if(tokens.Count>0)
+                    {
+                        gameDisplay.ShowGame(maze,"Es turno del PlayerTwo ");
+                        
+                        Thread.Sleep(1300);
+
+                        gameDisplay.ShowGame(maze,"Escoge un token");
+                        
+                        Thread.Sleep(1300);
+
+                        for (int i = 0; i < tokens.Count; i++)
+                        {
+                            gameDisplay.ShowGame(maze,"-" + (i+1)+ ". " + tokens[i].name );
+
+                            Thread.Sleep(1300);
+                        }
+
+                        while(true)
+                        {
+                            Console.Clear();
                             
-                            Thread.Sleep(1300);//Esto hace una pausa momentanea para q se lea el mensaje
+                            gameDisplay.ShowGame(maze,"Introduce el numero del token que deseas");
+
+                            if(int.TryParse(Console.ReadLine(),out index) && index>0 && index<= tokens.Count)
+                            {
+                                playerTwo.AddToken(tokens[index-1] );
+                                tokens.RemoveAt(index-1);
+                                break;
+                            } 
+
+                            else
+                            {
+                                gameDisplay.ShowGame(maze,"Entrada no valida, intenta otra vez");
+
+                                Thread.Sleep(1300);
+                            }
                         }
                     }
                 }
-            }
-
-            public bool EndGame(bool keepGoing)
-            {
-                return keepGoing = false;
             }
         }
     }

@@ -58,7 +58,7 @@ namespace MazeRunners
                 }
             }
 
-            maze[1,0] = new FreeCell();
+            //maze[1,0] = new FreeCell();
         }
 
         void FisherYates((int,int)[]array, Random random)
@@ -103,7 +103,8 @@ namespace MazeRunners
                 new TeleportTrap(),
                 new DamageTrap(),
                 new InvalidateTokenSkillTrap(),
-                new StuckTrap()
+                new StuckTrap(),
+                new HealthTrap()
             };
 
             ObstaclesOrtraps(counter,traps,isTrap,random,trapArray);
@@ -134,8 +135,8 @@ namespace MazeRunners
 
                                 if(IsAValidCell(high/2,width/2)) //le paso las coordenadas del centro del maze
                                     break;
-                                else
-                                    maze[CordX,CordY] = new FreeCell();
+                                
+                                maze[CordX,CordY] = new FreeCell();
                             }
 
                             else
@@ -144,8 +145,8 @@ namespace MazeRunners
 
                                 if(IsAValidCell(high/2,width/2))
                                     break;
-                                else
-                                    maze[CordX,CordY] = new FreeCell();
+
+                                maze[CordX,CordY] = new FreeCell();
                             }
                         }
 
@@ -242,32 +243,42 @@ namespace MazeRunners
 
             else if(maze[x,y] is TeleportTrap)
                 stringMaze[x,y] = "[blue]██[/]";//[cyan]░░ //[Green]██//🪤 || TT || color-██ //Recordar ponerle el mismo color que el pasillo a las trampas
+            
             else if(maze[x,y] is DamageTrap)                                                  //Al final borrar esto y quedarme con TrapCell
                 stringMaze[x,y] = "[Red]██[/]"; //[cyan]░░//[Red]██//🪤 || TT || color-██
+            
             else if(maze[x,y] is InvalidateTokenSkillTrap)
                 stringMaze[x,y] = "[Yellow]██[/]"; //[cyan]░░//[Yellow]██//🪤 || TT || color-██
+            
             else if(maze[x,y] is StuckTrap)
                 stringMaze[x,y] = "[Purple]██[/]";//[cyan]░░ //[Purple]██//🪤 || TT || color-██
+
+            else if(maze[x,y] is HealthTrap)
+                stringMaze[x,y] = "[Green]██[/]";//[cyan]░░ //[Purple]██//🪤 || TT || color-██
+
             else if(maze[x,y] is ExitCell)
                 stringMaze[x,y] = "[white]██[/]";
+            
             else if(maze[x,y] is ObstaclesCell)
                 stringMaze[x,y] = "[black]██[/]"; // OO || color-██ //CadetBlue_1
-
+            
             else if(maze[x,y] is NormalToken)
                 stringMaze[x,y] = "[cyan]⚡[/]"; //⇯░||☬░||⚡||⧖░||⚜️ ||⇶░
             
             else if(maze[x,y] is TeleportToken)
                 stringMaze[x,y] = "[cyan]☬░[/]";
 
+            else if(maze[x,y] is FlashToken)
+                stringMaze[x,y] = "[Red]⧖░[/]";
+
+            else if(maze[x,y] is WallDestroyerToken)
+                stringMaze[x,y] = "[Red]KK[/]";
+
             else if(maze[x,y] is TrapDeleteToken)
-            {
                 stringMaze[x,y] = "[cyan]⇶░[/]";
-            }
 
             else if (maze[x,y] is ObstacleToken)
-            {
                 stringMaze[x,y] = "[cyan]⇯░[/]";
-            }
         }
 
         public void AddTokens(List<Tokens> playerOneTokens,List<Tokens> playerTwoTokens, int high, int width)
@@ -286,5 +297,120 @@ namespace MazeRunners
 
             maze[high-2,1] = playerTwoTokens[0];
         }
+
+        public void MoveToken(Tokens token, Maze maze, string message)
+            {
+                GameDisplay gameDisplay=new GameDisplay();
+
+                int count = 6;
+
+                if(token is FlashToken)
+                    count = 5;
+
+                UsefulMethods usefulMethods = new UsefulMethods();
+
+                int n = maze.maze.GetLength(0);
+
+                int m = maze.maze.GetLength(1);
+
+                //Diccionario que asocia la letra con su direccion correspondiente
+                Dictionary<char,(int CordX, int CordY)> mazeDirec = new Dictionary<char, (int CordX, int CordY)>
+                {
+                    {'w',(-1,0)},
+                    {'s',(1,0)},
+                    {'a',(0,-1)},
+                    {'d',(0,1)},
+                };
+
+                while(count>0)
+                {    
+                    Console.Clear();//Refrescar la pantalla
+
+                    gameDisplay.ShowGame(maze,message);
+
+                    System.Console.WriteLine("Muevete por el maze con las letras w,s,a,d ");
+                    System.Console.WriteLine("Para salir del juego presiona e ");
+                    System.Console.WriteLine("Para utilizar tu habilidad presiona k");
+
+                    char letter = Console.ReadKey().KeyChar;
+                    //char letter = 'e';
+                    if(letter == 'e')
+                        break;
+                        
+
+                    if(letter=='k')
+                    {
+                        token.TokenSkill(maze);
+                        continue;
+                    }
+                        
+                    if(mazeDirec.ContainsKey(letter))
+                    {
+                        (int CordX,int CordY) = mazeDirec[letter];
+                        
+                        int newCordX = token.myX + CordX;
+
+                        int newCordY = token.myY + CordY;
+
+                        if(token.StuckTurns>0)
+                        {
+                            gameDisplay.ShowGame(maze,"You are stuck");
+                            
+                            token.StuckTurns--;
+                            
+                            Thread.Sleep(1000);
+                            
+                            continue;
+                        }
+
+                        if(usefulMethods.isAValidMove(newCordX,newCordY,maze.maze))
+                        {
+                            maze.maze[token.myX,token.myY] = new FreeCell();//Haz libre la celda en que estba el token
+
+                            token.myX = newCordX;
+
+                            token.myY = newCordY;
+
+                            
+                            if(maze.maze[newCordX,newCordY] is TrapCell trap)
+                            {
+                                gameDisplay.ShowGame(maze,"Trap Activated");
+
+                                Thread.Sleep(1500);
+
+                                trap.ActivateTrapSkill(token,maze);
+                            }
+                            
+                            if(maze.maze[newCordX,newCordY] is not TeleportTrap)
+                            {
+                                maze.maze[newCordX,newCordY] = token;//Poner al token en su nueva posicion
+                            }
+
+                            if(maze.maze[newCordX,newCordY] is TeleportTrap)
+                            {
+                                maze.maze[newCordX,newCordY] = new FreeCell();
+                            }
+
+                            token.cooldowmSkill++;
+
+                            if(token.Health<=0)
+                            {
+                                gameDisplay.ShowGame(maze,"Your token is dead, you lose :( ");
+                                
+                                break;
+                            }
+
+                            count--;
+                        }
+
+                        else
+                        {
+                            gameDisplay.ShowGame(maze," it is not a valid move");
+                            
+                            Thread.Sleep(1300);//Esto hace una pausa momentanea para q se lea el mensaje
+                        }
+                    }
+                }
+            }
     }
 }

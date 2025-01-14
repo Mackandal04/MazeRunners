@@ -57,4 +57,14 @@ namespace MazeRunners
             stuckToken.ActivateSkill(token,maze);
         }
     }
+
+    public class HealthTrap : TrapCell
+    {
+        public override void ActivateTrapSkill(Tokens token, Maze maze)
+        {
+            HealingToken healingToken = new HealingToken();
+
+            healingToken.ActivateSkill(token,maze);
+        }
+    }
 }

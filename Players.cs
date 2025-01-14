@@ -11,22 +11,8 @@ namespace MazeRunners
         public List<Tokens> playerTokens = new List<Tokens>(); //lista con los tokens de cada player
         public void AddToken(Tokens token)
         {
-            System.Console.WriteLine("Se annadio el token");
+            //Annade ek token selecc a la lista de tokens del player
             playerTokens.Add(token);
-        }
-
-        public void RemoveToken(Tokens token)
-        {
-            for (int i = 0; i < playerTokens.Count; i++)
-            {
-                if(playerTokens[i] == token)
-                {
-                    playerTokens.RemoveAt(i);
-                    return;
-                }
-            }
-
-            System.Console.WriteLine("the token wasn't found it");
         }
     }
 }

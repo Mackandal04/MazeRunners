@@ -51,25 +51,25 @@ namespace MazeRunners
         }
         public override void TokenSkill(Maze maze)
         {
-            DeleteTrapToken deleteTrapToken = new DeleteTrapToken();
+            DeleteTrap deleteTrap = new DeleteTrap();
 
-            deleteTrapToken.ActivateSkill(this,maze);
+            deleteTrap.ActivateSkill(this,maze);
         }
 
         public override void Show()
         {}
     }
 
-    public class ObstacleToken : Tokens
+    public class ObstacleToken : Tokens //implementar
     {
         public ObstacleToken(string name, int myX, int myY) : base(name, myX, myY)
         {
         }
         public override void TokenSkill(Maze maze)
         {
-            BlockerToken blockerToken = new BlockerToken();
+            Blocker blocker = new Blocker();
 
-            blockerToken.ActivateSkill(this,maze);
+            blocker.ActivateSkill(this,maze);
         }
 
         public override void Show()
@@ -83,7 +83,9 @@ namespace MazeRunners
         }
         public override void TokenSkill(Maze maze)
         {
-            throw new NotImplementedException();
+            SpeedUp speedUp = new SpeedUp();
+            
+            speedUp.ActivateSkill(this,maze);
         }
 
         public override void Show()
@@ -112,20 +114,36 @@ namespace MazeRunners
         {}
     }
 
-    public class BloquerToken : Tokens
+    public class WallDestroyerToken : Tokens
     {
-        public BloquerToken(string name, int myX, int myY) : base(name, myX, myY)
+        public WallDestroyerToken(string name, int myX, int myY) : base(name, myX, myY)
         {
         }
 
         public override void TokenSkill(Maze maze)
         {
-            BlockerToken blockerToken = new BlockerToken();
+            DestroyWall destroyWall = new DestroyWall();
 
-            blockerToken.ActivateSkill(this,maze);
+            destroyWall.ActivateSkill(this,maze);
         }
-
         public override void Show()
         {}
     }
+
+    // public class BloquerToken : Tokens
+    // {
+    //     public BloquerToken(string name, int myX, int myY) : base(name, myX, myY)
+    //     {
+    //     }
+
+    //     public override void TokenSkill(Maze maze)
+    //     {
+    //         BlockerToken blockerToken = new BlockerToken();
+
+    //         blockerToken.ActivateSkill(this,maze);
+    //     }
+
+    //     public override void Show()
+    //     {}
+    // }
 }

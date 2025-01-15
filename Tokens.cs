@@ -10,7 +10,7 @@ namespace MazeRunners
     {
         //Player player;
         public string name;
-        public int Health{get;set;} = 7;
+        public int Health{get;set;} = 10;
         public int StuckTurns{get;set;} = 0;
         public int myX{get;set;}
         public int myY{get;set;}

@@ -26,9 +26,7 @@
 
     OJO:el problema del maze esta en la instancia de las fichas. estoy diciendo q la ficha esta en -2-2
     o q esta en 1,-2 cuando en realidad es n-2,n-2 o 1,n-2(fixed✅)
-
-    Si un token pasa por encima del otro se ve el otro, pero luego el otro debe aparecer
-
+    
     Revisar xq el teleport token nos manda para un lugar donde no se puede llegar al final✅
     
     Hacer que AddTokens annada solo el toquen que le digo, en las coordenadas por defecto que tiene el token✅
@@ -40,4 +38,4 @@
     Recordar implementar un ChooseToken(donde de un array de token el player escoge con cuales quiere jugar
     y esos se meten en su lista de tokens)✅
 
-    En el mazeDisplay tratar de mostrar la salud del token, la habilidad del token y cuantos tokens le quedan al player
+    En el mazeDisplay tratar de mostrar la salud del token, la habilidad del token y cuantos tokens le quedan al player✅

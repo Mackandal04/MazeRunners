@@ -295,10 +295,10 @@ namespace MazeRunners
             {
                 GameDisplay gameDisplay=new GameDisplay();
 
-                int count = 6;//6
+                int count = 6;//mov standar
 
                 if(token is FlashToken)
-                    count = 12;//5
+                    count = 12;//efecto pasivo de un flashToken
 
                 UsefulMethods usefulMethods = new UsefulMethods();
 
@@ -324,13 +324,22 @@ namespace MazeRunners
                     System.Console.WriteLine("Muevete por el maze con las letras w,s,a,d ");
                     System.Console.WriteLine("Para saltar tu turno presiona e ");
                     System.Console.WriteLine("Para utilizar tu habilidad presiona k");
+                    System.Console.WriteLine("Para salir del juego presione q");
 
                     char letter = Console.ReadKey().KeyChar;
-                    //char letter = 'e';
+                    
+                    if(letter== 'q')
+                    {
+                        gameDisplay.ShowGame(maze,"Leaving the game...");
+                        Thread.Sleep(2000);
+
+                        //Cierra la el programa manualmente, 0 indica que termino correctamente
+                        Environment.Exit(0);
+                    }
+                    
                     if(letter == 'e')
                         break;
-                        
-
+    
                     if(letter=='k')
                     {
                         token.TokenSkill(maze);
@@ -410,11 +419,12 @@ namespace MazeRunners
 
                             token.cooldowmSkill++;
 
-                            if(token.Health<=0)
+                            if(token.Health<=4)
                             {
-                                gameDisplay.ShowGame(maze,"Your token is dead, you lose :( ");
-                                
-                                break;
+                                token.cooldowmSkill = int.MinValue;
+
+                                gameDisplay.ShowGame(maze,token.name + " does not have enough life to use his skill");
+                                Thread.Sleep(1000);
                             }
 
                             count--;

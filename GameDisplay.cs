@@ -16,7 +16,7 @@ namespace MazeRunners
                 var layout = new Layout("Root").SplitColumns
                 (
                     new Layout("Left").Ratio(3),
-                    new Layout("Right").SplitRows(new Layout("Top"),new Layout("Middle"), new Layout("Bottom")).Ratio(1)
+                    new Layout("Right").SplitRows( new Layout("Instruccions"),new Layout("Middle"), new Layout("Bottom")).Ratio(1)
                 );
 
                 layout["Left"].Update
@@ -35,26 +35,11 @@ namespace MazeRunners
                     .BorderColor(Color.Blue)
                 );
 
-                layout["Top"].Update
-                (
-                    new Panel
-                    (
-                        Align.Center
-                        (
-                            new Markup("[blue bold]Menu[/]"),
-                            VerticalAlignment.Middle
-                        )
-                    )
-                    .Header("[bold yellow]Options[/]")
-                    .RoundedBorder()
-                    .BorderColor(Color.Yellow)
-                    .Expand()
-                );
 
                 string playerState = "";
 
                 if(actualToken != null && actualPlayer != null)
-                    playerState = "[green]Health:[/] " + actualToken.Health + "\n" + "[cyan]Token Type:[/] " + actualToken.GetType().Name + "\n" + "[yellow]Tokens Left:[/] " + actualPlayer.playerTokens.Count;
+                    playerState =  actualPlayer.name + "\n" + "[green]Token's health:[/] " + actualToken.Health + "\n" + "[cyan]Token Type:[/] " + actualToken.GetType().Name + "\n" + "[yellow]Tokens Left:[/] " + actualPlayer.playerTokens.Count;
                 
                 else
                     playerState = "[red] ...  [/]";
@@ -91,6 +76,27 @@ namespace MazeRunners
                     .Expand()
                 );
 
+                string instruccions = "[white bold]Muevete por el maze con las letras w,s,a,d [/]\n" +
+                                    "[white bold]Para saltar su turno presiona e [/]\n" +
+                                    "[white bold]Para utilizar tu habilidad presiona k [/]\n" +
+                                    "[white bold]Para salir del juego presione q [/]";
+                
+                layout["Instruccions"].Update
+                (
+                                        new Panel
+                    (
+                        Align.Center
+                        (
+                            new Markup(instruccions),
+                            VerticalAlignment.Middle
+                        )
+                    )
+                    .Header("[bold yellow]Instruccions[/]")
+                    .RoundedBorder()
+                    .BorderColor(Color.Yellow)
+                    .Expand()
+                );
+                
                 AnsiConsole.Write(layout);
             }
     }

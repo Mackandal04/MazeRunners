@@ -9,10 +9,16 @@ namespace MazeRunners
         {
                 Game game = new Game();
 
-                //Creando los players
-                Player playerOne = new Player("Mauro");
+                UsefulMethods usefulMethods = new UsefulMethods();
 
-                Player playerTwo = new Player("Mackandal");
+                string playerOneName = usefulMethods.NoNullName("Introduzca el nombre del primer jugador");
+
+                string playerTwoName = usefulMethods.NoNullName("Introduzca el nombre del primer jugador");
+
+                //Creando los players
+                Player playerOne = new Player(playerOneName);
+
+                Player playerTwo = new Player(playerTwoName);
 
                 //iniciando el juego
                 game.StartGame(playerOne,playerTwo);

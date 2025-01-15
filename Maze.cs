@@ -321,11 +321,6 @@ namespace MazeRunners
 
                     gameDisplay.ShowGame(maze,message,token,player);
 
-                    System.Console.WriteLine("Muevete por el maze con las letras w,s,a,d ");
-                    System.Console.WriteLine("Para saltar tu turno presiona e ");
-                    System.Console.WriteLine("Para utilizar tu habilidad presiona k");
-                    System.Console.WriteLine("Para salir del juego presione q");
-
                     char letter = Console.ReadKey().KeyChar;
                     
                     if(letter== 'q')

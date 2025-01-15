@@ -60,5 +60,24 @@ namespace MazeRunners
             else
                 return false;
         }
+
+        public string NoNullName(string message)
+        {
+            while(true)
+            {
+                System.Console.WriteLine(message);
+                
+                string name = System.Console.ReadLine();
+                
+                if(!string.IsNullOrEmpty(name))
+                {
+                    return name;
+                }
+
+                else
+                    System.Console.WriteLine("No es un nombre valido");
+
+            }
+        }
     }
 }

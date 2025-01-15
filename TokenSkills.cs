@@ -78,6 +78,10 @@ namespace MazeRunners
         {
             UsefulMethods usefulMethods = new UsefulMethods();
 
+            int mazeCenterX = maze.maze.GetLength(0)/2 ;
+
+            int mazeCenterY = maze.maze.GetLength(1)/2 ;
+
             for (int i = 0; i <= maxRange; i++)
             {
                 for (int j = 0; j <= maxRange; j++)
@@ -86,17 +90,26 @@ namespace MazeRunners
 
                     int teleportToY = token.myY + j;
 
-                    if(usefulMethods.isAValidFreeCell(teleportToX,teleportToY,maze.maze) && maze.IsAValidCell(maze.maze.GetLength(0)/2, maze.maze.GetLength(1)/2 ))
+                    if(usefulMethods.isAValidFreeCell(teleportToX,teleportToY,maze.maze))// && maze.IsAValidCell(maze.maze.GetLength(0)/2, maze.maze.GetLength(1)/2 )
                     {
                         maze.maze[token.myX,token.myY] = new FreeCell();
 
                         maze.maze[teleportToX,teleportToY] = token;
 
-                        token.myX = teleportToX;
+                        bool [,] mask= new bool [maze.maze.GetLength(0),maze.maze.GetLength(1)];
 
-                        token.myY = teleportToY;
+                        if(maze.IsAValidCell(mazeCenterX, mazeCenterY) && maze.DFS(teleportToX,teleportToY,mazeCenterX,mazeCenterY,mask))
+                        {
+                            token.myX = teleportToX;
 
-                        return true;
+                            token.myY = teleportToY;
+
+                            return true;
+                        }
+
+                        maze.maze[teleportToX,teleportToY] = new FreeCell();
+
+                        maze.maze[token.myX, token.myY] = token;
                     }
                 }
             }
@@ -268,8 +281,12 @@ namespace MazeRunners
                 {'d',(0,1)}
             };
 
-            if(direccions.ContainsKey(goTo))
+            if(direccions.ContainsKey(goTo) && CoolDownEnd(token.cooldowmSkill))
             {
+                gameDisplay.ShowGame(maze,"Destruyendo muro");
+                
+                Thread.Sleep(1300);
+                
                 (int CordX,int CordY) = direccions[goTo];
 
                 int newCordX = token.myX + CordX;

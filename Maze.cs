@@ -57,14 +57,10 @@ namespace MazeRunners
                     MazeGenerator(newX,newY);
                 }
             }
-
-            //maze[1,0] = new FreeCell();
         }
 
         void FisherYates((int,int)[]array, Random random)
         {
-            //System.Console.WriteLine("Organizo el array de direcciones");
-
             //Metodo de Fisher Yates para organizar un array de forma random
             int n = array.Length;
 
@@ -85,8 +81,6 @@ namespace MazeRunners
         public void AddTrapsAndObstacles(int tableObject)
         {
             //Annadir verificacion, debe ser una entrada par
-            
-            //System.Console.WriteLine("Entro al AddTrapsAndObstacles");
 
             int traps = tableObject/2;
 
@@ -173,7 +167,7 @@ namespace MazeRunners
 
             return true;
         }
-            bool DFS(int CordX, int CordY, int centerX, int centerY, bool[,]arrive )//Devuelve true si en su actual estado el laberinto es valido
+            public bool DFS(int CordX, int CordY, int centerX, int centerY, bool[,]arrive )//Devuelve true si en su actual estado el laberinto es valido
             {
                 if(CordX == centerX && CordY == centerY)
                 {
@@ -210,7 +204,6 @@ namespace MazeRunners
         
         public string[,] ConcatMazeWithStringMaze()//Devuelve la matriz de string enlazada al maze
         {
-            //System.Console.WriteLine("Entro al concatMaze");
             string[,] stringMaze = new string[high,width];
 
             for (int i = 0; i < high; i++)
@@ -225,9 +218,7 @@ namespace MazeRunners
         }
 
         void WriteComponentToString(string[,] stringMaze,int x, int y) //Metodo que toma cada componente del maze y lo lleva como string a su
-        {                                             //componente correspondiente en el stringMaze
-            //System.Console.WriteLine("Entro al Write");
-
+        {                                                              //componente correspondiente en el stringMaze
             if(maze[x,y] is FreeCell)
                 stringMaze[x,y] = "[cyan]░░[/]";
             
@@ -289,23 +280,25 @@ namespace MazeRunners
             
             maze[centerX,centerY] = new ExitCell();
 
-            maze[1,1] = playerOneTokens[0];
+            for (int i = 0; i < playerOneTokens.Count-1; i++)
+            {
+                maze[playerOneTokens[i].myX,playerOneTokens[i].myY] = playerOneTokens[i];
+            }
 
-            maze[high-2,width-2] = playerOneTokens[1];
-
-            maze[1,width-2] = playerTwoTokens[1];
-
-            maze[high-2,1] = playerTwoTokens[0];
+            for (int j = 0; j < playerTwoTokens.Count-1; j++)
+            {
+                maze[playerTwoTokens[j].myX,playerTwoTokens[j].myY] = playerTwoTokens[j];
+            }
         }
 
-        public void MoveToken(Tokens token, Maze maze, string message)
+        public void MoveToken(Tokens token,Player player, Maze maze, string message)
             {
                 GameDisplay gameDisplay=new GameDisplay();
 
-                int count = 6;
+                int count = 6;//6
 
                 if(token is FlashToken)
-                    count = 5;
+                    count = 12;//5
 
                 UsefulMethods usefulMethods = new UsefulMethods();
 
@@ -326,10 +319,10 @@ namespace MazeRunners
                 {    
                     Console.Clear();//Refrescar la pantalla
 
-                    gameDisplay.ShowGame(maze,message);
+                    gameDisplay.ShowGame(maze,message,token,player);
 
                     System.Console.WriteLine("Muevete por el maze con las letras w,s,a,d ");
-                    System.Console.WriteLine("Para salir del juego presiona e ");
+                    System.Console.WriteLine("Para saltar tu turno presiona e ");
                     System.Console.WriteLine("Para utilizar tu habilidad presiona k");
 
                     char letter = Console.ReadKey().KeyChar;
@@ -371,24 +364,48 @@ namespace MazeRunners
 
                             token.myY = newCordY;
 
-                            
-                            if(maze.maze[newCordX,newCordY] is TrapCell trap)
+                            if(maze.maze[newCordX,newCordY] is ExitCell)
+                            {
+                                gameDisplay.ShowGame(maze,"Token has arrive to the exit");
+
+                                Thread.Sleep(1300);
+
+                                maze.maze[token.myX,token.myY] = new FreeCell();
+                                
+                                maze.maze[newCordX,newCordY] = new ExitCell();
+
+                                player.RemoveToken(token);
+
+                                if(player.playerTokens.Count==0)
+                                {
+                                    gameDisplay.ShowGame(maze,"El ganador es " + player.name);
+                                    
+                                    Thread.Sleep(1300);
+
+                                    return;
+                                }
+
+                                break;
+
+                            }
+
+                            else if(maze.maze[newCordX,newCordY] is TrapCell trap)
                             {
                                 gameDisplay.ShowGame(maze,"Trap Activated");
 
                                 Thread.Sleep(1500);
 
+                                if(maze.maze[newCordX,newCordY] is TeleportTrap)
+                                {
+                                    maze.maze[newCordX,newCordY] = new FreeCell();
+                                }
+
                                 trap.ActivateTrapSkill(token,maze);
                             }
                             
-                            if(maze.maze[newCordX,newCordY] is not TeleportTrap)
+                            else if(maze.maze[newCordX,newCordY] is not TeleportTrap && maze.maze[newCordX,newCordY] is not ExitCell)
                             {
                                 maze.maze[newCordX,newCordY] = token;//Poner al token en su nueva posicion
-                            }
-
-                            if(maze.maze[newCordX,newCordY] is TeleportTrap)
-                            {
-                                maze.maze[newCordX,newCordY] = new FreeCell();
                             }
 
                             token.cooldowmSkill++;

@@ -10,9 +10,9 @@ namespace MazeRunners
                 Game game = new Game();
 
                 //Creando los players
-                Player playerOne = new Player();
+                Player playerOne = new Player("Mauro");
 
-                Player playerTwo = new Player();
+                Player playerTwo = new Player("Mackandal");
 
                 //iniciando el juego
                 game.StartGame(playerOne,playerTwo);

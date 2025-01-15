@@ -14,21 +14,46 @@ namespace MazeRunners
     {
         public override void ActivateSkill(Tokens token, Maze maze)
         {
+            int high = maze.maze.GetLength(0);
+            
+            int width = maze.maze.GetLength(1);
+            
+            //Diccionario para segun el token, teletransportarlo a una casilla diferente
+            Dictionary<Type,(int CordX,int CordY)> tokensTeleportDestiny = new()
+            {
+                //typeof es xq cada token representa un tipo diferente de objeto
+                { typeof(NormalToken) ,(1,1)},
+                { typeof(TeleportToken) ,(high-2,width-2)},
+                { typeof(TrapDeleteToken) ,(1,width-2)},
+                { typeof(ObstacleToken) ,(high-2,1)},
+                { typeof(FlashToken) ,(1,1)},
+                { typeof(WallDestroyerToken) ,(high-2,width-2)}
+            };
+
             GameDisplay gameDisplay=new GameDisplay();
 
             gameDisplay.ShowGame(maze,"Teleporting the token");
             
             Thread.Sleep(1000);
-            
-            token.myX = 1;
 
-            token.myY = 1;
+            //es true si el tipo del token esta en el diccionario
+            if(tokensTeleportDestiny.ContainsKey(token.GetType()))
+            {
+                //asigna a destiny las coordenadas que le corresponde al token (int,int)
+                var destiny = tokensTeleportDestiny[token.GetType()]; 
 
-            maze.maze[token.myX,token.myY] = token;
+                maze.maze[token.myX,token.myY] = new FreeCell();
 
-            gameDisplay.ShowGame(maze,"TokenTeleportedSkill successfully activated");
-            
-            Thread.Sleep(1800);
+                token.myX = destiny.CordX;
+
+                token.myY = destiny.CordY;
+
+                maze.maze[token.myX, token.myY] = token;
+                
+                gameDisplay.ShowGame(maze,"TokenTeleportedSkill successfully activated");
+                
+                Thread.Sleep(1800);
+            }
         }
     }
 

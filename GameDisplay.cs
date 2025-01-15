@@ -9,7 +9,7 @@ namespace MazeRunners
     public class GameDisplay
     {
         //Para mostrar el estado del laberinto junto a un texto seleccionado
-        public void ShowGame(Maze maze, string message)
+        public void ShowGame(Maze maze, string message, Tokens actualToken = null, Player actualPlayer = null)
             {
                 UsefulMethods useful = new UsefulMethods();
 
@@ -32,7 +32,7 @@ namespace MazeRunners
                     .Header("[green bold]Board[/]")
                     .Expand()
                     .RoundedBorder()
-                    .BorderColor(Color.Blue)//BlueViolet //CadetBlue y _1 //Chartreuse1
+                    .BorderColor(Color.Blue)
                 );
 
                 layout["Top"].Update
@@ -51,13 +51,21 @@ namespace MazeRunners
                     .Expand()
                 );
 
+                string playerState = "";
+
+                if(actualToken != null && actualPlayer != null)
+                    playerState = "[green]Health:[/] " + actualToken.Health + "\n" + "[cyan]Token Type:[/] " + actualToken.GetType().Name + "\n" + "[yellow]Tokens Left:[/] " + actualPlayer.playerTokens.Count;
+                
+                else
+                    playerState = "[red] ...  [/]";
+
                 layout["Bottom"].Update
                 (
                     new Panel
                     (
                         Align.Left
                         (
-                            new Markup("[green]Points:[/]0\n[red]Health:[/]7\n[cyan]Skill:[/] NormalToken"),
+                            new Markup(playerState),
                             VerticalAlignment.Top
                         )
                     )

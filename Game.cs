@@ -8,9 +8,9 @@
         {
             public void StartGame(Player playerOne, Player playerTwo)//Debe recibir un array de token q representa los tokens de cada jugador
             {
-                int high = 31;
+                int high = 35;
 
-                int width = 31;
+                int width = 19;
                 
                 bool isPlayerOneturn = true;
 
@@ -28,26 +28,17 @@
 
                 Maze maze = new Maze(high,high);
 
-                CreateGame(maze,playerOne.playerTokens,playerTwo.playerTokens,high,width,tokens,playerOne,playerTwo);//Crea el juego por detras
-
-                //ShowGame(maze,"Welcome to the game !"); //Muestra el tablero y el estado del juego
-                //Thread.Sleep(2100);
-
-                //ShowGame(maze,"The first player to take all his tokens to exits will be the winner");
-                //Thread.Sleep(3500);
-
-                //ShowGame(maze,"Good luck :) ");
-                //Thread.Sleep(2300);
+                CreateGame(maze,high,width,tokens,playerOne,playerTwo);//Crea el juego por detras
 
                 int flag = 0;
 
                 TurnsSystem turnsSystem = new TurnsSystem();
 
-                while(true)
+                while(playerOne.playerTokens.Count>0 && playerTwo.playerTokens.Count>0)//&& playerTwo.playerTokens.Count>0
                 {
                     if(isPlayerOneturn)
                     {
-                        turnsSystem.PlayerTurn(flag,playerOne,maze);
+                        turnsSystem.PlayerTurn(flag,playerOne,maze);//flag
                         
                         isPlayerOneturn = false;
                     }
@@ -64,14 +55,13 @@
                     if(flag>1)
                         flag=0;
                 }
-
-                // gameDisplay.ShowGame(maze,"Exit game...");
-                // Thread.Sleep(1300);
             }
 
 
-            void CreateGame(Maze maze,List<Tokens> playerOneTokens,List<Tokens> playerTwoTokens, int high, int width, List<Tokens>tokens,Player playerOne, Player playerTwo)
+            void CreateGame(Maze maze, int high, int width, List<Tokens>tokens,Player playerOne, Player playerTwo)
             {
+                GameDisplay gameDisplay = new GameDisplay();
+
                 maze.MazeGenerator(1,1);//Siempre empezar en el 1-1
 
                 while(!maze.IsAValidCell(high/2, width/2))
@@ -79,11 +69,20 @@
                     maze.MazeGenerator(1,1);
                 }
 
+                gameDisplay.ShowGame(maze,"Welcome to the game !"); //Muestra el tablero y el estado del juego
+                Thread.Sleep(2100);
+
+                gameDisplay.ShowGame(maze,"The first player to take all his tokens to exits will be the winner");
+                Thread.Sleep(3500);
+
+                gameDisplay.ShowGame(maze,"Good luck :) ");
+                Thread.Sleep(2300);
+
                 ChooseToken(maze,tokens,playerOne,playerTwo);
                 
                 maze.AddTrapsAndObstacles(30);
 
-                maze.AddTokens(playerOneTokens,playerTwoTokens,high,width);
+                maze.AddTokens(playerOne.playerTokens,playerTwo.playerTokens,high,width);
             }
             
             //Metedo para q cada player seleccione sus tokens
@@ -172,5 +171,28 @@
                     }
                 }
             }
+
+            // public bool ExitGame(Maze maze,Player playerOne, Player playerTwo,GameDisplay gameDisplay)
+            // {
+            //     if(playerOne.playerTokens.Count==0 )//|| playerTwo.playerTokens.Count==0
+            //     {
+            //         gameDisplay.ShowGame(maze,"El ganador es PlayerOne");
+                    
+            //         Thread.Sleep(1300);
+
+            //         return true;
+            //     }
+
+            //     else if (playerTwo.playerTokens.Count==0)
+            //     {
+            //         gameDisplay.ShowGame(maze,"El ganador es el playerTwo");
+
+            //         Thread.Sleep(1300);
+
+            //         return true;
+            //     }
+
+            //     return false;
+            // }
         }
     }

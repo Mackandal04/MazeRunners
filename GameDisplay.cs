@@ -83,7 +83,7 @@ namespace MazeRunners
                 
                 layout["Instruccions"].Update
                 (
-                                        new Panel
+                    new Panel
                     (
                         Align.Center
                         (

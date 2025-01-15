@@ -1,5 +1,6 @@
     using System;
-    using Spectre.Console;
+using System.Text;
+using Spectre.Console;
 
 
     namespace MazeRunners
@@ -92,6 +93,10 @@
 
                 while(tokens.Count>0)//mientras hayan tokens para seleccionar
                 {
+                    StringBuilder stringBuilderOne = new StringBuilder();
+
+                    StringBuilder stringBuilderTwo = new StringBuilder();
+
                     //"Es turno de " + playerOne.playerTokens.Count + ". " + playerOne.playerTokens[playerOne.playerTokens.Count-1].name
                     gameDisplay.ShowGame(maze,"Es el turno del PlayerOne");//"Es el turno de " + player.playerTokens[flag].name
                     
@@ -103,10 +108,12 @@
 
                     for (int i = 0; i < tokens.Count; i++)
                     {
-                        gameDisplay.ShowGame(maze,"-" + (i+1)+ ". " + tokens[i].name );
-
-                        Thread.Sleep(1300);
+                        stringBuilderOne.Append("\n" + "-" + (i+1)+ ". " + tokens[i].name );
                     }
+                    stringBuilderOne.AppendLine();
+
+                    gameDisplay.ShowGame(maze,stringBuilderOne.ToString());
+                    Thread.Sleep(8000);
 
                     int index;
 
@@ -143,10 +150,13 @@
 
                         for (int i = 0; i < tokens.Count; i++)
                         {
-                            gameDisplay.ShowGame(maze,"-" + (i+1)+ ". " + tokens[i].name );
-
-                            Thread.Sleep(1300);
+                            stringBuilderTwo.Append("\n" + "-" + (i+1)+ ". " + tokens[i].name );
                         }
+                        stringBuilderTwo.AppendLine();
+
+                        gameDisplay.ShowGame(maze,stringBuilderTwo.ToString());
+
+                        Thread.Sleep(8000);
 
                         while(true)
                         {

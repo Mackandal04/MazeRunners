@@ -10,7 +10,7 @@
             {
                 int high = 35;
 
-                int width = 19;
+                int width = 35;
                 
                 bool isPlayerOneturn = true;
 
@@ -73,14 +73,14 @@
                 Thread.Sleep(2100);
 
                 gameDisplay.ShowGame(maze,"The first player to get all his tokens to the middle of the board, the exit, will be the winner");
-                Thread.Sleep(3500);
+                Thread.Sleep(4500);
 
                 gameDisplay.ShowGame(maze,"Good luck :) ");
                 Thread.Sleep(2300);
 
                 ChooseToken(maze,tokens,playerOne,playerTwo);
                 
-                maze.AddTrapsAndObstacles(30);
+                maze.AddTrapsAndObstacles(80);
 
                 maze.AddTokens(playerOne.playerTokens,playerTwo.playerTokens,high,width);
             }

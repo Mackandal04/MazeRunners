@@ -295,10 +295,10 @@ namespace MazeRunners
             {
                 GameDisplay gameDisplay=new GameDisplay();
 
-                int count = 6;//mov standar
+                int count = 8;//mov standar
 
                 if(token is FlashToken)
-                    count = 12;//efecto pasivo de un flashToken
+                    count = 16;//efecto pasivo de un flashToken
 
                 UsefulMethods usefulMethods = new UsefulMethods();
 

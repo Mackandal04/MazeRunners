@@ -72,7 +72,7 @@
                 gameDisplay.ShowGame(maze,"Welcome to the game !"); //Muestra el tablero y el estado del juego
                 Thread.Sleep(2100);
 
-                gameDisplay.ShowGame(maze,"The first player to take all his tokens to exits will be the winner");
+                gameDisplay.ShowGame(maze,"The first player to get all his tokens to the middle of the board, the exit, will be the winner");
                 Thread.Sleep(3500);
 
                 gameDisplay.ShowGame(maze,"Good luck :) ");

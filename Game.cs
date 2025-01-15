@@ -113,7 +113,7 @@ using Spectre.Console;
                     stringBuilderOne.AppendLine();
 
                     gameDisplay.ShowGame(maze,stringBuilderOne.ToString());
-                    Thread.Sleep(8000);
+                    Thread.Sleep(6500);
 
                     int index;
 
@@ -156,7 +156,7 @@ using Spectre.Console;
 
                         gameDisplay.ShowGame(maze,stringBuilderTwo.ToString());
 
-                        Thread.Sleep(8000);
+                        Thread.Sleep(6500);
 
                         while(true)
                         {

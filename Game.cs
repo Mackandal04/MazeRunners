@@ -113,15 +113,15 @@ using Spectre.Console;
                     stringBuilderOne.AppendLine();
 
                     gameDisplay.ShowGame(maze,stringBuilderOne.ToString());
-                    Thread.Sleep(6500);
+                    //Thread.Sleep(6500);.
 
                     int index;
 
                     while(true)
                     {
-                        Console.Clear();
+                        //Console.Clear();
                         
-                        gameDisplay.ShowGame(maze,"Introduce el numero del token que deseas");
+                        //gameDisplay.ShowGame(maze,"Introduce el numero del token que deseas");
 
                         if(int.TryParse(Console.ReadLine(),out index) && index>0 && index<= tokens.Count)
                         {
@@ -135,6 +135,8 @@ using Spectre.Console;
                             gameDisplay.ShowGame(maze,"Entrada no valida, intenta otra vez");
 
                             Thread.Sleep(1300);
+
+                            gameDisplay.ShowGame(maze,stringBuilderOne.ToString());
                         }
                     }
 
@@ -156,13 +158,13 @@ using Spectre.Console;
 
                         gameDisplay.ShowGame(maze,stringBuilderTwo.ToString());
 
-                        Thread.Sleep(6500);
+                        //Thread.Sleep(6500);
 
                         while(true)
                         {
-                            Console.Clear();
+                            //Console.Clear();
                             
-                            gameDisplay.ShowGame(maze,"Introduce el numero del token que deseas");
+                            //gameDisplay.ShowGame(maze,"Introduce el numero del token que deseas");
 
                             if(int.TryParse(Console.ReadLine(),out index) && index>0 && index<= tokens.Count)
                             {
@@ -176,33 +178,12 @@ using Spectre.Console;
                                 gameDisplay.ShowGame(maze,"Entrada no valida, intenta otra vez");
 
                                 Thread.Sleep(1300);
+
+                                gameDisplay.ShowGame(maze,stringBuilderTwo.ToString());
                             }
                         }
                     }
                 }
             }
-
-            // public bool ExitGame(Maze maze,Player playerOne, Player playerTwo,GameDisplay gameDisplay)
-            // {
-            //     if(playerOne.playerTokens.Count==0 )//|| playerTwo.playerTokens.Count==0
-            //     {
-            //         gameDisplay.ShowGame(maze,"El ganador es PlayerOne");
-                    
-            //         Thread.Sleep(1300);
-
-            //         return true;
-            //     }
-
-            //     else if (playerTwo.playerTokens.Count==0)
-            //     {
-            //         gameDisplay.ShowGame(maze,"El ganador es el playerTwo");
-
-            //         Thread.Sleep(1300);
-
-            //         return true;
-            //     }
-
-            //     return false;
-            // }
         }
     }

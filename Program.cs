@@ -13,7 +13,7 @@ namespace MazeRunners
 
                 string playerOneName = usefulMethods.NoNullName("Introduzca el nombre del primer jugador");
 
-                string playerTwoName = usefulMethods.NoNullName("Introduzca el nombre del primer jugador");
+                string playerTwoName = usefulMethods.NoNullName("Introduzca el nombre del segundo jugador");
 
                 //Creando los players
                 Player playerOne = new Player(playerOneName);

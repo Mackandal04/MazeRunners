@@ -281,12 +281,12 @@ namespace MazeRunners
             
             maze[centerX,centerY] = new ExitCell();
 
-            for (int i = 0; i < playerOneTokens.Count-1; i++)
+            for (int i = 0; i < playerOneTokens.Count; i++)
             {
                 maze[playerOneTokens[i].myX,playerOneTokens[i].myY] = playerOneTokens[i];
             }
 
-            for (int j = 0; j < playerTwoTokens.Count-1; j++)
+            for (int j = 0; j < playerTwoTokens.Count; j++)
             {
                 maze[playerTwoTokens[j].myX,playerTwoTokens[j].myY] = playerTwoTokens[j];
             }
@@ -296,10 +296,8 @@ namespace MazeRunners
             {
                 GameDisplay gameDisplay=new GameDisplay();
 
-                int count = 8;//mov standar
-
                 if(token is FlashToken)
-                    count = 16;//efecto pasivo de un flashToken
+                    token.TurnsLeft = 16;//efecto pasivo de un flashToken
 
                 UsefulMethods usefulMethods = new UsefulMethods();
 
@@ -316,7 +314,7 @@ namespace MazeRunners
                     {'d',(0,1)},
                 };
 
-                while(count>0)
+                while(token.TurnsLeft>0)
                 {    
                     Console.Clear();//Refrescar la pantalla
 
@@ -353,7 +351,7 @@ namespace MazeRunners
 
                         if(token.StuckTurns>0)
                         {
-                            gameDisplay.ShowGame(maze,"You are stuck");
+                            gameDisplay.ShowGame(maze,"You are stuck for " + token.StuckTurns + " turns");
                             
                             token.StuckTurns--;
                             
@@ -425,7 +423,7 @@ namespace MazeRunners
                                 Console.ReadKey();
                             }
 
-                            count--;
+                            token.TurnsLeft--;
                         }
 
                         else

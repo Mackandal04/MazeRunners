@@ -40,7 +40,7 @@ namespace MazeRunners
             
             UsefulMethods usefulMethods = new UsefulMethods();
 
-            int maxRange = 4;
+            int maxRange = 14;
 
             if(CoolDownEnd(token.cooldowmSkill))
             {

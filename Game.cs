@@ -19,12 +19,12 @@ using Spectre.Console;
 
                 List<Tokens> tokens = new List<Tokens> //Lista con todos los tokens del juego, para seleccionar
                 {
-                    new NormalToken("Jarvis",1,1),
-                    new TeleportToken("Ultron",high-2,width-2),
-                    new TrapDeleteToken("Batman",1,width-2),
-                    new ObstacleToken("Hulk",high-2,1),
-                    new FlashToken("Flash",1,1),
-                    new WallDestroyerToken("Truck",high-2,width-2)
+                    new NormalToken("Jarvis","[cyan]⚡[/]",1,1),
+                    new TeleportToken("Nightcrawler","[cyan]☬░[/]",high-2,width-2),
+                    new TrapDeleteToken("Batman","[cyan]⇶░[/]",1,width-2),
+                    new ObstacleToken("Hulk","[cyan]⇯░[/]",high-2,1),
+                    new FlashToken("Flash","[Red]⧖░[/]",1,1),
+                    new WallDestroyerToken("Optimus Prime","[Red]KK[/]",high-2,width-2)
                 };
 
                 Maze maze = new Maze(high,high);
@@ -160,7 +160,7 @@ using Spectre.Console;
 
                     if(tokens.Count>0)
                     {
-                        gameDisplay.ShowGame(maze,"Es turno de "  + "\n" + playerOne.name);
+                        gameDisplay.ShowGame(maze,"Es turno de "  + "\n" + playerTwo.name);
                         
                         Console.ReadKey();
                         

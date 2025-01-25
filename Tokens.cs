@@ -8,18 +8,21 @@ namespace MazeRunners
 {
     public abstract class Tokens:Cell
     {
-        //Player player;
         public string name;
+        public string icon;
         public int Health{get;set;} = 10;
+        public int TurnsLeft = 8;
         public int StuckTurns{get;set;} = 0;
         public int myX{get;set;}
         public int myY{get;set;}
         public int cooldowmSkill = 6;
         public abstract void TokenSkill(Maze maze);
 
-        public Tokens(string name,int myX, int myY)
+        public Tokens(string name,string icon,int myX, int myY)
         {
             this.name = name;
+
+            this.icon = icon;
 
             this.myX = myX;
 
@@ -29,7 +32,7 @@ namespace MazeRunners
 
     public class NormalToken : Tokens
     {
-        public NormalToken(string name, int myX, int myY) : base(name, myX, myY)
+        public NormalToken(string name, string icon,int myX, int myY) : base(name,icon, myX, myY)
         {
 
         }
@@ -46,7 +49,8 @@ namespace MazeRunners
 
     public class TrapDeleteToken : Tokens
     {
-        public TrapDeleteToken(string name, int myX, int myY) : base(name, myX, myY)
+
+        public TrapDeleteToken(string name, string icon,int myX, int myY) : base(name,icon, myX, myY)
         {
         }
         public override void TokenSkill(Maze maze)
@@ -62,7 +66,7 @@ namespace MazeRunners
 
     public class ObstacleToken : Tokens //implementar
     {
-        public ObstacleToken(string name, int myX, int myY) : base(name, myX, myY)
+        public ObstacleToken(string name, string icon,int myX, int myY) : base(name,icon, myX, myY)
         {
         }
         public override void TokenSkill(Maze maze)
@@ -78,7 +82,7 @@ namespace MazeRunners
 
     public class FlashToken : Tokens
     {
-        public FlashToken(string name, int myX, int myY) : base(name, myX, myY)
+        public FlashToken(string name, string icon,int myX, int myY) : base(name,icon, myX, myY)
         {
         }
         public override void TokenSkill(Maze maze)
@@ -94,7 +98,7 @@ namespace MazeRunners
 
     public class TeleportToken : Tokens
     {
-        public TeleportToken(string name, int myX, int myY) : base(name, myX, myY)
+        public TeleportToken(string name, string icon,int myX, int myY) : base(name,icon, myX, myY)
         {
         }
         public override void TokenSkill(Maze maze)
@@ -116,7 +120,7 @@ namespace MazeRunners
 
     public class WallDestroyerToken : Tokens
     {
-        public WallDestroyerToken(string name, int myX, int myY) : base(name, myX, myY)
+        public WallDestroyerToken(string name, string icon,int myX, int myY) : base(name,icon, myX, myY)
         {
         }
 
@@ -132,7 +136,7 @@ namespace MazeRunners
 
     // public class BloquerToken : Tokens
     // {
-    //     public BloquerToken(string name, int myX, int myY) : base(name, myX, myY)
+    //     public BloquerToken(string name, string icon,int myX, int myY) : base(name,icon, myX, myY)
     //     {
     //     }
 

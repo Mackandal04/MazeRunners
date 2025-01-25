@@ -52,7 +52,6 @@ namespace MazeRunners
                 
                 gameDisplay.ShowGame(maze,"TokenTeleportedSkill successfully activated");
                 Console.ReadKey();
-                //Thread.Sleep(1800);
             }
         }
     }
@@ -72,7 +71,6 @@ namespace MazeRunners
             gameDisplay.ShowGame(maze,token.name +" takes 3 of damage");
             
             Console.ReadKey();
-            //Thread.Sleep(1000);
         }
     }
 
@@ -85,9 +83,11 @@ namespace MazeRunners
             GameDisplay gameDisplay=new GameDisplay();
 
             gameDisplay.ShowGame(maze,"This token won't be able to use his skill no more");
+
+            if(token is FlashToken)
+                gameDisplay.ShowGame(maze,"But Flash is Faster, so the trap had no effect");
             
             Console.ReadKey();
-            //Thread.Sleep(1800);
         }
     }
 
@@ -102,7 +102,6 @@ namespace MazeRunners
             gameDisplay.ShowGame(maze,"This token is stuck for three turns");
             
             Console.ReadKey();
-            //Thread.Sleep(1000);
         }
     }
 
@@ -121,8 +120,6 @@ namespace MazeRunners
             gameDisplay.ShowGame(maze,token.name +" receives 3 life points");
             
             Console.ReadKey();
-            //Thread.Sleep(1000);
-
         }
     }
 }

@@ -33,8 +33,8 @@ namespace MazeRunners
             GameDisplay gameDisplay=new GameDisplay();
 
             gameDisplay.ShowGame(maze,"Teleporting the token");
-            
-            Thread.Sleep(1000);
+            Console.ReadKey();
+            //Thread.Sleep(1000);
 
             //es true si el tipo del token esta en el diccionario
             if(tokensTeleportDestiny.ContainsKey(token.GetType()))
@@ -51,8 +51,8 @@ namespace MazeRunners
                 maze.maze[token.myX, token.myY] = token;
                 
                 gameDisplay.ShowGame(maze,"TokenTeleportedSkill successfully activated");
-                
-                Thread.Sleep(1800);
+                Console.ReadKey();
+                //Thread.Sleep(1800);
             }
         }
     }
@@ -71,7 +71,8 @@ namespace MazeRunners
 
             gameDisplay.ShowGame(maze,token.name +" takes 3 of damage");
             
-            Thread.Sleep(1000);
+            Console.ReadKey();
+            //Thread.Sleep(1000);
         }
     }
 
@@ -85,7 +86,8 @@ namespace MazeRunners
 
             gameDisplay.ShowGame(maze,"This token won't be able to use his skill no more");
             
-            Thread.Sleep(1800);
+            Console.ReadKey();
+            //Thread.Sleep(1800);
         }
     }
 
@@ -99,7 +101,8 @@ namespace MazeRunners
             
             gameDisplay.ShowGame(maze,"This token is stuck for three turns");
             
-            Thread.Sleep(1000);
+            Console.ReadKey();
+            //Thread.Sleep(1000);
         }
     }
 
@@ -117,7 +120,8 @@ namespace MazeRunners
 
             gameDisplay.ShowGame(maze,token.name +" receives 3 life points");
             
-            Thread.Sleep(1000);
+            Console.ReadKey();
+            //Thread.Sleep(1000);
 
         }
     }

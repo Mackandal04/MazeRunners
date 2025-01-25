@@ -16,7 +16,7 @@ namespace MazeRunners
                 var layout = new Layout("Root").SplitColumns
                 (
                     new Layout("Left").Ratio(3),
-                    new Layout("Right").SplitRows( new Layout("Instruccions"),new Layout("Middle"), new Layout("Bottom")).Ratio(1)
+                    new Layout("Right").SplitRows( new Layout("Middle"), new Layout("Bottom"), new Layout("Instrucions")).Ratio(1)
                 );
 
                 layout["Left"].Update
@@ -39,7 +39,7 @@ namespace MazeRunners
                 string playerState = "";
 
                 if(actualToken != null && actualPlayer != null)
-                    playerState =  actualPlayer.name + "\n" + "[green]Token's health:[/] " + actualToken.Health + "\n" + "[cyan]Token Type:[/] " + actualToken.GetType().Name + "\n" + "[blue]Token's position:[/] " + "\n" + "[blue]fila:[/] " + actualToken.myX + "\n" +"[blue]columna:[/] " + actualToken.myY +"\n"+ "[yellow]Tokens Left:[/] " + actualPlayer.playerTokens.Count;
+                    playerState =  actualToken.name + "\n" + "[cyan]Token Type:[/] " + actualToken.GetType().Name + "\n" + "[green]Token's health:[/] " + actualToken.Health + "\n" + "[blue]Token's position:[/] " + "\n" + "[blue]    fila:[/] " + actualToken.myX + "\n" +"[blue]    columna:[/] " + actualToken.myY ;
                 
                 else
                     playerState = "[red] ...  [/]";
@@ -54,7 +54,7 @@ namespace MazeRunners
                             VerticalAlignment.Top
                         )
                     )
-                    .Header("[bold cyan]Player's Stade[/]")
+                    .Header("[bold cyan]Token Active[/]")
                     .RoundedBorder()
                     .BorderColor(Color.Cyan1)
                     .Expand()
@@ -76,12 +76,12 @@ namespace MazeRunners
                     .Expand()
                 );
 
-                string instruccions = "[white bold]Muevete por el maze con las letras w,s,a,d [/]\n" +
-                                    "[white bold]Para saltar su turno presiona e [/]\n" +
-                                    "[white bold]Para utilizar tu habilidad presiona k [/]\n" +
+                string instruccions = "[white bold]Muevase por el maze con las letras w,s,a,d [/]\n" +
+                                    "[white bold]Para saltar su turno presione e [/]\n" +
+                                    "[white bold]Para utilizar su habilidad presione k [/]\n" +
                                     "[white bold]Para salir del juego presione q [/]";
                 
-                layout["Instruccions"].Update
+                layout["Instrucions"].Update
                 (
                     new Panel
                     (
@@ -91,7 +91,7 @@ namespace MazeRunners
                             VerticalAlignment.Middle
                         )
                     )
-                    .Header("[bold yellow]Instruccions[/]")
+                    .Header("[bold yellow]Instrucions[/]")
                     .RoundedBorder()
                     .BorderColor(Color.Yellow)
                     .Expand()

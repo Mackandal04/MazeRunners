@@ -14,8 +14,8 @@ namespace MazeRunners
             if(player.playerTokens.Count==0)
             {
                 gameDisplay.ShowGame(maze,"El ganador es " + player.name);
-
-                Thread.Sleep(1300);
+                Console.ReadKey();
+                //Thread.Sleep(1300);
 
                 return;
             }
@@ -27,7 +27,7 @@ namespace MazeRunners
 
             //flag indica que token es el q se debe mover de los tokens disponibles x el player
 
-            string message = "Es el turno de " + player.playerTokens[flag].name; 
+            string message = "Es el turno de " + player.name +"\n"+ "[yellow]Tokens Left:[/] " + player.playerTokens.Count; 
 
             maze.MoveToken(player.playerTokens[flag],player, maze , message);
 

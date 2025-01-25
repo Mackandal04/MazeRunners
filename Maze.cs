@@ -327,7 +327,8 @@ namespace MazeRunners
                     if(letter== 'q')
                     {
                         gameDisplay.ShowGame(maze,"Leaving the game...");
-                        Thread.Sleep(2000);
+                        
+                        Console.ReadKey();
 
                         //Cierra la el programa manualmente, 0 indica que termino correctamente
                         Environment.Exit(0);
@@ -356,7 +357,7 @@ namespace MazeRunners
                             
                             token.StuckTurns--;
                             
-                            Thread.Sleep(1000);
+                            Console.ReadKey();
                             
                             continue;
                         }
@@ -373,7 +374,7 @@ namespace MazeRunners
                             {
                                 gameDisplay.ShowGame(maze,"Token has arrive to the exit");
 
-                                Thread.Sleep(1300);
+                                Console.ReadKey();
 
                                 maze.maze[token.myX,token.myY] = new FreeCell();
                                 
@@ -385,7 +386,7 @@ namespace MazeRunners
                                 {
                                     gameDisplay.ShowGame(maze,"El ganador es " + player.name);
                                     
-                                    Thread.Sleep(1300);
+                                    Console.ReadKey();
 
                                     return;
                                 }
@@ -398,7 +399,7 @@ namespace MazeRunners
                             {
                                 gameDisplay.ShowGame(maze,"Trap Activated");
 
-                                Thread.Sleep(1500);
+                                Console.ReadKey();
 
                                 if(maze.maze[newCordX,newCordY] is TeleportTrap)
                                 {
@@ -420,7 +421,8 @@ namespace MazeRunners
                                 token.cooldowmSkill = int.MinValue;
 
                                 gameDisplay.ShowGame(maze,token.name + " does not have enough life to use his skill");
-                                Thread.Sleep(1000);
+                                
+                                Console.ReadKey();
                             }
 
                             count--;
@@ -430,7 +432,7 @@ namespace MazeRunners
                         {
                             gameDisplay.ShowGame(maze," it is not a valid move");
                             
-                            Thread.Sleep(1300);//Esto hace una pausa momentanea para q se lea el mensaje
+                            Console.ReadKey();
                         }
                     }
                 }

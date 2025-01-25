@@ -71,13 +71,16 @@ using Spectre.Console;
                 }
 
                 gameDisplay.ShowGame(maze,"Welcome to the game !"); //Muestra el tablero y el estado del juego
-                Thread.Sleep(2100);
+                
+                Console.ReadKey();
 
-                gameDisplay.ShowGame(maze,"The first player to get all his tokens to the middle of the board, the exit, will be the winner");
-                Thread.Sleep(4500);
+                gameDisplay.ShowGame(maze,"The first player to get all his tokens to the middle of the board(the exit) will be the winner");
+                
+                Console.ReadKey();
 
                 gameDisplay.ShowGame(maze,"Good luck :) ");
-                Thread.Sleep(2300);
+                
+                Console.ReadKey();
 
                 ChooseToken(maze,tokens,playerOne,playerTwo);
                 
@@ -89,22 +92,37 @@ using Spectre.Console;
             //Metedo para q cada player seleccione sus tokens
             public void ChooseToken(Maze maze, List<Tokens>tokens, Player playerOne, Player playerTwo)
             {
+                int high = maze.maze.GetLength(0);
+
+                int width = maze.maze.GetLength(1);
+                
+                UsefulMethods usefulMethods = new UsefulMethods();
+
                 GameDisplay gameDisplay = new GameDisplay();
 
-                while(tokens.Count>0)//mientras hayan tokens para seleccionar
+                List<(int,int)> positions = new List<(int, int)>
+                {
+                    (1,1),
+                    (high-2,width-2),
+                    (1,width-2),
+                    (high-2,1)
+                };
+
+                while(tokens.Count>2)//mientras hayan tokens para seleccionar
                 {
                     StringBuilder stringBuilderOne = new StringBuilder();
 
                     StringBuilder stringBuilderTwo = new StringBuilder();
 
-                    //"Es turno de " + playerOne.playerTokens.Count + ". " + playerOne.playerTokens[playerOne.playerTokens.Count-1].name
-                    gameDisplay.ShowGame(maze,"Es el turno del PlayerOne");//"Es el turno de " + player.playerTokens[flag].name
+                    gameDisplay.ShowGame(maze,"Es el turno de " + "\n" + playerOne.name);
                     
-                    Thread.Sleep(1300);
+                    Console.ReadKey();
+                    
 
                     gameDisplay.ShowGame(maze,"Escoge un token");
                     
-                    Thread.Sleep(1300);
+                    Console.ReadKey();
+                    
 
                     for (int i = 0; i < tokens.Count; i++)
                     {
@@ -113,20 +131,19 @@ using Spectre.Console;
                     stringBuilderOne.AppendLine();
 
                     gameDisplay.ShowGame(maze,stringBuilderOne.ToString());
-                    //Thread.Sleep(6500);.
 
                     int index;
 
                     while(true)
                     {
-                        //Console.Clear();
-                        
-                        //gameDisplay.ShowGame(maze,"Introduce el numero del token que deseas");
-
                         if(int.TryParse(Console.ReadLine(),out index) && index>0 && index<= tokens.Count)
                         {
                             playerOne.AddToken(tokens[index-1] );
+                            
+                            usefulMethods.TokensPositions(maze,positions,tokens[index-1]);
+                            
                             tokens.RemoveAt(index-1);
+                            
                             break;
                         } 
 
@@ -134,7 +151,8 @@ using Spectre.Console;
                         {
                             gameDisplay.ShowGame(maze,"Entrada no valida, intenta otra vez");
 
-                            Thread.Sleep(1300);
+                            Console.ReadKey();
+                            
 
                             gameDisplay.ShowGame(maze,stringBuilderOne.ToString());
                         }
@@ -142,13 +160,15 @@ using Spectre.Console;
 
                     if(tokens.Count>0)
                     {
-                        gameDisplay.ShowGame(maze,"Es turno del PlayerTwo ");
+                        gameDisplay.ShowGame(maze,"Es turno de "  + "\n" + playerOne.name);
                         
-                        Thread.Sleep(1300);
+                        Console.ReadKey();
+                        
 
                         gameDisplay.ShowGame(maze,"Escoge un token");
                         
-                        Thread.Sleep(1300);
+                        Console.ReadKey();
+                        
 
                         for (int i = 0; i < tokens.Count; i++)
                         {
@@ -158,18 +178,16 @@ using Spectre.Console;
 
                         gameDisplay.ShowGame(maze,stringBuilderTwo.ToString());
 
-                        //Thread.Sleep(6500);
-
                         while(true)
                         {
-                            //Console.Clear();
-                            
-                            //gameDisplay.ShowGame(maze,"Introduce el numero del token que deseas");
-
                             if(int.TryParse(Console.ReadLine(),out index) && index>0 && index<= tokens.Count)
-                            {
+                            {                            
                                 playerTwo.AddToken(tokens[index-1] );
+                                
+                                usefulMethods.TokensPositions(maze,positions,tokens[index-1]);
+                                
                                 tokens.RemoveAt(index-1);
+                                
                                 break;
                             } 
 
@@ -177,7 +195,7 @@ using Spectre.Console;
                             {
                                 gameDisplay.ShowGame(maze,"Entrada no valida, intenta otra vez");
 
-                                Thread.Sleep(1300);
+                                Console.ReadKey();
 
                                 gameDisplay.ShowGame(maze,stringBuilderTwo.ToString());
                             }

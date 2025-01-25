@@ -46,7 +46,7 @@ namespace MazeRunners
             {
                 gameDisplay.ShowGame(maze,"Teleporting the token");
                 
-                Thread.Sleep(1000);
+                Console.ReadKey();
 
                 if(TeleportSuccessfully(maxRange,token,maze))
                 {
@@ -54,14 +54,14 @@ namespace MazeRunners
                     
                     gameDisplay.ShowGame(maze,"Token teleport's skill was successfully realized");
                     
-                    Thread.Sleep(1800);
+                    Console.ReadKey();
                 }
 
                 else
                 {
                     gameDisplay.ShowGame(maze,"Something was wrong");
                     
-                    Thread.Sleep(1000);
+                    Console.ReadKey();
                 }
             }
 
@@ -69,7 +69,7 @@ namespace MazeRunners
             {
                 gameDisplay.ShowGame(maze,"you can't do this, not yet");
                 
-                Thread.Sleep(1000);
+                Console.ReadKey();
             }
         }
 
@@ -134,7 +134,7 @@ namespace MazeRunners
             {
                 gameDisplay.ShowGame(maze,"Bloqueando celda");
                 
-                Thread.Sleep(1000);
+                Console.ReadKey();
 
                 if(BlockerSuccessfully(maxRange,token,maze))
                 {
@@ -142,14 +142,15 @@ namespace MazeRunners
 
                     gameDisplay.ShowGame(maze,"BlockerTokenSkill was succesfully activated");
                     
-                    Thread.Sleep(1600);
+                    Console.ReadKey();
                 }
 
                 else
                 {
                     gameDisplay.ShowGame(maze,"Something was wrong");
                 
-                    Thread.Sleep(1000);
+                    Console.ReadKey();
+
                 }
             }
 
@@ -157,7 +158,7 @@ namespace MazeRunners
             {
                 gameDisplay.ShowGame(maze,"you can't do this, not yet");
                 
-                Thread.Sleep(1000);
+                Console.ReadKey();
             }
         }
 
@@ -197,7 +198,8 @@ namespace MazeRunners
             {
                 gameDisplay.ShowGame(maze,"Looking for traps");
                 
-                Thread.Sleep(1000);
+                Console.ReadKey();
+
                 //So hay una trampa cerca y se pudo eliminar
                 if(TrapsFoundSuccessfully(maxRange,token,maze))
                 {
@@ -205,14 +207,14 @@ namespace MazeRunners
 
                     gameDisplay.ShowGame(maze,"the Trap was successfully deleted");
                     
-                    Thread.Sleep(1500);
+                    Console.ReadKey();
                 }
 
                 else
                 {
                     gameDisplay.ShowGame(maze,"This is not a valid operation");
                     
-                    Thread.Sleep(1000);
+                    Console.ReadKey();
                 }
             }
 
@@ -220,7 +222,7 @@ namespace MazeRunners
             {
                 gameDisplay.ShowGame(maze,"You can't do this...yet");
                 
-                Thread.Sleep(1000);
+                Console.ReadKey();
             }
         }
 
@@ -285,7 +287,7 @@ namespace MazeRunners
             {
                 gameDisplay.ShowGame(maze,"Destruyendo muro");
                 
-                Thread.Sleep(1300);
+                Console.ReadKey();
                 
                 (int CordX,int CordY) = direccions[goTo];
 
@@ -301,7 +303,7 @@ namespace MazeRunners
 
                     gameDisplay.ShowGame(maze,"Wall was destroyed");
                     
-                    Thread.Sleep(1300);
+                    Console.ReadKey();
                 }
             }
 

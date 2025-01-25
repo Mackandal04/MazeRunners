@@ -79,5 +79,30 @@ namespace MazeRunners
 
             }
         }
+
+        public void TokensPositions(Maze maze,List<(int,int)> positions, Tokens token)
+        {
+            // int high = maze.maze.GetLength(0);
+
+            // int width = maze.maze.GetLength(1);
+
+            // List<(int,int)> positions = new List<(int, int)>
+            // {
+            //     (1,1),
+            //     (high-2,width-2),
+            //     (1,width-2),
+            //     (high-2,1)
+            // };
+
+            Random random = new Random();
+            
+            int mazeCord = random.Next(0,positions.Count);
+
+            token.myX = positions[mazeCord].Item1;
+
+            token.myY = positions[mazeCord].Item2;
+
+            positions.RemoveAt(mazeCord);
+        }
     }
 }

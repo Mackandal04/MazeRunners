@@ -67,7 +67,7 @@ namespace MazeRunners
             {
                 System.Console.WriteLine(message);
                 
-                string name = System.Console.ReadLine();
+                string name = System.Console.ReadLine()!;
                 
                 if(!string.IsNullOrEmpty(name))
                 {

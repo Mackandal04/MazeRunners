@@ -32,7 +32,7 @@ namespace MazeRunners
 
             GameDisplay gameDisplay=new GameDisplay();
 
-            gameDisplay.ShowGame(maze,"Teleporting the token");
+            gameDisplay.ShowGame(maze,"[blue]Teleporting the token[/]");
             Console.ReadKey();
             //Thread.Sleep(1000);
 
@@ -50,7 +50,7 @@ namespace MazeRunners
 
                 maze.maze[token.myX, token.myY] = token;
                 
-                gameDisplay.ShowGame(maze,"TokenTeleportedSkill successfully activated");
+                gameDisplay.ShowGame(maze,"[green]TokenTeleportedSkill successfully activated[/]");
                 Console.ReadKey();
             }
         }
@@ -68,7 +68,7 @@ namespace MazeRunners
 
             token.Health = life;
 
-            gameDisplay.ShowGame(maze,token.name +" takes 3 of damage");
+            gameDisplay.ShowGame(maze,token.name +"[red] takes 3 of damage[/]");
             
             Console.ReadKey();
         }
@@ -82,10 +82,10 @@ namespace MazeRunners
             
             GameDisplay gameDisplay=new GameDisplay();
 
-            gameDisplay.ShowGame(maze,"This token won't be able to use his skill no more");
+            gameDisplay.ShowGame(maze,"[red] This token won't be able to use his skill no more[/]");
 
             if(token is FlashToken)
-                gameDisplay.ShowGame(maze,"But Flash is Faster, so the trap had no effect");
+                gameDisplay.ShowGame(maze,"But Flash is Faster, so the trap had no effect !");
             
             Console.ReadKey();
         }
@@ -99,7 +99,7 @@ namespace MazeRunners
 
             GameDisplay gameDisplay=new GameDisplay();
             
-            gameDisplay.ShowGame(maze,"This token is stuck for three turns");
+            gameDisplay.ShowGame(maze,"[bold yellow]This token is stuck for three turns ! [/]");
             
             Console.ReadKey();
         }
@@ -117,7 +117,7 @@ namespace MazeRunners
 
             token.Health = life;
 
-            gameDisplay.ShowGame(maze,token.name +" receives 3 life points");
+            gameDisplay.ShowGame(maze,token.name +"[green] receives 3 life points[/]");
             
             Console.ReadKey();
         }

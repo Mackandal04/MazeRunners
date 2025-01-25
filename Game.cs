@@ -70,15 +70,15 @@ using Spectre.Console;
                     maze.MazeGenerator(1,1);
                 }
 
-                gameDisplay.ShowGame(maze,"Welcome to the game !"); //Muestra el tablero y el estado del juego
+                gameDisplay.ShowGame(maze,"[bold yellow]Welcome to the game ![/]"); //Muestra el tablero y el estado del juego
                 
                 Console.ReadKey();
 
-                gameDisplay.ShowGame(maze,"The first player to get all his tokens to the middle of the board(the exit) will be the winner");
+                gameDisplay.ShowGame(maze,"[bold yellow]The first player to get all his tokens to the middle of the board(the exit) will be the winner[/]");
                 
                 Console.ReadKey();
 
-                gameDisplay.ShowGame(maze,"Good luck :) ");
+                gameDisplay.ShowGame(maze,"[bold yellow]Good luck :) [/]");
                 
                 Console.ReadKey();
 
@@ -126,7 +126,7 @@ using Spectre.Console;
 
                     for (int i = 0; i < tokens.Count; i++)
                     {
-                        stringBuilderOne.Append("\n" + "-" + (i+1)+ ". " + tokens[i].name );
+                        stringBuilderOne.Append("\n" +"\n"+ "-" + (i+1)+ ". " + tokens[i].name );
                     }
                     stringBuilderOne.AppendLine();
 
@@ -149,7 +149,7 @@ using Spectre.Console;
 
                         else
                         {
-                            gameDisplay.ShowGame(maze,"Entrada no valida, intenta otra vez");
+                            gameDisplay.ShowGame(maze,"[bold yellow]Entrada no valida, intenta otra vez[/]");
 
                             Console.ReadKey();
                             
@@ -160,7 +160,7 @@ using Spectre.Console;
 
                     if(tokens.Count>0)
                     {
-                        gameDisplay.ShowGame(maze,"Es turno de "  + "\n" + playerTwo.name);
+                        gameDisplay.ShowGame(maze,"Es el turno de "  + "\n" + playerTwo.name);
                         
                         Console.ReadKey();
                         
@@ -172,7 +172,7 @@ using Spectre.Console;
 
                         for (int i = 0; i < tokens.Count; i++)
                         {
-                            stringBuilderTwo.Append("\n" + "-" + (i+1)+ ". " + tokens[i].name );
+                            stringBuilderTwo.Append("\n" +"\n"+ "-" + (i+1)+ ". " + tokens[i].name );
                         }
                         stringBuilderTwo.AppendLine();
 
@@ -193,7 +193,7 @@ using Spectre.Console;
 
                             else
                             {
-                                gameDisplay.ShowGame(maze,"Entrada no valida, intenta otra vez");
+                                gameDisplay.ShowGame(maze,"[bold yellow]Entrada no valida, intenta otra vez[/]");
 
                                 Console.ReadKey();
 

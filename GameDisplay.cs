@@ -9,7 +9,7 @@ namespace MazeRunners
     public class GameDisplay
     {
         //Para mostrar el estado del laberinto junto a un texto seleccionado
-        public void ShowGame(Maze maze, string message, Tokens actualToken = null, Player actualPlayer = null)
+        public void ShowGame(Maze maze, string message, Tokens actualToken = null!, Player actualPlayer = null!)
             {
                 UsefulMethods useful = new UsefulMethods();
 
@@ -29,7 +29,7 @@ namespace MazeRunners
                             VerticalAlignment.Middle
                         )
                     )
-                    .Header("[green bold]Board[/]")
+                    .Header("[blue]Board[/]")
                     .Expand()
                     .RoundedBorder()
                     .BorderColor(Color.Blue)

@@ -111,7 +111,7 @@ namespace MazeRunners
             }
 
             else
-                System.Console.WriteLine("Skill is not charge yet");
+                System.Console.WriteLine("[bold yellow]Skill is not charge yet ![/]");
         }
 
         public override void Show()

@@ -13,7 +13,7 @@ namespace MazeRunners
 
             if(player.playerTokens.Count==0)
             {
-                gameDisplay.ShowGame(maze,"El ganador es " + player.name);
+                gameDisplay.ShowGame(maze,"[green]El ganador es [/]" + player.name);
                 Console.ReadKey();
                 //Thread.Sleep(1300);
 

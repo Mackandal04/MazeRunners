@@ -52,14 +52,14 @@ namespace MazeRunners
                 {
                     token.cooldowmSkill = 0;
                     
-                    gameDisplay.ShowGame(maze,"Token teleport's skill was successfully realized");
+                    gameDisplay.ShowGame(maze,"[green]Token teleport's skill was successfully realized[/]");
                     
                     Console.ReadKey();
                 }
 
                 else
                 {
-                    gameDisplay.ShowGame(maze,"Something was wrong");
+                    gameDisplay.ShowGame(maze,"[red]Something was wrong :( [/]");
                     
                     Console.ReadKey();
                 }
@@ -132,7 +132,7 @@ namespace MazeRunners
 
             if(CoolDownEnd(token.cooldowmSkill))
             {
-                gameDisplay.ShowGame(maze,"Bloqueando celda");
+                gameDisplay.ShowGame(maze,"Bloqueando celda...");
                 
                 Console.ReadKey();
 
@@ -140,14 +140,14 @@ namespace MazeRunners
                 {
                     token.cooldowmSkill = 0;
 
-                    gameDisplay.ShowGame(maze,"BlockerTokenSkill was succesfully activated");
+                    gameDisplay.ShowGame(maze,"[green]BlockerTokenSkill was succesfully activated[/]");
                     
                     Console.ReadKey();
                 }
 
                 else
                 {
-                    gameDisplay.ShowGame(maze,"Something was wrong");
+                    gameDisplay.ShowGame(maze,"[red]Something was wrong :( [/]");
                 
                     Console.ReadKey();
 
@@ -196,7 +196,7 @@ namespace MazeRunners
 
             if(CoolDownEnd(token.cooldowmSkill))
             {
-                gameDisplay.ShowGame(maze,"Looking for traps");
+                gameDisplay.ShowGame(maze,"Looking for traps...");
                 
                 Console.ReadKey();
 
@@ -205,7 +205,7 @@ namespace MazeRunners
                 {
                     token.cooldowmSkill = 0;
 
-                    gameDisplay.ShowGame(maze,"the Trap was successfully deleted");
+                    gameDisplay.ShowGame(maze,"[green]The Trap was successfully deleted[/]");
                     
                     Console.ReadKey();
                 }
@@ -285,7 +285,7 @@ namespace MazeRunners
 
             if(direccions.ContainsKey(goTo) && CoolDownEnd(token.cooldowmSkill))
             {
-                gameDisplay.ShowGame(maze,"Destruyendo muro");
+                gameDisplay.ShowGame(maze,"Destruyendo muro...");
                 
                 Console.ReadKey();
                 
@@ -301,14 +301,14 @@ namespace MazeRunners
 
                     token.cooldowmSkill = 0;
 
-                    gameDisplay.ShowGame(maze,"Wall was destroyed");
+                    gameDisplay.ShowGame(maze,"[green]Wall was destroyed ![/]");
                     
                     Console.ReadKey();
                 }
             }
 
             else
-                gameDisplay.ShowGame(maze,"you can't destroy there");
+                gameDisplay.ShowGame(maze,"[red]you can't destroy there :( [/]");
         }
     }
 }

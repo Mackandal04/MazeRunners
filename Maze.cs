@@ -351,7 +351,7 @@ namespace MazeRunners
 
                         if(token.StuckTurns>0)
                         {
-                            gameDisplay.ShowGame(maze,"You are stuck for " + token.StuckTurns + " turns");
+                            gameDisplay.ShowGame(maze,"[bold yellow]You are stuck for " + token.StuckTurns + " turns ![/]");
                             
                             token.StuckTurns--;
                             
@@ -370,7 +370,7 @@ namespace MazeRunners
 
                             if(maze.maze[newCordX,newCordY] is ExitCell)
                             {
-                                gameDisplay.ShowGame(maze,"Token has arrive to the exit");
+                                gameDisplay.ShowGame(maze,"[green] the token has arrive to the exit !!!");
 
                                 Console.ReadKey();
 
@@ -382,7 +382,7 @@ namespace MazeRunners
 
                                 if(player.playerTokens.Count==0)
                                 {
-                                    gameDisplay.ShowGame(maze,"El ganador es " + player.name);
+                                    gameDisplay.ShowGame(maze,"[green]El ganador es [/]" + player.name);
                                     
                                     Console.ReadKey();
 
@@ -395,7 +395,7 @@ namespace MazeRunners
 
                             else if(maze.maze[newCordX,newCordY] is TrapCell trap)
                             {
-                                gameDisplay.ShowGame(maze,"Trap Activated");
+                                gameDisplay.ShowGame(maze,"[bold yellow]Trap Activated[/]");
 
                                 Console.ReadKey();
 
@@ -418,7 +418,7 @@ namespace MazeRunners
                             {
                                 token.cooldowmSkill = int.MinValue;
 
-                                gameDisplay.ShowGame(maze,token.name + " does not have enough life to use his skill");
+                                gameDisplay.ShowGame(maze,token.name + "[bold yellow]does not have enough life to use his skill[/]");
                                 
                                 Console.ReadKey();
                             }
@@ -428,7 +428,7 @@ namespace MazeRunners
 
                         else
                         {
-                            gameDisplay.ShowGame(maze," it is not a valid move");
+                            gameDisplay.ShowGame(maze,"[red]it is not a valid move[/]");
                             
                             Console.ReadKey();
                         }

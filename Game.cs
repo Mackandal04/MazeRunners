@@ -9,9 +9,9 @@ using Spectre.Console;
         {
             public void StartGame(Player playerOne, Player playerTwo)//Debe recibir un array de token q representa los tokens de cada jugador
             {
-                int high = 19;//35
+                int high = 35;
 
-                int width = 19;
+                int width = 35;
                 
                 GameDisplay gameDisplay=new GameDisplay();
 

@@ -22,7 +22,7 @@ namespace MazeRunners
                 "El primero en llevar todas sus fichas a la salida gana la partida.",
                 "Habrá obstáculos, trampas y caminos bloqueados que los jugadores deben sortear.\n",
 
-                "[bold yellow]🛠 Características del Juego[/]",
+                "[bold yellow]🚀 Características del Juego[/]",
                 "- Interfaz en consola con [green]Spectre.Console[/]",
                 "- Dos jugadores",
                 "- La partida termina cuando un jugador lleva todas sus fichas a la salida.",
@@ -31,14 +31,14 @@ namespace MazeRunners
                 "[bold yellow]🎮 Leyenda del Laberinto[/]\n",
 
                 "[bold green]🔹 Fichas:[/]",
-                "[cyan]- ⚡️[/] Jarvis (NormalToken) → Icono más fachero del juego.",
+                "[cyan]-⚡[/] Jarvis (NormalToken) → Icono más fachero del juego.",
                 "[cyan]- ☬░[/] Ultron (TeleportToken) → Puede teletransportarse a un lugar cercano.",
                 "[cyan]- ⇶░[/] Batman (TrapDeleteToken) → Inutiliza trampas en su camino.",
                 "[cyan]- ⇯░[/] Quasimodo (ObstacleToken) → Coloca obstáculos en el camino.",
                 "[red]- ⧖░[/] Francesco (FlashToken) → Se mueve grandes distancias rápidamente.",
                 "[red]- KK[/] Optimus Prime (WallDestroyerToken) → Puede destruir muros.\n",
 
-                "[bold red]⚠️ Trampas:[/]",
+                "[red]🪤 Trampas [/]",
                 "[blue]- ██[/] TeleportTrap → Envía al token a un punto de inicio del laberinto.",
                 "[red]- ██[/] DamageTrap → Resta 3 puntos de vida.",
                 "[green]- ██[/] HealthTrap → Restaura puntos de vida.",

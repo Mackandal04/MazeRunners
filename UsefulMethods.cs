@@ -82,18 +82,6 @@ namespace MazeRunners
 
         public void TokensPositions(Maze maze,List<(int,int)> positions, Tokens token)
         {
-            // int high = maze.maze.GetLength(0);
-
-            // int width = maze.maze.GetLength(1);
-
-            // List<(int,int)> positions = new List<(int, int)>
-            // {
-            //     (1,1),
-            //     (high-2,width-2),
-            //     (1,width-2),
-            //     (high-2,1)
-            // };
-
             Random random = new Random();
             
             int mazeCord = random.Next(0,positions.Count);
@@ -103,6 +91,20 @@ namespace MazeRunners
             token.myY = positions[mazeCord].Item2;
 
             positions.RemoveAt(mazeCord);
+        }
+
+        public bool CheckCoolDownToken(Maze maze,Tokens token)
+        {
+            GameDisplay gameDisplay = new GameDisplay();
+
+            if(token.cooldowmSkill>=6)
+            return true;
+
+            gameDisplay.ShowGame(maze,"[bold yellow]la habilidad de esta ficha aun necesita tiempo para cargar ![/]");
+
+            Console.ReadKey();
+
+            return false;
         }
     }
 }

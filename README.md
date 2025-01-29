@@ -16,8 +16,8 @@
         - ⚡ Jarvis es un NormalToken
         - ☬░ Ultro es un TeleportToken
         -⇶░ Batman es un TrapDeleteToken
-        - ⇯░Hulk es un ObstacleToken
-        -⧖░ Flash es un FlashToken
+        - ⇯░Quasimodo es un ObstacleToken
+        -⧖░ Francesco es un FlashToken
         - KK Truck es un WallDestroyerToken
 
         #Traps

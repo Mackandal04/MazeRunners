@@ -32,6 +32,18 @@ namespace MazeRunners
         }
     }
 
+    public class JustHandsome : TokenSkills
+    {
+        public override void ActivateSkill(Tokens token, Maze maze)
+        {
+            GameDisplay gameDisplay = new GameDisplay();
+
+            gameDisplay.ShowGame(maze,"[bold yellow]Lo siento...solo soy poderosamente bello[/]");
+
+            Console.ReadKey();
+        }
+    }
+
     public class Teleport : TokenSkills
     {
         public override void ActivateSkill(Tokens token, Maze maze)
@@ -42,32 +54,18 @@ namespace MazeRunners
 
             int maxRange = 14;
 
-            if(CoolDownEnd(token.cooldowmSkill))
+            if(TeleportSuccessfully(maxRange,token,maze) && CoolDownEnd(token.cooldowmSkill))
             {
-                gameDisplay.ShowGame(maze,"Teleporting the token");
+                token.cooldowmSkill = 0;
+
+                gameDisplay.ShowGame(maze,"[green]El teletransporte fue realizado con exito ![/]");
                 
                 Console.ReadKey();
-
-                if(TeleportSuccessfully(maxRange,token,maze))
-                {
-                    token.cooldowmSkill = 0;
-                    
-                    gameDisplay.ShowGame(maze,"[green]Token teleport's skill was successfully realized[/]");
-                    
-                    Console.ReadKey();
-                }
-
-                else
-                {
-                    gameDisplay.ShowGame(maze,"[red]Something was wrong :( [/]");
-                    
-                    Console.ReadKey();
-                }
             }
 
             else
             {
-                gameDisplay.ShowGame(maze,"you can't do this, not yet");
+                gameDisplay.ShowGame(maze,"[red]Algo salio mal[/]");
                 
                 Console.ReadKey();
             }
@@ -76,6 +74,12 @@ namespace MazeRunners
 
         bool TeleportSuccessfully(int maxRange, Tokens token, Maze maze)
         {
+            GameDisplay gameDisplay = new GameDisplay();
+                            
+            gameDisplay.ShowGame(maze,"[bold yellow]La ficha esta intentando teletransportarse...[/]");
+                
+            Console.ReadKey();
+
             UsefulMethods usefulMethods = new UsefulMethods();
 
             int mazeCenterX = maze.maze.GetLength(0)/2 ;
@@ -132,7 +136,7 @@ namespace MazeRunners
 
             if(CoolDownEnd(token.cooldowmSkill))
             {
-                gameDisplay.ShowGame(maze,"Bloqueando celda...");
+                gameDisplay.ShowGame(maze,"[bold yellow]Bloqueando celda...[/]");
                 
                 Console.ReadKey();
 
@@ -140,14 +144,14 @@ namespace MazeRunners
                 {
                     token.cooldowmSkill = 0;
 
-                    gameDisplay.ShowGame(maze,"[green]BlockerTokenSkill was succesfully activated[/]");
+                    gameDisplay.ShowGame(maze,"[green]El token bloque la celda con exito ![/]");
                     
                     Console.ReadKey();
                 }
 
                 else
                 {
-                    gameDisplay.ShowGame(maze,"[red]Something was wrong :( [/]");
+                    gameDisplay.ShowGame(maze,"[red]Algo salio mal :( [/]");
                 
                     Console.ReadKey();
 
@@ -156,7 +160,7 @@ namespace MazeRunners
 
             else
             {
-                gameDisplay.ShowGame(maze,"you can't do this, not yet");
+                gameDisplay.ShowGame(maze,"[bold yellow] Aun no puedes hacer esto[/]");
                 
                 Console.ReadKey();
             }
@@ -192,64 +196,46 @@ namespace MazeRunners
         {
             GameDisplay gameDisplay=new GameDisplay();
 
-            int maxRange = 2;
+            gameDisplay.ShowGame(maze,"[bold yellow]Seleccione la trampa que desee eliminar[/]");
 
-            if(CoolDownEnd(token.cooldowmSkill))
+            char deleteThis = Console.ReadKey().KeyChar;
+
+            Dictionary<char,(int CordX,int CordY)> direccions = new Dictionary<char, (int CordX, int CordY)>
             {
-                gameDisplay.ShowGame(maze,"Looking for traps...");
+                {'w',(-1,0)},
+                {'s',(1,0)},
+                {'a',(0,-1)},
+                {'d',(0,1)}
+            };
+
+            if(direccions.ContainsKey(deleteThis))
+            {
+                gameDisplay.ShowGame(maze,"[bold yellow]Eliminando trampa...[/]");
                 
                 Console.ReadKey();
+                
+                (int CordX,int CordY) = direccions[deleteThis];
 
-                //So hay una trampa cerca y se pudo eliminar
-                if(TrapsFoundSuccessfully(maxRange,token,maze))
+                int newCordX = token.myX + CordX;
+
+                int newCordY = token.myY + CordY;
+
+                if(maze.maze[newCordX,newCordY] is TrapCell)
                 {
+                    maze.maze[newCordX,newCordY] = new FreeCell();
+
                     token.cooldowmSkill = 0;
 
-                    gameDisplay.ShowGame(maze,"[green]The Trap was successfully deleted[/]");
-                    
-                    Console.ReadKey();
-                }
-
-                else
-                {
-                    gameDisplay.ShowGame(maze,"This is not a valid operation");
+                    gameDisplay.ShowGame(maze,"[green]La trampa fue eliminada del campo exitosamente ![/]");
                     
                     Console.ReadKey();
                 }
             }
 
             else
-            {
-                gameDisplay.ShowGame(maze,"You can't do this...yet");
-                
-                Console.ReadKey();
-            }
+                gameDisplay.ShowGame(maze,"[red]No puedes eliminar una trampa en esa direccion :( [/]");
+
         }
-
-        bool TrapsFoundSuccessfully(int maxRange, Tokens token, Maze maze)
-        {
-            UsefulMethods usefulMethods = new UsefulMethods();
-
-            for (int i = -maxRange; i <= maxRange; i++)
-            {
-                for (int j = -maxRange; j <= maxRange; j++)
-                {
-                    int trapCordX = token.myX + i;
-
-                    int trapCordY = token.myY + j;
-
-                    if(usefulMethods.isAValidTrap(trapCordX,trapCordY,maze.maze))
-                    {
-                        maze.maze[trapCordX,trapCordY] = new FreeCell();
-
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
                 bool TryingTrapsFoundSuccessfully(int maxRange, Tokens token, Maze maze)
         {
             //Nueva busqueda en espiral de trampas
@@ -262,7 +248,17 @@ namespace MazeRunners
         //Aumento de la cantiad de veces que se puede mover esta en MoveToken
         //Habilidad pasiva
         public override void ActivateSkill(Tokens token, Maze maze)
-        {}
+        {
+            GameDisplay gameDisplay = new GameDisplay();
+
+            gameDisplay.ShowGame(maze,"[bold yellow]Eres veloz?...[/]");
+
+            Console.ReadKey();
+
+            gameDisplay.ShowGame(maze,"[green]Francesco es...3 veces veloz jajajaj[/]");
+
+            Console.ReadKey();
+        }
     }
 
     public class DestroyWall : TokenSkills
@@ -271,7 +267,7 @@ namespace MazeRunners
         {
             GameDisplay gameDisplay = new GameDisplay();
 
-            gameDisplay.ShowGame(maze,"Seleccione una direccion para destruir una pared");
+            gameDisplay.ShowGame(maze,"[bold yellow]Seleccione una direccion para destruir una pared[/]");
 
             char goTo = Console.ReadKey().KeyChar;
 
@@ -285,7 +281,7 @@ namespace MazeRunners
 
             if(direccions.ContainsKey(goTo) && CoolDownEnd(token.cooldowmSkill))
             {
-                gameDisplay.ShowGame(maze,"Destruyendo muro...");
+                gameDisplay.ShowGame(maze,"[bold yellow]Intentando destruir el muro...[/]");
                 
                 Console.ReadKey();
                 
@@ -301,14 +297,14 @@ namespace MazeRunners
 
                     token.cooldowmSkill = 0;
 
-                    gameDisplay.ShowGame(maze,"[green]Wall was destroyed ![/]");
+                    gameDisplay.ShowGame(maze,"[green]El muro fue derrumbado exitosamente ![/]");
                     
                     Console.ReadKey();
                 }
             }
 
             else
-                gameDisplay.ShowGame(maze,"[red]you can't destroy there :( [/]");
+                gameDisplay.ShowGame(maze,"[red]No puedes romper en esa direccion:( [/]");
         }
     }
 }

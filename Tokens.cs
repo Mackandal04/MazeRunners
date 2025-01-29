@@ -42,38 +42,49 @@ namespace MazeRunners
 
         public override void TokenSkill(Maze maze)
         {
-            System.Console.WriteLine("This token has no skill");
+            JustHandsome justHandsome = new JustHandsome();
+
+            justHandsome.ActivateSkill(this,maze);
         } 
     }
 
 
     public class TrapDeleteToken : Tokens
     {
-
         public TrapDeleteToken(string name, string icon,int myX, int myY) : base(name,icon, myX, myY)
         {
         }
         public override void TokenSkill(Maze maze)
         {
-            DeleteTrap deleteTrap = new DeleteTrap();
+            UsefulMethods usefulMethods = new UsefulMethods();
 
-            deleteTrap.ActivateSkill(this,maze);
+            if(usefulMethods.CheckCoolDownToken(maze,this))
+            {
+                DeleteTrap deleteTrap = new DeleteTrap();
+
+                deleteTrap.ActivateSkill(this,maze);
+            }
         }
 
         public override void Show()
         {}
     }
 
-    public class ObstacleToken : Tokens //implementar
+    public class ObstacleToken : Tokens
     {
         public ObstacleToken(string name, string icon,int myX, int myY) : base(name,icon, myX, myY)
         {
         }
         public override void TokenSkill(Maze maze)
         {
-            Blocker blocker = new Blocker();
+            UsefulMethods usefulMethods = new UsefulMethods();
 
-            blocker.ActivateSkill(this,maze);
+            if(usefulMethods.CheckCoolDownToken(maze,this))
+            {
+                Blocker blocker = new Blocker();
+
+                blocker.ActivateSkill(this,maze);
+            }
         }
 
         public override void Show()
@@ -103,15 +114,14 @@ namespace MazeRunners
         }
         public override void TokenSkill(Maze maze)
         {
-            if(cooldowmSkill>=6)
+            UsefulMethods usefulMethods = new UsefulMethods();
+
+            if(usefulMethods.CheckCoolDownToken(maze,this))
             {
                 Teleport teleport = new Teleport();
 
                 teleport.ActivateSkill(this,maze);//Le pasamos el token actual junto con el maze
             }
-
-            else
-                System.Console.WriteLine("[bold yellow]Skill is not charge yet ![/]");
         }
 
         public override void Show()
@@ -126,28 +136,16 @@ namespace MazeRunners
 
         public override void TokenSkill(Maze maze)
         {
-            DestroyWall destroyWall = new DestroyWall();
+            UsefulMethods usefulMethods = new UsefulMethods();
+            
+            if(usefulMethods.CheckCoolDownToken(maze,this))
+            {
+                DestroyWall destroyWall = new DestroyWall();
 
-            destroyWall.ActivateSkill(this,maze);
+                destroyWall.ActivateSkill(this,maze);
+            }
         }
         public override void Show()
         {}
     }
-
-    // public class BloquerToken : Tokens
-    // {
-    //     public BloquerToken(string name, string icon,int myX, int myY) : base(name,icon, myX, myY)
-    //     {
-    //     }
-
-    //     public override void TokenSkill(Maze maze)
-    //     {
-    //         BlockerToken blockerToken = new BlockerToken();
-
-    //         blockerToken.ActivateSkill(this,maze);
-    //     }
-
-    //     public override void Show()
-    //     {}
-    // }
 }

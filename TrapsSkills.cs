@@ -32,7 +32,7 @@ namespace MazeRunners
 
             GameDisplay gameDisplay=new GameDisplay();
 
-            gameDisplay.ShowGame(maze,"[blue]Teleporting the token[/]");
+            gameDisplay.ShowGame(maze,"[bold yellow]Una trampa esta teletransportando al token[/]");
             Console.ReadKey();
             //Thread.Sleep(1000);
 
@@ -50,7 +50,7 @@ namespace MazeRunners
 
                 maze.maze[token.myX, token.myY] = token;
                 
-                gameDisplay.ShowGame(maze,"[green]TokenTeleportedSkill successfully activated[/]");
+                gameDisplay.ShowGame(maze,"[green]El token fue teletransportado exitosamente[/]");
                 Console.ReadKey();
             }
         }
@@ -68,7 +68,7 @@ namespace MazeRunners
 
             token.Health = life;
 
-            gameDisplay.ShowGame(maze,token.name +"[red] takes 3 of damage[/]");
+            gameDisplay.ShowGame(maze,token.name +"[red] ha recibido 3 puntos de daño[/]");
             
             Console.ReadKey();
         }
@@ -82,12 +82,24 @@ namespace MazeRunners
             
             GameDisplay gameDisplay=new GameDisplay();
 
-            gameDisplay.ShowGame(maze,"[red] This token won't be able to use his skill no more[/]");
+            gameDisplay.ShowGame(maze,token.name + "...");
+
+            Console.ReadKey();
+
+            gameDisplay.ShowGame(maze,"[red]lastimosamente no podra utilizar mas su habilidad[/]");
+
+            Console.ReadKey();
 
             if(token is FlashToken)
-                gameDisplay.ShowGame(maze,"But Flash is Faster, so the trap had no effect !");
-            
-            Console.ReadKey();
+            {
+                gameDisplay.ShowGame(maze,"[bold yellow]pero Francesco es demasiado rapido y consigue sortear la trampa, asi que esta no tuvo efecto ![/]");
+                
+                Console.ReadKey();
+
+                gameDisplay.ShowGame(maze,"[green]Ciao y Arrivederci jajaja[/]");
+
+                Console.ReadKey();
+            }
         }
     }
 
@@ -99,8 +111,12 @@ namespace MazeRunners
 
             GameDisplay gameDisplay=new GameDisplay();
             
-            gameDisplay.ShowGame(maze,"[bold yellow]This token is stuck for three turns ! [/]");
+            gameDisplay.ShowGame(maze,"[bold yellow]Esta ficha se encuentra atrapada en una trampa temporal ! [/]");
             
+            Console.ReadKey();
+
+            gameDisplay.ShowGame(maze,"[bold yellow]Debera esperar tres turnos antes de continuar avanzando[/]");
+
             Console.ReadKey();
         }
     }
@@ -117,7 +133,7 @@ namespace MazeRunners
 
             token.Health = life;
 
-            gameDisplay.ShowGame(maze,token.name +"[green] receives 3 life points[/]");
+            gameDisplay.ShowGame(maze,token.name +"[green] recibe 3 puntos de vida[/]");
             
             Console.ReadKey();
         }

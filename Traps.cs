@@ -10,10 +10,7 @@ namespace MazeRunners
     public abstract class TrapCell : Cell
     {
         public override void Show()
-        {
-            AnsiConsole.Markup("##");
-            //AnsiConsole.Markup("🪤");
-        }
+        {}
 
         public abstract void ActivateTrapSkill(Tokens token,Maze maze);
     }

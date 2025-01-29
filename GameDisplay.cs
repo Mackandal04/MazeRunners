@@ -76,10 +76,11 @@ namespace MazeRunners
                     .Expand()
                 );
 
-                string instruccions = "[white bold]Muevase por el maze con las letras w,s,a,d [/]\n" +
-                                    "[white bold]Para saltar su turno presione e [/]\n" +
-                                    "[white bold]Para utilizar su habilidad presione k [/]\n" +
-                                    "[white bold]Para salir del juego presione q [/]";
+                string instruccions ="[white bold]Presione cualquier tecla para continuar[/]\n " +
+                                    "[white bold]Presione h para ver las reglas y caracteristicas de Maze Runners[/]\n" +
+                                    "[white bold]Muevase por el laberinto con las letras w,s,a,d [/]\n" +
+                                    "[white bold]Para que una ficha utilice su habilidad presione k [/]\n" +
+                                    "[white bold]Para salir del juego presione q [/]\n ";
                 
                 layout["Instrucions"].Update
                 (

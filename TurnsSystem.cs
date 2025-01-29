@@ -11,27 +11,9 @@ namespace MazeRunners
         {
             GameDisplay gameDisplay = new GameDisplay();
 
-            if(player.playerTokens.Count==0)
-            {
-                gameDisplay.ShowGame(maze,"[green]El ganador es [/]" + player.name);
-                Console.ReadKey();
-                //Thread.Sleep(1300);
-
-                return;
-            }
-
-            if(player.playerTokens.Count==1)
-            {
-                flag = 0;
-            }
-
-            //flag indica que token es el q se debe mover de los tokens disponibles x el player
-
-            string message = "Es el turno de " + player.name +"\n"+ "[yellow]Tokens Left:[/] " + player.playerTokens.Count; 
+            string message = "Es el turno de " + player.name +"\n"+ "[bold yellow]Fichas restantes:[/] " + player.playerTokens.Count; 
 
             maze.MoveToken(player.playerTokens[flag],player, maze , message);
-
-            player.isYourTurn = false;
         }
     }
 }

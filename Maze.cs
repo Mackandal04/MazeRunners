@@ -34,9 +34,6 @@ namespace MazeRunners
 
         public void MazeGenerator(int CordX, int CordY)//Metodo que genera un tablero valido
         {
-            //Annadir verificacion, debe empezar en 1,1
-            //System.Console.WriteLine("Entro al mazeGenerator");
-
             maze[CordX,CordY] = new FreeCell();
 
             (int, int)[] direcArray = {(0,2),(0,-2),(2,0),(-2,0)};
@@ -299,6 +296,9 @@ namespace MazeRunners
                 if(token is FlashToken)
                     token.TurnsLeft = 16;//efecto pasivo de un flashToken
 
+                else
+                    token.TurnsLeft = 8;
+
                 UsefulMethods usefulMethods = new UsefulMethods();
 
                 int n = maze.maze.GetLength(0);
@@ -324,16 +324,32 @@ namespace MazeRunners
                     
                     if(letter== 'q')
                     {
-                        gameDisplay.ShowGame(maze,"Leaving the game...");
+                        gameDisplay.ShowGame(maze,"[bold yellow]Saliendo del juego...[/]");
                         
                         Console.ReadKey();
+
+                        gameDisplay.ShowGame(maze,"[bold yellow]Que tengan un buen dia ;) [/]");
+
+                        Console.ReadKey();
+
+                        Console.Clear();
 
                         //Cierra la el programa manualmente, 0 indica que termino correctamente
                         Environment.Exit(0);
                     }
                     
-                    if(letter == 'e')
-                        break;
+                    if(letter == 'h')
+                    {
+                        RulesDisplay rulesDisplay = new RulesDisplay();
+
+                        Console.Clear();
+
+                        rulesDisplay.ShowRules();
+
+                        Console.ReadKey();
+
+                        Console.Clear();
+                    }
     
                     if(letter=='k')
                     {
@@ -351,9 +367,11 @@ namespace MazeRunners
 
                         if(token.StuckTurns>0)
                         {
-                            gameDisplay.ShowGame(maze,"[bold yellow]You are stuck for " + token.StuckTurns + " turns ![/]");
+                            gameDisplay.ShowGame(maze,"[bold yellow]Su ficha esta atrapada por " + token.StuckTurns + " turnos ![/]");
                             
                             token.StuckTurns--;
+
+                            token.TurnsLeft--;
                             
                             Console.ReadKey();
                             
@@ -370,7 +388,7 @@ namespace MazeRunners
 
                             if(maze.maze[newCordX,newCordY] is ExitCell)
                             {
-                                gameDisplay.ShowGame(maze,"[green] the token has arrive to the exit !!!");
+                                gameDisplay.ShowGame(maze,"[green] Su ficha ha llegado a la salida !!![/]");
 
                                 Console.ReadKey();
 
@@ -382,7 +400,11 @@ namespace MazeRunners
 
                                 if(player.playerTokens.Count==0)
                                 {
-                                    gameDisplay.ShowGame(maze,"[green]El ganador es [/]" + player.name);
+                                    gameDisplay.ShowGame(maze,"[green]El ganador es...[/]");
+
+                                    Console.ReadKey();
+
+                                    gameDisplay.ShowGame(maze,player.name + "!!!!!!!!");
                                     
                                     Console.ReadKey();
 
@@ -395,7 +417,7 @@ namespace MazeRunners
 
                             else if(maze.maze[newCordX,newCordY] is TrapCell trap)
                             {
-                                gameDisplay.ShowGame(maze,"[bold yellow]Trap Activated[/]");
+                                gameDisplay.ShowGame(maze,"[bold yellow]Trampa activada[/]");
 
                                 Console.ReadKey();
 
@@ -418,7 +440,7 @@ namespace MazeRunners
                             {
                                 token.cooldowmSkill = int.MinValue;
 
-                                gameDisplay.ShowGame(maze,token.name + "[bold yellow]does not have enough life to use his skill[/]");
+                                gameDisplay.ShowGame(maze,token.name + "[bold yellow]Su ficha se encuentra muy debil como para utilizar su habilidad[/]");
                                 
                                 Console.ReadKey();
                             }
@@ -428,7 +450,7 @@ namespace MazeRunners
 
                         else
                         {
-                            gameDisplay.ShowGame(maze,"[red]it is not a valid move[/]");
+                            gameDisplay.ShowGame(maze,"[red] Ese no es un movimiento valido[/]");
                             
                             Console.ReadKey();
                         }

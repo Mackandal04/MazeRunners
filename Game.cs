@@ -9,12 +9,10 @@ using Spectre.Console;
         {
             public void StartGame(Player playerOne, Player playerTwo)//Debe recibir un array de token q representa los tokens de cada jugador
             {
-                int high = 35;
+                int high = 19;//35
 
-                int width = 35;
+                int width = 19;
                 
-                bool isPlayerOneturn = true;
-
                 GameDisplay gameDisplay=new GameDisplay();
 
                 List<Tokens> tokens = new List<Tokens> //Lista con todos los tokens del juego, para seleccionar
@@ -22,8 +20,8 @@ using Spectre.Console;
                     new NormalToken("Jarvis","[cyan]⚡[/]",1,1),
                     new TeleportToken("Nightcrawler","[cyan]☬░[/]",high-2,width-2),
                     new TrapDeleteToken("Batman","[cyan]⇶░[/]",1,width-2),
-                    new ObstacleToken("Hulk","[cyan]⇯░[/]",high-2,1),
-                    new FlashToken("Flash","[Red]⧖░[/]",1,1),
+                    new ObstacleToken("Quasimodo","[cyan]⇯░[/]",high-2,1),
+                    new FlashToken("Francesco Bernoulli","[Red]⧖░[/]",1,1),
                     new WallDestroyerToken("Optimus Prime","[Red]KK[/]",high-2,width-2)
                 };
 
@@ -31,33 +29,87 @@ using Spectre.Console;
 
                 CreateGame(maze,high,width,tokens,playerOne,playerTwo);//Crea el juego por detras
 
-                int flag = 0;
+                bool isPlayerOneturn = true;
 
                 TurnsSystem turnsSystem = new TurnsSystem();
 
-                while(playerOne.playerTokens.Count>0 && playerTwo.playerTokens.Count>0)//&& playerTwo.playerTokens.Count>0
+                while(playerOne.playerTokens.Count>0 && playerTwo.playerTokens.Count>0)//Mientras ambos tengan al menos un token para jugar
                 {
                     if(isPlayerOneturn)
                     {
-                        turnsSystem.PlayerTurn(flag,playerOne,maze);//flag
+                        StringBuilder stringBuilderOne = new StringBuilder();
                         
-                        isPlayerOneturn = false;
+                        gameDisplay.ShowGame(maze,"Es el turno de " + playerOne.name);
+
+                        Console.ReadKey();
+
+                        gameDisplay.ShowGame(maze,"Que token desea utilizar ?");
+
+                        Console.ReadKey();
+
+                        for (int i = 0; i < playerOne.playerTokens.Count; i++)
+                        {
+                            stringBuilderOne.Append("\n" + "-" + (i+1)+ ". " + playerOne.playerTokens[i].name);
+                        }
+
+                        stringBuilderOne.AppendLine();
+
+                        gameDisplay.ShowGame(maze,stringBuilderOne.ToString());
+
+                        int tokenIndex;
+
+                        if(int.TryParse(Console.ReadLine(),out tokenIndex) && tokenIndex >=0 && tokenIndex <= playerOne.playerTokens.Count)
+                        {
+                            turnsSystem.PlayerTurn(tokenIndex-1,playerOne,maze);
+
+                            isPlayerOneturn = false;
+                        }
+
+                        else
+                        {
+                            gameDisplay.ShowGame(maze,"[bold yellow]Entrada no valida, por favor intente otra vez[/]");
+
+                            Console.ReadKey();
+                        }
                     }
 
                     else
                     {
-                        turnsSystem.PlayerTurn(flag,playerTwo,maze);
-                        
-                        isPlayerOneturn = true;
-                        
-                        flag++;
-                    }
+                        StringBuilder stringBuilderTwo = new StringBuilder();
 
-                    if(flag>1)
-                        flag=0;
+                        gameDisplay.ShowGame(maze,"Es el turno de " + playerTwo.name);
+
+                        gameDisplay.ShowGame(maze,"Que token desea utilizar ?");
+
+                        Console.ReadKey();
+
+                        for (int i = 0; i < playerTwo.playerTokens.Count; i++)
+                        {
+                            stringBuilderTwo.Append("\n" + "-" + (i+1)+ ". " + playerTwo.playerTokens[i].name);
+                        }
+
+                        stringBuilderTwo.AppendLine();
+
+                        gameDisplay.ShowGame(maze,stringBuilderTwo.ToString());
+
+                        int tokenIndex;
+
+                        if(int.TryParse(Console.ReadLine(),out tokenIndex) && tokenIndex >=0 && tokenIndex <= playerTwo.playerTokens.Count)
+                        {
+                            turnsSystem.PlayerTurn(tokenIndex-1,playerTwo,maze);
+
+                            isPlayerOneturn = true;
+                        }
+
+                        else
+                        {
+                            gameDisplay.ShowGame(maze,"[bold yellow]Entrada no valida,por favor intente otra vez[/]");
+
+                            Console.ReadKey();
+                        }
+                    }
                 }
             }
-
 
             void CreateGame(Maze maze, int high, int width, List<Tokens>tokens,Player playerOne, Player playerTwo)
             {
@@ -70,15 +122,15 @@ using Spectre.Console;
                     maze.MazeGenerator(1,1);
                 }
 
-                gameDisplay.ShowGame(maze,"[bold yellow]Welcome to the game ![/]"); //Muestra el tablero y el estado del juego
+                gameDisplay.ShowGame(maze,"[bold yellow]Bienvenidos a Maze Runners ![/]"); //Muestra el tablero y el estado del juego
                 
                 Console.ReadKey();
 
-                gameDisplay.ShowGame(maze,"[bold yellow]The first player to get all his tokens to the middle of the board(the exit) will be the winner[/]");
+                gameDisplay.ShowGame(maze,"[bold yellow]El primer jugador en llevar todas sus fichas a la casilla de salida sera el ganador[/]" + "\n" + "[bold yellow]La casilla de salida se encuentra representada por un tunel gris en el medio del laberinto que veran a continuacion[/]" + "\n" + "[bold yellow]Les deseo exitos a todos ![/]");
                 
                 Console.ReadKey();
 
-                gameDisplay.ShowGame(maze,"[bold yellow]Good luck :) [/]");
+                gameDisplay.ShowGame(maze,"[bold yellow]Buena suerte :) [/]");
                 
                 Console.ReadKey();
 
@@ -119,10 +171,9 @@ using Spectre.Console;
                     Console.ReadKey();
                     
 
-                    gameDisplay.ShowGame(maze,"Escoge un token");
+                    gameDisplay.ShowGame(maze,"Con que ficha desea jugar ?");
                     
                     Console.ReadKey();
-                    
 
                     for (int i = 0; i < tokens.Count; i++)
                     {
@@ -149,7 +200,7 @@ using Spectre.Console;
 
                         else
                         {
-                            gameDisplay.ShowGame(maze,"[bold yellow]Entrada no valida, intenta otra vez[/]");
+                            gameDisplay.ShowGame(maze,"[bold yellow]Entrada no valida,por favor intente otra vez[/]");
 
                             Console.ReadKey();
                             
@@ -165,7 +216,7 @@ using Spectre.Console;
                         Console.ReadKey();
                         
 
-                        gameDisplay.ShowGame(maze,"Escoge un token");
+                        gameDisplay.ShowGame(maze,"Con que ficha desea jugar ?");
                         
                         Console.ReadKey();
                         
@@ -193,7 +244,7 @@ using Spectre.Console;
 
                             else
                             {
-                                gameDisplay.ShowGame(maze,"[bold yellow]Entrada no valida, intenta otra vez[/]");
+                                gameDisplay.ShowGame(maze,"[bold yellow]Entrada no valida,por favor intente otra vez[/]");
 
                                 Console.ReadKey();
 

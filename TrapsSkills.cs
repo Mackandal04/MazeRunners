@@ -68,6 +68,9 @@ namespace MazeRunners
 
             token.Health = life;
 
+            if(token.Health<1)
+                token.Health = 1;
+
             gameDisplay.ShowGame(maze,token.name +"[red] ha recibido 3 puntos de daño[/]");
             
             Console.ReadKey();
@@ -78,7 +81,7 @@ namespace MazeRunners
     {
         public override void ActivateSkill(Tokens token, Maze maze)
         {
-            token.cooldowmSkill = int.MinValue;
+            token.invalidateSkill = 12;
             
             GameDisplay gameDisplay=new GameDisplay();
 
@@ -86,12 +89,14 @@ namespace MazeRunners
 
             Console.ReadKey();
 
-            gameDisplay.ShowGame(maze,"[red]lastimosamente no podra utilizar mas su habilidad[/]");
+            gameDisplay.ShowGame(maze,"[red]lastimosamente no podra utilizar su habilidad durante 12 turnos[/]");
 
             Console.ReadKey();
 
             if(token is FlashToken)
             {
+                token.invalidateSkill = 0;
+
                 gameDisplay.ShowGame(maze,"[bold yellow]pero Francesco es demasiado rapido y consigue sortear la trampa, asi que esta no tuvo efecto ![/]");
                 
                 Console.ReadKey();

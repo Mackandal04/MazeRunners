@@ -186,7 +186,7 @@ using Spectre.Console;
 
                     for (int i = 0; i < tokens.Count; i++)
                     {
-                        stringBuilderOne.Append("\n" +"\n"+ "-" + (i+1)+ ". " + tokens[i].name );
+                        stringBuilderOne.Append("\n"+ "-" + (i+1)+ ". " + tokens[i].name );
                     }
                     stringBuilderOne.AppendLine();
 
@@ -232,7 +232,7 @@ using Spectre.Console;
 
                         for (int i = 0; i < tokens.Count; i++)
                         {
-                            stringBuilderTwo.Append("\n" +"\n"+ "-" + (i+1)+ ". " + tokens[i].name );
+                            stringBuilderTwo.Append("\n"+ "-" + (i+1)+ ". " + tokens[i].name );
                         }
                         stringBuilderTwo.AppendLine();
 

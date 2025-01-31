@@ -342,8 +342,32 @@ namespace MazeRunners
     
                     if(letter=='k')
                     {
-                        token.TokenSkill(maze);
-                        continue;
+                        if(token.Health<=4)
+                        {
+                            token.invalidateSkill = 1;
+
+                            gameDisplay.ShowGame(maze,token.name + "[bold yellow] se encuentra muy debil como para utilizar su habilidad[/]");
+                                
+                            Console.ReadKey();
+                        }
+
+
+                        else if(token.invalidateSkill!=0)
+                        {
+                            gameDisplay.ShowGame(maze,"[bold yellow]Esta ficha no podra utilizar su habilidad durante...[/]");
+
+                            Console.ReadKey();
+
+                            gameDisplay.ShowGame(maze,token.invalidateSkill + " turnos");
+
+                            Console.ReadKey();
+                        }
+
+                        else
+                        {
+                            token.TokenSkill(maze);
+                            continue;
+                        }
                     }
                         
                     if(mazeDirec.ContainsKey(letter))
@@ -425,16 +449,9 @@ namespace MazeRunners
 
                             token.cooldowmSkill++;
 
-                            if(token.Health<=4)
-                            {
-                                token.cooldowmSkill = int.MinValue;
-
-                                gameDisplay.ShowGame(maze,token.name + "[bold yellow]Su ficha se encuentra muy debil como para utilizar su habilidad[/]");
-                                
-                                Console.ReadKey();
-                            }
-
                             token.TurnsLeft--;
+
+                            token.invalidateSkill--;
                         }
 
                         else

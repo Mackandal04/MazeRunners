@@ -17,7 +17,8 @@ namespace MazeRunners
         }
         public void AddToken(Tokens token)
         {
-            //Annade ek token selecc a la lista de tokens del player
+            //Annade el token selecc a la lista de tokens del player
+            
             playerTokens.Add(token);
         }
 

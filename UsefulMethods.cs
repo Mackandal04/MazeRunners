@@ -97,7 +97,7 @@ namespace MazeRunners
         {
             GameDisplay gameDisplay = new GameDisplay();
 
-            if(token.cooldowmSkill>=6)
+            if(token.cooldowmSkill>=10)
             return true;
 
             gameDisplay.ShowGame(maze,"[bold yellow]la habilidad de esta ficha aun necesita tiempo para cargar ![/]");

@@ -71,57 +71,63 @@ namespace MazeRunners
             }
         }
 
-
         bool TeleportSuccessfully(int maxRange, Tokens token, Maze maze)
         {
             GameDisplay gameDisplay = new GameDisplay();
-                            
-            gameDisplay.ShowGame(maze,"[bold yellow]La ficha esta intentando teletransportarse...[/]");
-                
+            
+            gameDisplay.ShowGame(maze, "[bold yellow]La ficha está intentando teletransportarse...[/]");
+            
             Console.ReadKey();
 
             UsefulMethods usefulMethods = new UsefulMethods();
+            
+            int mazeCenterX = maze.maze.GetLength(0) / 2;
+            
+            int mazeCenterY = maze.maze.GetLength(1) / 2;
 
-            int mazeCenterX = maze.maze.GetLength(0)/2 ;
+            List<(int CellX,int CellY)> teleportCells = new List<(int X,int Y)>();//lista de celdas para teletransportarse
 
-            int mazeCenterY = maze.maze.GetLength(1)/2 ;
-
-            for (int i = 0; i <= maxRange; i++)
+            for (int i = -maxRange; i <= maxRange; i++)
             {
-                for (int j = 0; j <= maxRange; j++)
+                for (int j = -maxRange; j <= maxRange; j++)
                 {
                     int teleportToX = token.myX + i;
-
+                    
                     int teleportToY = token.myY + j;
 
-                    if(usefulMethods.isAValidFreeCell(teleportToX,teleportToY,maze.maze))// && maze.IsAValidCell(maze.maze.GetLength(0)/2, maze.maze.GetLength(1)/2 )
+                    if (teleportToX >= 0 && teleportToX < maze.maze.GetLength(0) && teleportToY >= 0 && teleportToY < maze.maze.GetLength(1) && usefulMethods.isAValidFreeCell(teleportToX, teleportToY, maze.maze))
                     {
-                        maze.maze[token.myX,token.myY] = new FreeCell();
-
-                        maze.maze[teleportToX,teleportToY] = token;
-
-                        bool [,] mask= new bool [maze.maze.GetLength(0),maze.maze.GetLength(1)];
-
-                        if(maze.IsAValidCell(mazeCenterX, mazeCenterY) && maze.DFS(teleportToX,teleportToY,mazeCenterX,mazeCenterY,mask))
-                        {
-                            token.myX = teleportToX;
-
-                            token.myY = teleportToY;
-
-                            return true;
-                        }
-
-                        maze.maze[teleportToX,teleportToY] = new FreeCell();
-
-                        maze.maze[token.myX, token.myY] = token;
+                        // Verificar si el centro es accesible desde esta celda
+                        bool[,] mask = new bool[maze.maze.GetLength(0), maze.maze.GetLength(1)];
+                        
+                        if (maze.DFS(teleportToX, teleportToY, mazeCenterX, mazeCenterY, mask))
+                            teleportCells.Add((teleportToX, teleportToY));//Si permite llegar al medio, agregala a la lista
                     }
                 }
             }
 
-            return false;
+            if (teleportCells.Count == 0)
+            {
+                gameDisplay.ShowGame(maze,"[bold red]No es posible teletransportarse ahora mismo[/]");
+                
+                return false;
+            }
+
+            Random random = new Random();
+            
+            var goToThisCell = teleportCells[random.Next(teleportCells.Count)];
+
+            maze.maze[token.myX, token.myY] = new FreeCell();
+            
+            maze.maze[goToThisCell.CellX, goToThisCell.CellY] = token;
+            
+            token.myX = goToThisCell.CellX;
+            
+            token.myY = goToThisCell.CellY;
+            
+            return true;
         }
     }
-
 
     //Bloquea una casilla del maze
     public class Blocker : TokenSkills

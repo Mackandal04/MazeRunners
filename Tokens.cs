@@ -13,9 +13,10 @@ namespace MazeRunners
         public int Health{get;set;} = 10;
         public int TurnsLeft = 8;
         public int StuckTurns{get;set;} = 0;
+        public int invalidateSkill{get;set;} = 0;
         public int myX{get;set;}
         public int myY{get;set;}
-        public int cooldowmSkill = 6;
+        public int cooldowmSkill = 10;
         public abstract void TokenSkill(Maze maze);
 
         public Tokens(string name,string icon,int myX, int myY)

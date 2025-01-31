@@ -9,16 +9,11 @@ namespace MazeRunners
     {
         public Cell[,] maze {get;}
 
-        int high;
-        int width;
+        static int high = 35;
+        static int width = 35;
 
-        public Maze(int high, int width) //Metodo que crea el tablero
+        public Maze() //Constructor del tablero tablero
         {
-            //Annadir verificacion, deber ser como maximo 35x31
-            
-            this.high = high;
-            this.width = width;
-
             maze = new Cell[high, width];
 
             for (int i = 0; i < high; i++)
@@ -223,13 +218,7 @@ namespace MazeRunners
 
             else if(maze[x,y] is Wall)
                 stringMaze[x,y] = "[Silver]██[/]"; //Silver
-            
-
-            // else if(maze[x,y] is TrapCell)
-            //     stringMaze[x,y] = "[cyan]░░[/]"; //[cyan]░░//[Gold1]██//🪤 || TT || color-██ //Recordar ponerle el mismo color que el pasillo
-            //                                                             //para que el plaer se coma las traps
-            
-
+                
             else if(maze[x,y] is TeleportTrap)
                 stringMaze[x,y] = "[blue]██[/]";//[cyan]░░ //[Green]██//🪤 || TT || color-██ //Recordar ponerle el mismo color que el pasillo a las trampas
             

@@ -9,12 +9,15 @@ using Spectre.Console;
         {
             public void StartGame(Player playerOne, Player playerTwo)//Debe recibir un array de token q representa los tokens de cada jugador
             {
-                int high = 35;
-
-                int width = 35;
                 
                 GameDisplay gameDisplay=new GameDisplay();
 
+                Maze maze = new Maze();
+
+                int high = maze.maze.GetLength(0);
+
+                int width = maze.maze.GetLength(1);
+                
                 List<Tokens> tokens = new List<Tokens> //Lista con todos los tokens del juego, para seleccionar
                 {
                     new NormalToken("Jarvis","[cyan]⚡[/]",1,1),
@@ -25,13 +28,15 @@ using Spectre.Console;
                     new WallDestroyerToken("Optimus Prime","[Red]KK[/]",high-2,width-2)
                 };
 
-                Maze maze = new Maze(high,high);
-
-                CreateGame(maze,high,width,tokens,playerOne,playerTwo);//Crea el juego por detras
+                CreateGame(maze,tokens,playerOne,playerTwo);//Crea el juego por detras //,high,width
 
                 bool isPlayerOneturn = true;
 
                 TurnsSystem turnsSystem = new TurnsSystem();
+
+                gameDisplay.ShowGame(maze,"[bold yellow]Que comience el juego !!![/]");
+
+                Console.ReadKey();
 
                 while(playerOne.playerTokens.Count>0 && playerTwo.playerTokens.Count>0)//Mientras ambos tengan al menos un token para jugar
                 {
@@ -111,9 +116,13 @@ using Spectre.Console;
                 }
             }
 
-            void CreateGame(Maze maze, int high, int width, List<Tokens>tokens,Player playerOne, Player playerTwo)
+            void CreateGame(Maze maze, List<Tokens>tokens,Player playerOne, Player playerTwo)//, int high, int width
             {
                 GameDisplay gameDisplay = new GameDisplay();
+
+                int high = maze.maze.GetLength(0);
+
+                int width = maze.maze.GetLength(1);
 
                 maze.MazeGenerator(1,1);//Siempre empezar en el 1-1
 
@@ -126,7 +135,7 @@ using Spectre.Console;
                 
                 Console.ReadKey();
 
-                gameDisplay.ShowGame(maze,"[bold yellow]El primer jugador en llevar todas sus fichas a la casilla de salida sera el ganador[/]" + "\n" + "[bold yellow]La casilla de salida se encuentra representada por un tunel gris en el medio del laberinto que veran a continuacion[/]" + "\n" + "[bold yellow]Les deseo exitos a todos ![/]");
+                gameDisplay.ShowGame(maze,"[bold yellow]El primer jugador en llevar todas sus fichas a la casilla de salida sera el ganador[/]" + "\n" + "[bold yellow]La casilla de salida se encuentra representada por un tunel gris en el medio del laberinto que veran a continuacion[/]" + "\n");
                 
                 Console.ReadKey();
 

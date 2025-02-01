@@ -39,7 +39,7 @@ namespace MazeRunners
                 string playerState = "";
 
                 if(actualToken != null && actualPlayer != null)
-                    playerState =  actualToken.name + " " +actualToken.icon +"\n" + "[cyan]Token Type:[/] " + actualToken.GetType().Name + "\n" + "[green]Token's health:[/] " + actualToken.Health + "\n" + "[blue]Token's position:[/] " + "\n" + "[blue]    fila:[/] " + actualToken.myX + "\n" +"[blue]    columna:[/] " + actualToken.myY + "\n" + "[bold yellow]Remaining Turns:[/] " + actualToken.TurnsLeft;
+                    playerState =  actualToken.name + " " +actualToken.icon +"\n" + "[cyan]Token Type:[/] " + actualToken.GetType().Name + "\n" + "[green]Token's health:[/] " + actualToken.Health + "\n" + "[blue]Token's position:[/] " + "\n" + "[blue]    fila:[/] " + actualToken.myX + "\n" +"[blue]    columna:[/] " + actualToken.myY + "\n" + "[bold magenta]SkillCoolDown:[/] " + actualToken.cooldowmSkill + "\n" + "[bold yellow]Remaining Turns:[/] " + actualToken.TurnsLeft;
                 
                 else
                     playerState = "[red] ...  [/]";

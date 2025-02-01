@@ -447,11 +447,13 @@ namespace MazeRunners
                                 maze.maze[newCordX,newCordY] = token;//Poner al token en su nueva posicion
                             }
 
-                            token.cooldowmSkill++;
+                            if(token.cooldowmSkill <10)
+                                token.cooldowmSkill++;
 
                             token.TurnsLeft--;
 
-                            token.invalidateSkill--;
+                            if(token.invalidateSkill>0)
+                                token.invalidateSkill--;
                         }
 
                         else

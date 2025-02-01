@@ -9,8 +9,8 @@ namespace MazeRunners
     {
         public Cell[,] maze {get;}
 
-        static int high = 35;
-        static int width = 35;
+        static int high = 19;
+        static int width = 19;
 
         public Maze() //Constructor del tablero tablero
         {

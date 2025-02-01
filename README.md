@@ -1,5 +1,5 @@
-    # Maze Runners
-    **Maze Runners** Este proyecto es un juego de laberinto llamado "Maze Runners" desarrollado en C# 
+# Maze Runners
+    Maze Runners Este proyecto es un juego de laberinto llamado "Maze Runners" desarrollado en C# 
     utilizando la biblioteca Spectre.Console para la interfaz de consola. El juego cuenta con dos jugadores 
     que deben navegar a través de un laberinto generado aleatoriamente.El objetivo es que cada jugador encuentre la salida 
     del laberinto antes que el otro.
@@ -13,7 +13,7 @@
 
     ## 🎮Objetos del maze
         #Fichas
-        - ⚡ Jarvis es un NormalToken
+        - ⚡️ Jarvis es un NormalToken
         - ☬░ Ultro es un TeleportToken
         -⇶░ Batman es un TrapDeleteToken
         - ⇯░Quasimodo es un ObstacleToken

@@ -236,6 +236,13 @@ namespace MazeRunners
                     
                     Console.ReadKey();
                 }
+
+                else
+                {
+                    gameDisplay.ShowGame(maze,"[bold yellow]Lastimosamente no se pudo completar el proceso[/]");
+                    
+                    Console.ReadKey();
+                }
             }
 
             else
@@ -304,6 +311,13 @@ namespace MazeRunners
                     token.cooldowmSkill = 0;
 
                     gameDisplay.ShowGame(maze,"[green]El muro fue derrumbado exitosamente ![/]");
+                    
+                    Console.ReadKey();
+                }
+
+                else
+                {
+                    gameDisplay.ShowGame(maze,"[bold yellow]Lastimosamente no se pudo completar el proceso[/]");
                     
                     Console.ReadKey();
                 }
